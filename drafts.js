@@ -1,46 +1,123 @@
-// Shared local-draft storage for hand-drawn structures.
+// Hand-added structures (see add.html), shared across everyone who opens
+// this site via Supabase — a small free-tier database, not a repo commit.
+// See README.md ("Adding a structure by hand") and supabase-schema.sql for
+// the table + access-control setup, and config.js for where the project
+// URL/key go.
 //
-// There's no backend, so a structure drawn by hand (not pulled from
-// OdanLab) can't be written into data/molecules.json by the browser --
-// GitHub Pages serves static files and has nowhere to accept a write, and
-// giving the page a GitHub token to commit with would expose that token to
-// anyone who opens the site. So instead: drafts live in this browser's
-// localStorage (visible only here, gone if you clear site data), and
-// "Export" turns a draft into the PNG + JSON snippet you'd commit to make
-// it permanent and visible to everyone. See add.html and README.md.
-const Drafts = (function () {
-  const KEY = 'catalysisScreenDrafts.v1';
+// If config.js hasn't been filled in yet, this quietly falls back to a
+// same-browser-only localStorage list, so add.html still works while
+// you're setting Supabase up.
 
-  function all() {
+const Drafts = (function () {
+  const LOCAL_KEY = 'catalysisScreenDrafts.v1'; // fallback only, pre-Supabase
+
+  let client = null;
+  const configured = !!(window.SUPABASE_URL && window.SUPABASE_ANON_KEY &&
+    window.SUPABASE_URL.indexOf('YOUR-PROJECT') === -1);
+  if (configured && window.supabase) {
+    client = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  } else if (configured && !window.supabase) {
+    console.error('Drafts: config.js is filled in but the supabase-js script did not load (offline? ad-blocker?)');
+  }
+
+  function localAll() {
     try {
-      const raw = localStorage.getItem(KEY);
+      const raw = localStorage.getItem(LOCAL_KEY);
       return raw ? JSON.parse(raw) : [];
     } catch (e) {
-      console.error('Drafts: failed to read localStorage', e);
+      console.error('Drafts: localStorage read failed', e);
       return [];
     }
   }
-
-  function save(list) {
+  function localSave(list) {
     try {
-      localStorage.setItem(KEY, JSON.stringify(list));
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(list));
       return true;
     } catch (e) {
-      console.error('Drafts: failed to write localStorage', e);
+      console.error('Drafts: localStorage write failed', e);
       return false;
     }
   }
 
-  function add(entry) {
-    const list = all();
-    list.push(entry);
-    return save(list);
+  function rowToEntry(r) {
+    return {
+      id: r.id,
+      category: r.category,
+      name: r.name,
+      formula: r.formula,
+      cas: r.cas,
+      loading_umol: r.loading_umol,
+      yield_analyt: r.yield_analyt,
+      yield_iso: r.yield_iso,
+      note: r.note,
+      smiles: r.smiles,
+      reactions: r.reactions || [],
+      image: r.image,
+      isDraft: true,
+      created_at: r.created_at,
+    };
+  }
+  function entryToRow(e) {
+    return {
+      id: e.id,
+      category: e.category,
+      name: e.name,
+      formula: e.formula,
+      cas: e.cas,
+      loading_umol: e.loading_umol,
+      yield_analyt: e.yield_analyt,
+      yield_iso: e.yield_iso,
+      note: e.note,
+      smiles: e.smiles,
+      reactions: e.reactions || [],
+      image: e.image,
+      created_at: e.created_at,
+    };
   }
 
-  function remove(id) {
-    const list = all().filter(d => d.id !== id);
-    return save(list);
+  async function all() {
+    if (!client) return localAll();
+    const { data, error } = await client
+      .from('drafts')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.error('Drafts: supabase select failed', error);
+      return [];
+    }
+    return (data || []).map(rowToEntry);
   }
 
-  return { all, add, remove };
+  async function add(entry) {
+    if (!client) {
+      const list = localAll();
+      list.push(entry);
+      return localSave(list);
+    }
+    const { error } = await client.from('drafts').insert(entryToRow(entry));
+    if (error) {
+      console.error('Drafts: supabase insert failed', error);
+      return false;
+    }
+    return true;
+  }
+
+  async function remove(id) {
+    if (!client) return localSave(localAll().filter(d => d.id !== id));
+    const { error } = await client.from('drafts').delete().eq('id', id);
+    if (error) {
+      console.error('Drafts: supabase delete failed', error);
+      return false;
+    }
+    return true;
+  }
+
+  // Whether drafts are actually shared (Supabase configured) or only
+  // visible in this browser (fallback). The UI uses this to word things
+  // correctly instead of always claiming "shared" or always "local".
+  function isShared() {
+    return !!client;
+  }
+
+  return { all, add, remove, isShared };
 })();

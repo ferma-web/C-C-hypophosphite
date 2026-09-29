@@ -77,7 +77,7 @@
     return v === '' ? null : v;
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = str('f-name');
     if (!name) return;
@@ -101,12 +101,23 @@
       created_at: new Date().toISOString(),
     };
 
-    Drafts.add(entry);
+    const prevLabel = btnAdd.textContent;
+    btnAdd.disabled = true;
+    btnAdd.textContent = 'Добавляем…';
+    const ok = await Drafts.add(entry);
+    btnAdd.textContent = prevLabel;
+
+    if (!ok) {
+      btnAdd.disabled = false;
+      alert('Не удалось сохранить структуру. Если это происходит у всех — проверьте config.js и supabase-schema.sql (см. README). Подробности в консоли браузера.');
+      return;
+    }
+
     form.reset();
     document.getElementById('f-category').value = '4';
     smilesInput.value = '';
     renderSmiles('');
-    renderDraftList();
+    await renderDraftList();
   });
 
   function downloadBlob(filename, blob) {
@@ -148,13 +159,18 @@
     downloadBlob(d.id + '.json', new Blob([JSON.stringify(snippet, null, 2)], { type: 'application/json' }));
   }
 
-  function renderDraftList() {
-    const drafts = Drafts.all();
+  async function renderDraftList() {
+    const shared = Drafts.isShared();
+    const banner = shared
+      ? ''
+      : `<div class="draw-status err" style="margin-bottom:12px;">Supabase не настроен (см. config.js) — добавленное видно только в этом браузере, а не всем по ссылке.</div>`;
+
+    const drafts = await Drafts.all();
     if (!drafts.length) {
-      draftListEl.innerHTML = '<div class="draft-empty">Пока ничего не добавлено.</div>';
+      draftListEl.innerHTML = banner + '<div class="draft-empty">Пока ничего не добавлено.</div>';
       return;
     }
-    draftListEl.innerHTML = drafts.map(d => `
+    draftListEl.innerHTML = banner + drafts.map(d => `
       <div class="draft-row" data-id="${d.id}">
         ${d.image ? `<img src="${d.image}" alt="">` : `<img alt="">`}
         <div class="meta">
@@ -167,12 +183,13 @@
         </div>
       </div>
     `).join('');
-    draftListEl.querySelectorAll('.btn-export').forEach(b => b.addEventListener('click', () => {
-      const d = Drafts.all().find(x => x.id === b.dataset.id);
+    draftListEl.querySelectorAll('.btn-export').forEach(b => b.addEventListener('click', async () => {
+      const all = await Drafts.all();
+      const d = all.find(x => x.id === b.dataset.id);
       if (d) exportDraft(d);
     }));
-    draftListEl.querySelectorAll('.btn-remove').forEach(b => b.addEventListener('click', () => {
-      Drafts.remove(b.dataset.id);
+    draftListEl.querySelectorAll('.btn-remove').forEach(b => b.addEventListener('click', async () => {
+      await Drafts.remove(b.dataset.id);
       renderDraftList();
     }));
   }

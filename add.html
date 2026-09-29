@@ -3,12 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <title>Добавить структуру — Catalysis Screen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/smiles-drawer@2.1.7/dist/smiles-drawer.min.js"></script>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
@@ -101,16 +104,18 @@
         <label for="f-note">Примечание</label>
         <textarea id="f-note" style="font-family:inherit; font-size:13px;"></textarea>
       </div>
-      <button type="submit" class="btn primary" id="btn-add" disabled>Добавить на сайт (черновик, только у вас в браузере)</button>
+      <button type="submit" class="btn primary" id="btn-add" disabled>Добавить на сайт</button>
     </form>
   </div>
 
   <div class="panel">
-    <h2>Черновики в этом браузере</h2>
+    <h2>Добавленные вручную структуры</h2>
     <p>
-      Черновики видны только вам, в этом браузере (localStorage) — они пропадут при очистке данных сайта
-      и не видны другим посетителям. Чтобы структура появилась у всех, экспортируйте её и добавьте файлы в репозиторий
-      (или попросите Claude сделать это за вас) — см. <code>README.md</code>.
+      Если в <code>config.js</code> прописан Supabase-проект (см. <code>README.md</code>), добавленное здесь видят все,
+      у кого есть ссылка на сайт — не только вы. Если Supabase ещё не настроен, ниже появится предупреждение, и
+      добавленное будет видно только в этом браузере. Чтобы структура попала и в основной раздел сайта
+      (<code>data/molecules.json</code>), а не только в раздел «добавлено вручную», экспортируйте её и добавьте файлы
+      в репозиторий — или попросите Claude сделать это за вас.
     </p>
     <div id="draft-list"></div>
   </div>

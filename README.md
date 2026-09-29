@@ -106,15 +106,60 @@ public demo can't hand data back to the page (cross-origin). Copy-pasting
 a SMILES sidesteps both problems and works with any drawing tool, not just
 Ketcher.
 
-**Where it's stored:** there's no backend, so what you add lives in that
-browser's `localStorage` only (see `drafts.js`) — it shows up on `index.html`
-with a dashed border and a "черновик" badge, but only in that browser, and
-it's gone if you clear site data. To make it permanent and visible to
-everyone: on `add.html`, click **Экспорт** on the draft — it downloads a
-PNG (for `assets/structures/`) and a JSON snippet shaped like one entry of
+**Where it's stored — shared via Supabase.** A static site has no backend
+of its own, so drafts are stored in a small free
+[Supabase](https://supabase.com) database instead of just the browser's
+`localStorage`. That's what makes a structure someone else adds via
+`add.html` show up for everyone who opens the site, not only in their own
+browser. One-time setup (do this once per deployment):
+
+1. Create a free project at [supabase.com](https://supabase.com) (needs a
+   Supabase account — you or whoever administers this site does this, not
+   every group member).
+2. In that project's SQL Editor, run `supabase-schema.sql` from this repo —
+   it creates the `drafts` table and the access policies described below.
+3. In the project's Settings → API, copy the **Project URL** and the
+   **anon public** key into `config.js` (replacing the `YOUR-PROJECT` /
+   `YOUR-ANON-PUBLIC-KEY` placeholders), then commit and push.
+
+Until `config.js` is filled in, `add.html` quietly falls back to
+`localStorage` (same-browser-only, as before) so it isn't broken while you
+set Supabase up — you'll see a warning on the page in that state.
+
+Drafts show up on `index.html` with a dashed border and a "добавлено
+вручную" badge. To promote one into the permanent, curated dataset (so it
+shows up as a normal, non-dashed card in `data/molecules.json`): on
+`add.html`, click **Экспорт** — it downloads a PNG (for
+`assets/structures/`) and a JSON snippet shaped like one entry of
 `data/molecules.json`. Add the PNG to `assets/structures/`, append the
 snippet into `data/molecules.json`'s `molecules` array, commit and push (or
-just ask Claude to do it, same as an OdanLab refresh).
+ask Claude to do it, same as an OdanLab refresh).
+
+## Who can see and edit this site
+
+This repo is public (required for free GitHub Pages), so the deployed site
+is reachable by **anyone who has the URL** — it isn't gated by a login.
+Two things soften that without adding real authentication:
+
+- `robots.txt` and a `noindex` meta tag on every page tell search engines
+  not to crawl or list it, so it won't turn up in Google etc. — it's
+  reachable only by someone who already has the link.
+- The Supabase **anon key** in `config.js` is, by design, not a secret
+  (Supabase's model puts access control in the database's Row Level
+  Security policies, not in hiding that key) — but with the policies in
+  `supabase-schema.sql`, anyone who has the site link effectively also has
+  that key, and so can add (and, as configured, delete) drafts, the same
+  as viewing the page.
+
+In short: this is "unlisted, share the link with your group" access, not
+"only logged-in group members." That matches sharing a link with a small
+lab group who won't stumble on it otherwise, but it does **not** stop
+someone who has the link from adding junk data or deleting others' drafts.
+If that turns out to matter, the next step up is adding real per-person
+access — for example Supabase Auth (email/password or magic-link) with
+policies scoped to `auth.uid()` instead of `anon`, or putting the whole
+site behind Cloudflare Access / a hosting provider's password protection.
+Ask Claude to set either of those up if you need it later.
 
 ## Categories
 

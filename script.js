@@ -56,7 +56,7 @@
       ${d.note ? `<div class="note-line">${esc(d.note)}</div>` : ''}`;
 
     const linkBodyHtml = `
-      ${d.isDraft ? `<span class="draft-badge">черновик · только у вас</span>` : ''}
+      ${d.isDraft ? `<span class="draft-badge">${(typeof Drafts !== 'undefined' && Drafts.isShared()) ? 'добавлено вручную · видно всем по ссылке' : 'добавлено вручную · только у вас (Supabase ещё не настроен)'}</span>` : ''}
       <div class="imgbox">${url ? `<img src="${esc(url)}" alt="${esc(d.name)}" loading="lazy">` : `<span class="ph">нет структуры</span>`}</div>
       <div class="name">${esc(d.name)}</div>
       <div class="formula mono">${esc(d.formula || '')}${d.formula && d.loading_umol ? ' · ' : ''}${d.loading_umol ? 'загрузка: ' + d.loading_umol + ' мкмоль' : ''}</div>
@@ -144,10 +144,10 @@
       return;
     }
 
-    // Hand-drawn structures added via add.html live only in this browser's
-    // localStorage (see drafts.js) — merge them in so they show up here too.
+    // Hand-drawn structures added via add.html, shared via Supabase (see
+    // drafts.js) — merge them in so they show up here too.
     if (typeof Drafts !== 'undefined') {
-      const drafts = Drafts.all();
+      const drafts = await Drafts.all();
       if (drafts.length) {
         allDocs = allDocs.concat(drafts);
       }
