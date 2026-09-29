@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalysis Screen — восстановленные соединения</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <div class="brand">
+      <span class="eyebrow">Lab of Effective Catalysis &middot; OdanLab</span>
+      <h1>Hypophosphite C=C Reduction — молекулы</h1>
+    </div>
+    <div class="stats-row" id="stats-row"></div>
+  </div>
+  <div class="search-row">
+    <input id="search" type="text" placeholder="Поиск по названию, формуле или шифру (AAP-35, KIR-46, …)" autocomplete="off">
+    <span id="sync-note">—</span>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<footer>
+  <span>Данные выгружены из OdanLab. Как обновить — см. <a href="scripts/refresh_data.py" class="mono">scripts/refresh_data.py</a> и README.</span>
+  <span id="footer-updated"></span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
