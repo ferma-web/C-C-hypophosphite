@@ -6,7 +6,8 @@ links back to the source reactions.
 
 It's plain HTML/CSS/JS — no build step, no backend. `index.html` reads
 `data/molecules.json` and renders the cards; structure images live in
-`assets/structures/`.
+`assets/structures/`. `add.html` lets you draw/paste a structure that isn't
+in OdanLab at all (see "Adding a structure by hand" below).
 
 ## Run it locally
 
@@ -84,6 +85,36 @@ The JSON shape either way:
   ]
 }
 ```
+
+## Adding a structure by hand (not from OdanLab)
+
+`add.html` ("+ Добавить структуру вручную" in the header) lets you add a
+compound that isn't in OdanLab at all — draw it in any structure editor
+that can export **SMILES** (a link to EPAM's public
+[Ketcher](https://lifescience.opensource.epam.com/KetcherDemoSA/index.html)
+demo is right there, but MarvinJS, PubChem's sketcher, ChemDraw, whatever
+you have all work the same way), paste the SMILES in, fill in the rest of
+the fields, and it renders a preview client-side via
+[SmilesDrawer](https://github.com/reymond-group/smilesDrawer) (loaded from
+jsDelivr — needs internet, same as the Google Fonts link already in
+`index.html`).
+
+This is deliberately **not** a live Ketcher embed: Ketcher's actual editor
+component needs a build step (webpack + its own web workers) to embed
+directly, which doesn't fit a zero-build static site, and iframing its
+public demo can't hand data back to the page (cross-origin). Copy-pasting
+a SMILES sidesteps both problems and works with any drawing tool, not just
+Ketcher.
+
+**Where it's stored:** there's no backend, so what you add lives in that
+browser's `localStorage` only (see `drafts.js`) — it shows up on `index.html`
+with a dashed border and a "черновик" badge, but only in that browser, and
+it's gone if you clear site data. To make it permanent and visible to
+everyone: on `add.html`, click **Экспорт** on the draft — it downloads a
+PNG (for `assets/structures/`) and a JSON snippet shaped like one entry of
+`data/molecules.json`. Add the PNG to `assets/structures/`, append the
+snippet into `data/molecules.json`'s `molecules` array, commit and push (or
+just ask Claude to do it, same as an OdanLab refresh).
 
 ## Categories
 

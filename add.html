@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Добавить структуру — Catalysis Screen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/smiles-drawer@2.1.7/dist/smiles-drawer.min.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <div class="brand">
+      <span class="eyebrow">Lab of Effective Catalysis &middot; OdanLab</span>
+      <h1>Добавить структуру вручную</h1>
+    </div>
+    <a class="nav-link" href="index.html">&larr; к таблице соединений</a>
+  </div>
+</header>
+
+<main id="main" style="max-width:720px;">
+
+  <div class="panel">
+    <h2>1. Нарисуйте структуру</h2>
+    <p>
+      Откройте любой редактор структур — например
+      <a class="nav-link" href="https://lifescience.opensource.epam.com/KetcherDemoSA/index.html" target="_blank" rel="noopener">Ketcher</a>
+      (публичная демо-версия EPAM) — нарисуйте молекулу, затем
+      <b>File → Save As → SMILES</b> (или скопируйте SMILES из панели инструментов) и вставьте строку в поле ниже.
+      Подойдёт любой инструмент, который умеет отдавать SMILES (Ketcher, MarvinJS, PubChem Sketcher и т.д.) —
+      сайт не привязан конкретно к Ketcher.
+    </p>
+    <a class="btn" href="https://lifescience.opensource.epam.com/KetcherDemoSA/index.html" target="_blank" rel="noopener">Открыть Ketcher в новой вкладке ↗</a>
+  </div>
+
+  <div class="panel">
+    <h2>2. Вставьте SMILES и проверьте превью</h2>
+    <div class="draw-row">
+      <div class="draw-preview" id="preview">
+        <span class="ph">превью появится здесь</span>
+      </div>
+      <div style="flex:1; min-width:220px;">
+        <div class="field">
+          <label for="smiles">SMILES</label>
+          <textarea id="smiles" placeholder="например: COC(=O)C(C#N)Cc1ccc(OC)cc1"></textarea>
+        </div>
+        <div class="draw-status" id="draw-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>3. Заполните данные</h2>
+    <form id="form">
+      <div class="field">
+        <label for="f-name">Название</label>
+        <input type="text" id="f-name" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-formula">Формула (необязательно)</label>
+          <input type="text" id="f-formula" placeholder="C12H13NO3">
+        </div>
+        <div class="field">
+          <label for="f-cas">CAS (необязательно)</label>
+          <input type="text" id="f-cas">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-category">Категория</label>
+        <select id="f-category">
+          <option value="1">1 — Есть препаративный выход</option>
+          <option value="2">2 — Ожидает выделения</option>
+          <option value="3">3 — Субстраты с низким аналитическим выходом</option>
+          <option value="4" selected>4 — Ожидает ЯМР / только запланировано</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-loading">Загрузка, мкмоль</label>
+          <input type="number" id="f-loading" step="any">
+        </div>
+        <div class="field">
+          <label for="f-yield-analyt">ЯМР/GC выход, %</label>
+          <input type="number" id="f-yield-analyt" step="any">
+        </div>
+        <div class="field">
+          <label for="f-yield-iso">Изолированный выход, %</label>
+          <input type="number" id="f-yield-iso" step="any">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-code">Источник / шифр (необязательно)</label>
+        <input type="text" id="f-code" placeholder="например: черновик из статьи X, или свой шифр">
+      </div>
+      <div class="field">
+        <label for="f-note">Примечание</label>
+        <textarea id="f-note" style="font-family:inherit; font-size:13px;"></textarea>
+      </div>
+      <button type="submit" class="btn primary" id="btn-add" disabled>Добавить на сайт (черновик, только у вас в браузере)</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2>Черновики в этом браузере</h2>
+    <p>
+      Черновики видны только вам, в этом браузере (localStorage) — они пропадут при очистке данных сайта
+      и не видны другим посетителям. Чтобы структура появилась у всех, экспортируйте её и добавьте файлы в репозиторий
+      (или попросите Claude сделать это за вас) — см. <code>README.md</code>.
+    </p>
+    <div id="draft-list"></div>
+  </div>
+
+</main>
+
+<footer>
+  <span>Catalysis Screen — <a class="nav-link" href="index.html">к таблице соединений</a></span>
+</footer>
+
+<script src="drafts.js"></script>
+<script src="add.js"></script>
+</body>
+</html>

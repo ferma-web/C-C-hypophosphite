@@ -56,16 +56,17 @@
       ${d.note ? `<div class="note-line">${esc(d.note)}</div>` : ''}`;
 
     const linkBodyHtml = `
+      ${d.isDraft ? `<span class="draft-badge">черновик · только у вас</span>` : ''}
       <div class="imgbox">${url ? `<img src="${esc(url)}" alt="${esc(d.name)}" loading="lazy">` : `<span class="ph">нет структуры</span>`}</div>
       <div class="name">${esc(d.name)}</div>
       <div class="formula mono">${esc(d.formula || '')}${d.formula && d.loading_umol ? ' · ' : ''}${d.loading_umol ? 'загрузка: ' + d.loading_umol + ' мкмоль' : ''}</div>
       <div class="yields">${pills}</div>`;
 
-    const wrapTag = primaryLink ? 'a' : 'div';
-    const wrapAttrs = primaryLink ? ` href="${esc(ODANLAB_URL(primaryLink.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primaryLink.code)} в OdanLab"` : '';
+    const wrapTag = (primaryLink && primaryLink.id) ? 'a' : 'div';
+    const wrapAttrs = (primaryLink && primaryLink.id) ? ` href="${esc(ODANLAB_URL(primaryLink.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primaryLink.code)} в OdanLab"` : '';
 
     return `
-      <div class="card${d.note ? ' is-note' : ''}" data-id="${esc(d.id)}" data-search="${esc((d.name + ' ' + (d.formula || '') + ' ' + (d.cas || '') + ' ' + reactions.map(r => r.code).join(' ')).toLowerCase())}">
+      <div class="card${d.note ? ' is-note' : ''}${d.isDraft ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc((d.name + ' ' + (d.formula || '') + ' ' + (d.cas || '') + ' ' + reactions.map(r => r.code).join(' ')).toLowerCase())}">
         <${wrapTag} class="card-link"${wrapAttrs}>${linkBodyHtml}</${wrapTag}>
         ${tailHtml}
       </div>`;
@@ -142,6 +143,16 @@
       mainEl.innerHTML = `<div class="banner info">Не удалось загрузить data/molecules.json: ${esc(err.message)}</div>`;
       return;
     }
+
+    // Hand-drawn structures added via add.html live only in this browser's
+    // localStorage (see drafts.js) — merge them in so they show up here too.
+    if (typeof Drafts !== 'undefined') {
+      const drafts = Drafts.all();
+      if (drafts.length) {
+        allDocs = allDocs.concat(drafts);
+      }
+    }
+
     updateStats();
     render();
   }
