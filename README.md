@@ -31,37 +31,38 @@ then open `http://localhost:8000`. (Opening `index.html` directly via
 
 ## Updating the data
 
-`data/molecules.json` is a plain checked-in file — the site has no
-knowledge of where it came from. Today it holds a one-time export (21
-compounds) pulled from OdanLab by hand.
+`data/molecules.json` is a plain checked-in file — the site itself has no
+connection to OdanLab and never will (it's static HTML served to anyone's
+browser, so it can't hold a credential safely). Data gets into it via
+**Claude, using the OdanLab connector**, not via a public OdanLab API:
+there isn't a confirmed one, and even if there were, putting its token in
+`script.js` would expose it to every visitor.
 
-`scripts/refresh_data.py` is a **scaffold** for automating that export, not
-a finished integration — read the docstring at the top of that file. In
-short: it needs OdanLab's public API base URL and an auth token scheme,
-neither of which were available to build this repo. Once you confirm those
-with OdanLab:
+The refresh flow in practice:
 
-1. Finish `fetch_reactions()` / `build_molecules()` in
-   `scripts/refresh_data.py`.
-2. Add the token as a GitHub Actions secret named `ODANLAB_API_TOKEN`
-   (Settings → Secrets and variables → Actions).
-3. Switch `.github/workflows/refresh-data.yml` from manual
-   (`workflow_dispatch`) to a schedule, e.g.:
-   ```yaml
-   on:
-     schedule:
-       - cron: "0 6 * * *"
-     workflow_dispatch: {}
-   ```
+1. In a Claude chat that has this repo and the OdanLab connector, ask
+   Claude to refresh the site's data. Claude pulls the current state of
+   every reaction listed in `data/molecules.json` (it already has their
+   IDs) via `mcp__OdanLab__get_reaction`, and writes a small
+   `{code: {yield_analyt, yield_iso, mass_measured, melt_point, cas}}`
+   JSON.
+2. `scripts/refresh_data.py <that file>` merges it into
+   `data/molecules.json` (updates numbers for compounds already tracked;
+   see the script's docstring — it doesn't invent new compounds or decide
+   their category on its own).
+3. Commit and push — GitHub Pages redeploys automatically.
 
-That keeps the OdanLab credential server-side (inside the Action), which is
-the only safe place for it — a token embedded in `script.js` would be
-visible to anyone who views the page source, since GitHub Pages serves
-static files with no way to hide secrets from the browser.
+Ask Claude to do all three steps in one go ("refresh the site from OdanLab
+and push it"), or ask it to set up a recurring scheduled task if you want
+this to happen automatically on a cadence (daily/weekly) instead of only
+when you ask.
 
-Until that's wired up, just re-run whatever process produced
-`data/molecules.json` (or edit it by hand) and commit — the site picks up
-any valid file in the same shape:
+Adding a genuinely new compound (not just refreshing numbers) still needs a
+person (or Claude, told which category it belongs in) to pick a category
+and provide/confirm a structure image — that's a judgment call `refresh_data.py`
+deliberately leaves alone.
+
+The JSON shape either way:
 
 ```json
 {
