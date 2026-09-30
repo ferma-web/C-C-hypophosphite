@@ -135,6 +135,39 @@ shows up as a normal, non-dashed card in `data/molecules.json`): on
 snippet into `data/molecules.json`'s `molecules` array, commit and push (or
 ask Claude to do it, same as an OdanLab refresh).
 
+## Adding a structure by шифр (OdanLab reaction code)
+
+Instead of drawing a structure from scratch, `add.html` has a **"Добавить по
+шифру реакции из OdanLab"** box at the top: type a reaction's short code
+(e.g. `AAP-36`, `EGZ-25`) and click **Найти**. If it's in the cache, the
+name, reagent list and analytical yield get pulled into the form
+automatically — you (or whoever's adding it) still need to supply the
+structure (SMILES) and pick a category, since the cache deliberately
+doesn't store images.
+
+**Why a cache, and why Claude can't just look it up live:** the sandbox
+Claude runs in cannot reach this project's Supabase database directly over
+the network (the same kind of outbound restriction that blocks `git push`
+from there — see the git-based delivery workflow above). So instead of a
+live lookup, the **whole OdanLab project's reaction list** (all ~149
+reactions, not just the 21 currently tracked) is pre-loaded once into a
+separate, read-only `odanlab_cache` table, and `add.html` queries *that*
+table directly from your browser (which has normal internet access). This
+table is not shown anywhere on the site — it only backs the "Найти" lookup.
+
+One-time setup (in addition to the `drafts` table setup above): run
+`odanlab-cache.sql` in Supabase's SQL Editor. It creates `odanlab_cache`
+and bulk-inserts every reaction's code/name/reagents/yield known as of
+generation time.
+
+**Keeping the cache current:** ask Claude to regenerate `odanlab-cache.sql`
+from OdanLab whenever you want the lookup to reflect new/changed reactions
+(it re-derives every reaction's code from its OdanLab `display_id` and
+overwrites the whole table via `truncate` + `insert` — safe, since this
+table is just a lookup cache, never the source of truth for what's on the
+site). Re-running it is the same "generate a file, paste it into Supabase's
+SQL Editor" pattern as the original schema setup — not an automatic sync.
+
 ## Who can see and edit this site
 
 This repo is public (required for free GitHub Pages), so the deployed site
