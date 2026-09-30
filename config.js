@@ -9,5 +9,5 @@
 // can read this file) can also read and add structures. That matches an
 // "anyone with the link" access model, not a login-gated one — see the
 // README for what to do if you need real per-person access control later.
-window.SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-window.SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
+window.SUPABASE_URL = 'https://ltagfebavqqjjggwinzq.supabase.co';
+window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0YWdmZWJhdnFxampnZ3dpbnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3MzUxMzcsImV4cCI6MjEwNjMxMTEzN30.cfqbg28zymUcbJbyTosFqjMS5CGUgRV9CKcZQPFnDJ0';
