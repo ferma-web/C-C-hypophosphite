@@ -7,6 +7,9 @@
   const btnAdd = document.getElementById('btn-add');
   const form = document.getElementById('form');
   const draftListEl = document.getElementById('draft-list');
+  const lookupInput = document.getElementById('f-lookup-code');
+  const btnLookup = document.getElementById('btn-lookup');
+  const lookupStatus = document.getElementById('lookup-status');
 
   let lastGoodPng = null; // data URL, only set once a SMILES has rendered successfully
   let smilesDrawerReady = typeof window.SmilesDrawer !== 'undefined';
@@ -44,11 +47,18 @@
           drawStatus.className = 'draw-status ok';
           btnAdd.disabled = false;
         } catch (err) {
-          console.error(err);
-          drawStatus.textContent = 'Не удалось отрисовать: ' + err.message;
+          // SmilesDrawer throws low-level, confusing errors (e.g. "Cannot
+          // read properties of null (reading 'determineDimensions')") on
+          // some SMILES it can't lay out, even when the SMILES itself is
+          // valid. Log the real error for debugging but show a plain
+          // message — the raw message isn't useful to someone drawing a
+          // structure.
+          console.error('SmilesDrawer render failed', err);
+          preview.innerHTML = '<span class="ph">не удалось нарисовать структуру</span>';
+          drawStatus.textContent = 'Библиотека отрисовки не справилась с этим SMILES (внутренняя ошибка отрисовки, не обязательно ошибка в самой структуре). Можно всё равно добавить структуру без превью, или попробовать переписать SMILES иначе — например явно указав ароматические кольца строчными буквами (c1ccccc1) вместо чередующихся двойных связей.';
           drawStatus.className = 'draw-status err';
           lastGoodPng = null;
-          btnAdd.disabled = true;
+          btnAdd.disabled = false;
         }
       },
       function (err) {
@@ -66,6 +76,61 @@
   smilesInput.addEventListener('input', () => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => renderSmiles(smilesInput.value), 300);
+  });
+
+  btnLookup.addEventListener('click', async () => {
+    const code = lookupInput.value.trim();
+    if (!code) return;
+
+    if (!Drafts.isShared()) {
+      lookupStatus.textContent = 'Поиск по шифру работает только с настроенным Supabase (см. config.js) — база с шифрами реакций, как и черновики, хранится там.';
+      lookupStatus.className = 'draw-status err';
+      return;
+    }
+    if (typeof Drafts.lookupCode !== 'function') {
+      lookupStatus.textContent = 'Эта функция ещё не подключена — обновите drafts.js.';
+      lookupStatus.className = 'draw-status err';
+      return;
+    }
+
+    const prevLabel = btnLookup.textContent;
+    btnLookup.disabled = true;
+    btnLookup.textContent = 'Ищем…';
+    lookupStatus.textContent = '';
+    lookupStatus.className = 'draw-status';
+
+    let row;
+    try {
+      row = await Drafts.lookupCode(code);
+    } catch (err) {
+      console.error('lookupCode threw', err);
+      row = null;
+    }
+    btnLookup.disabled = false;
+    btnLookup.textContent = prevLabel;
+
+    if (!row) {
+      lookupStatus.textContent = `Шифр «${code}» не найден в кэше OdanLab (odanlab_cache). Либо опечатка, либо реакция появилась в OdanLab уже после последней загрузки кэша — попросите Claude обновить odanlab-cache.sql. Можно заполнить форму вручную.`;
+      lookupStatus.className = 'draw-status err';
+      return;
+    }
+
+    document.getElementById('f-name').value = row.name || '';
+    document.getElementById('f-code').value = row.code || code;
+    if (row.yield_analyt != null) {
+      document.getElementById('f-yield-analyt').value = row.yield_analyt;
+    }
+    const noteField = document.getElementById('f-note');
+    const reagentsNote = row.reagents ? `Реагенты (из OdanLab): ${row.reagents}` : '';
+    noteField.value = noteField.value
+      ? noteField.value + (reagentsNote ? '\n' + reagentsNote : '')
+      : reagentsNote;
+
+    const already = row.already_tracked
+      ? ' Эта реакция уже есть в основной таблице сайта (data/molecules.json) — вероятно, добавлять её заново не нужно.'
+      : '';
+    lookupStatus.textContent = `Найдено: «${row.name || '(без названия)'}». Название, выход и реагенты подставлены в форму ниже — осталось указать структуру (SMILES) и категорию.${already}`;
+    lookupStatus.className = 'draw-status ok';
   });
 
   function num(id) {

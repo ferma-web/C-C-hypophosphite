@@ -119,5 +119,24 @@ const Drafts = (function () {
     return !!client;
   }
 
-  return { all, add, remove, isShared };
+  // Look up a reaction by its short OdanLab code (e.g. "AAP-36") in the
+  // read-only odanlab_cache table (see odanlab-cache.sql). Returns null if
+  // Supabase isn't configured, the table doesn't exist yet, or no match is
+  // found — callers should treat all of those the same way (tell the user
+  // to fill the form in by hand).
+  async function lookupCode(code) {
+    if (!client || !code) return null;
+    const { data, error } = await client
+      .from('odanlab_cache')
+      .select('*')
+      .eq('code', code.trim())
+      .maybeSingle();
+    if (error) {
+      console.error('Drafts: odanlab_cache lookup failed', error);
+      return null;
+    }
+    return data || null;
+  }
+
+  return { all, add, remove, isShared, lookupCode };
 })();

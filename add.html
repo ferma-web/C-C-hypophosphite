@@ -28,6 +28,24 @@
 <main id="main" style="max-width:720px;">
 
   <div class="panel">
+    <h2>Добавить по шифру реакции из OdanLab</h2>
+    <p>
+      Если реакция уже есть в OdanLab-проекте, не нужно рисовать структуру заново — введите её шифр
+      (например <code>AAP-36</code>) и нажмите «Найти». Часть полей формы ниже заполнится автоматически
+      (название, выход, реагенты). Структуру (SMILES/превью) и категорию нужно будет указать вручную —
+      кэш не хранит картинки, чтобы не тянуть их для всех 149 реакций проекта заранее.
+    </p>
+    <div class="field-row" style="align-items:flex-end;">
+      <div class="field" style="flex:1;">
+        <label for="f-lookup-code">Шифр реакции</label>
+        <input type="text" id="f-lookup-code" placeholder="например: AAP-36">
+      </div>
+      <button type="button" class="btn" id="btn-lookup">Найти</button>
+    </div>
+    <div class="draw-status" id="lookup-status"></div>
+  </div>
+
+  <div class="panel">
     <h2>1. Нарисуйте структуру</h2>
     <p>
       Откройте любой редактор структур — например
