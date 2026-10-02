@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-09-29T14:14:00Z",
+    "generated_at": "2026-10-02T16:30:01Z",
     "source": "OdanLab (pulled via Claude's OdanLab connector)",
-    "count": 21
+    "count": 25
   },
   "molecules": [
     {
@@ -127,13 +127,13 @@
     },
     {
       "id": "c16111e7a413de3fdf3cb13e37b3c1ee",
-      "category": 2,
+      "category": 1,
       "name": "2-(2-Nitroethyl)naphthalene",
       "formula": "C12H11NO2",
       "cas": null,
       "loading_umol": 500,
       "yield_analyt": 63,
-      "yield_iso": null,
+      "yield_iso": 74.5,
       "note": null,
       "reactions": [
         {
@@ -347,12 +347,12 @@
     },
     {
       "id": "92c60a163a3fd3d5fb8c6ff5702a1ad6",
-      "category": 4,
+      "category": 3,
       "name": "Thiophene, 2-(2-nitroethyl)-",
       "formula": "C6H7NO2S",
       "cas": "30807-46-6",
       "loading_umol": 700,
-      "yield_analyt": null,
+      "yield_analyt": 54,
       "yield_iso": null,
       "note": null,
       "reactions": [
@@ -422,6 +422,86 @@
         }
       ],
       "image": "assets/structures/dab5c8374520fb57936c50c4b1d34aa6.png",
+      "mass_measured_mg": null,
+      "melt_point_c": null
+    },
+    {
+      "id": "ad0eaf6cd4fc46419338e3b4f8f2a6cb",
+      "category": 1,
+      "name": "2-(cyclopentyloxy)-1-methoxy-4-(2-nitroethyl)benzene",
+      "formula": "C14H19NO4",
+      "cas": null,
+      "loading_umol": null,
+      "yield_analyt": 75,
+      "yield_iso": 46.3,
+      "note": null,
+      "reactions": [
+        {
+          "code": "AAP-51",
+          "id": "fdef5c74-d358-4000-b59b-620265e314fd"
+        }
+      ],
+      "image": "assets/structures/ad0eaf6cd4fc46419338e3b4f8f2a6cb.svg",
+      "mass_measured_mg": null,
+      "melt_point_c": null
+    },
+    {
+      "id": "38178dfb96744fbface5016b90e1b70c",
+      "category": 2,
+      "name": "1,2,3-trimethoxy-5-[(E)-2-nitrovinyl]benzene",
+      "formula": "C11H13NO5",
+      "cas": "6316-70-7",
+      "loading_umol": null,
+      "yield_analyt": null,
+      "yield_iso": null,
+      "note": null,
+      "reactions": [
+        {
+          "code": "AAP-57",
+          "id": "0141fabf-3716-4934-9e68-b3b2eea13887"
+        }
+      ],
+      "image": "assets/structures/38178dfb96744fbface5016b90e1b70c.svg",
+      "mass_measured_mg": null,
+      "melt_point_c": null
+    },
+    {
+      "id": "6f52e1befe9146f499c87ce5cd822881",
+      "category": 2,
+      "name": "N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
+      "formula": "C10H12N2O2",
+      "cas": "2604-08-2",
+      "loading_umol": null,
+      "yield_analyt": null,
+      "yield_iso": null,
+      "note": null,
+      "reactions": [
+        {
+          "code": "AAP-58",
+          "id": "5a27fe63-de83-4f0f-a412-436ac2a032ac"
+        }
+      ],
+      "image": "assets/structures/6f52e1befe9146f499c87ce5cd822881.svg",
+      "mass_measured_mg": null,
+      "melt_point_c": null
+    },
+    {
+      "id": "639564d4688c43ffb23eafb8ffdccf76",
+      "category": 3,
+      "name": "1-nitro-4-[(E)-2-nitroethenyl]benzene",
+      "formula": "C8H6N2O4",
+      "cas": "5576-98-7",
+      "loading_umol": null,
+      "yield_analyt": 32,
+      "yield_iso": null,
+      "note": "Выход по ЯМР низкий (32%); в OdanLab запись продукта пока совпадает по формуле с исходным нитроалкеном — похоже, восстановление прошло не полностью.",
+      "reactions": [
+        {
+          "code": "AAP-56",
+          "id": "44c48c7e-fb24-4510-a63b-b31254081205"
+        }
+      ],
+      "image": "assets/structures/639564d4688c43ffb23eafb8ffdccf76.svg",
       "mass_measured_mg": null,
       "melt_point_c": null
     }

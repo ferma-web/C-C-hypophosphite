@@ -120,7 +120,7 @@ const Drafts = (function () {
   }
 
   // Look up a reaction by its short OdanLab code (e.g. "AAP-36") in the
-  // read-only odanlab_cache table (see odanlab-cache.sql). Returns null if
+  // read-only odanlab_cache table (see odanlab-cache-sql/). Returns null if
   // Supabase isn't configured, the table doesn't exist yet, or no match is
   // found — callers should treat all of those the same way (tell the user
   // to fill the form in by hand).
