@@ -45,17 +45,31 @@
     <div class="draw-status" id="lookup-status"></div>
   </div>
 
-  <div class="panel">
+  <div class="panel" id="ketcher-panel">
     <h2>1. Нарисуйте структуру</h2>
-    <p>
-      Откройте любой редактор структур — например
-      <a class="nav-link" href="https://lifescience.opensource.epam.com/KetcherDemoSA/index.html" target="_blank" rel="noopener">Ketcher</a>
-      (публичная демо-версия EPAM) — нарисуйте молекулу, затем
-      <b>File → Save As → SMILES</b> (или скопируйте SMILES из панели инструментов) и вставьте строку в поле ниже.
-      Подойдёт любой инструмент, который умеет отдавать SMILES (Ketcher, MarvinJS, PubChem Sketcher и т.д.) —
-      сайт не привязан конкретно к Ketcher.
+    <p id="ketcher-embedded-note">
+      Нарисуйте молекулу прямо здесь, затем нажмите «Перенести структуру в форму ↓» — SMILES подставится в поле
+      ниже автоматически, копировать вручную не нужно.
     </p>
-    <a class="btn" href="https://lifescience.opensource.epam.com/KetcherDemoSA/index.html" target="_blank" rel="noopener">Открыть Ketcher в новой вкладке ↗</a>
+    <div id="ketcher-embed" style="display:none;">
+      <iframe id="ketcher-frame" src="ketcher/index.html" style="width:100%; height:520px; border:1px solid var(--line, #ddd); border-radius:8px;"></iframe>
+      <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <button type="button" class="btn primary" id="btn-ketcher-transfer">Перенести структуру в форму ↓</button>
+        <span class="draw-status" id="ketcher-status" style="margin:0;"></span>
+      </div>
+    </div>
+    <div id="ketcher-fallback" style="display:none;">
+      <p>
+        Встроенный редактор на этой странице не найден (см. README.md, раздел «Встроенный Ketcher» — нужно
+        один раз добавить его файлы в репозиторий). Пока этого не сделано, можно нарисовать структуру во внешнем
+        редакторе и вставить SMILES вручную: откройте
+        <a class="nav-link" href="https://lifescience.opensource.epam.com/KetcherDemoSA/index.html" target="_blank" rel="noopener">Ketcher</a>
+        (публичная демо-версия EPAM), нарисуйте молекулу, затем <b>File → Save As → SMILES</b> (или скопируйте SMILES
+        из панели инструментов) и вставьте строку в поле ниже. Подойдёт любой инструмент, который умеет отдавать
+        SMILES (Ketcher, MarvinJS, PubChem Sketcher и т.д.).
+      </p>
+      <a class="btn" href="https://lifescience.opensource.epam.com/KetcherDemoSA/index.html" target="_blank" rel="noopener">Открыть Ketcher в новой вкладке ↗</a>
+    </div>
   </div>
 
   <div class="panel">

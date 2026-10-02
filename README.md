@@ -89,22 +89,39 @@ The JSON shape either way:
 ## Adding a structure by hand (not from OdanLab)
 
 `add.html` ("+ Добавить структуру вручную" in the header) lets you add a
-compound that isn't in OdanLab at all — draw it in any structure editor
-that can export **SMILES** (a link to EPAM's public
+compound that isn't in OdanLab at all. If the embedded Ketcher editor is
+set up (see "Встроенный Ketcher" below), you draw the structure directly
+on the page and click **"Перенести структуру в форму ↓"** — no copying
+SMILES by hand. Otherwise it falls back to pasting a SMILES string from
+any structure editor that can export one (a link to EPAM's public
 [Ketcher](https://lifescience.opensource.epam.com/KetcherDemoSA/index.html)
 demo is right there, but MarvinJS, PubChem's sketcher, ChemDraw, whatever
-you have all work the same way), paste the SMILES in, fill in the rest of
-the fields, and it renders a preview client-side via
+you have all work the same way), rendered client-side via
 [SmilesDrawer](https://github.com/reymond-group/smilesDrawer) (loaded from
 jsDelivr — needs internet, same as the Google Fonts link already in
 `index.html`).
 
-This is deliberately **not** a live Ketcher embed: Ketcher's actual editor
-component needs a build step (webpack + its own web workers) to embed
-directly, which doesn't fit a zero-build static site, and iframing its
-public demo can't hand data back to the page (cross-origin). Copy-pasting
-a SMILES sidesteps both problems and works with any drawing tool, not just
-Ketcher.
+### Встроенный Ketcher (draw directly on the page)
+
+Getting SMILES back out of a drawn structure in JavaScript only works if
+the editor runs on the **same domain** as the site (a browser security
+rule — see Ketcher's own developer docs). Ketcher's public demo lives on
+EPAM's domain, so it can't hand data back this way; self-hosting
+Ketcher's own prebuilt static files fixes that, with no build step needed.
+One-time setup:
+
+1. Download Ketcher's standalone build: go to
+   [github.com/epam/ketcher/releases/latest](https://github.com/epam/ketcher/releases/latest),
+   expand **Assets**, and download the zip whose name contains
+   "standalone" (e.g. `ketcher-standalone-X.Y.Z.zip`).
+2. Unzip it, and copy its contents into a new `ketcher/` folder at the
+   root of this repo, so `ketcher/index.html` exists (alongside its own
+   asset files/folders).
+3. Commit and push `ketcher/` to GitHub.
+
+Until that folder exists, `add.html` quietly falls back to the
+paste-a-SMILES flow described above (with a note explaining why) — nothing
+breaks in the meantime.
 
 **Where it's stored — shared via Supabase.** A static site has no backend
 of its own, so drafts are stored in a small free
@@ -140,10 +157,11 @@ ask Claude to do it, same as an OdanLab refresh).
 Instead of drawing a structure from scratch, `add.html` has a **"Добавить по
 шифру реакции из OdanLab"** box at the top: type a reaction's short code
 (e.g. `AAP-36`, `EGZ-25`) and click **Найти**. If it's in the cache, the
-name, reagent list and analytical yield get pulled into the form
-automatically — you (or whoever's adding it) still need to supply the
-structure (SMILES) and pick a category, since the cache deliberately
-doesn't store images.
+name, reagent list, analytical yield **and structure picture** get pulled
+into the form automatically — the preview fills in and "Добавить на сайт"
+is enabled right away, with no need to draw or paste a SMILES at all. You
+only need to pick a category (drawing/SMILES is still available above if
+you'd rather supply your own structure instead of the cached picture).
 
 **Why a cache, and why Claude can't just look it up live:** the sandbox
 Claude runs in cannot reach this project's Supabase database directly over
@@ -157,8 +175,13 @@ table is not shown anywhere on the site — it only backs the "Найти" looku
 
 One-time setup (in addition to the `drafts` table setup above): run
 `odanlab-cache.sql` in Supabase's SQL Editor. It creates `odanlab_cache`
-and bulk-inserts every reaction's code/name/reagents/yield known as of
-generation time.
+and bulk-inserts every reaction's code/name/reagents/yield **and structure
+picture** (as a base64 SVG, pulled straight from OdanLab) known as of
+generation time. The file is bigger than before (~1.7MB) because of the
+pictures — still well within what Supabase's SQL Editor and free tier
+handle fine. If you already ran an older version of this script, just
+re-run the new one: it's migration-safe (adds the missing column instead
+of erroring).
 
 **Keeping the cache current:** ask Claude to regenerate `odanlab-cache.sql`
 from OdanLab whenever you want the lookup to reflect new/changed reactions

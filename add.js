@@ -78,6 +78,67 @@
     debounceTimer = setTimeout(() => renderSmiles(smilesInput.value), 300);
   });
 
+  // Embedded Ketcher (see README.md, "Встроенный Ketcher"): only works if
+  // the static Ketcher build has been dropped into ketcher/ in this repo —
+  // it needs to be same-origin with the page for contentWindow.ketcher to
+  // be reachable at all (cross-origin iframes can't be read from JS).
+  // Detect that up front with a plain fetch, rather than letting the
+  // iframe silently show a 404 page with no way to draw anything.
+  (function setupKetcher() {
+    const embedNote = document.getElementById('ketcher-embedded-note');
+    const embedBox = document.getElementById('ketcher-embed');
+    const fallbackBox = document.getElementById('ketcher-fallback');
+    const frame = document.getElementById('ketcher-frame');
+    const btnTransfer = document.getElementById('btn-ketcher-transfer');
+    const ketcherStatus = document.getElementById('ketcher-status');
+
+    function showFallback() {
+      embedNote.style.display = 'none';
+      embedBox.style.display = 'none';
+      fallbackBox.style.display = '';
+    }
+
+    fetch('ketcher/index.html', { method: 'GET' })
+      .then((res) => {
+        if (!res.ok) { showFallback(); return; }
+        embedBox.style.display = '';
+      })
+      .catch(() => showFallback());
+
+    btnTransfer.addEventListener('click', () => {
+      let k = null;
+      try {
+        k = frame.contentWindow && frame.contentWindow.ketcher;
+      } catch (err) {
+        console.error('Ketcher: contentWindow access failed (not same-origin?)', err);
+      }
+      if (!k || typeof k.getSmiles !== 'function') {
+        ketcherStatus.textContent = 'Редактор ещё не загрузился (или не смог загрузиться) — подождите пару секунд и попробуйте снова.';
+        ketcherStatus.className = 'draw-status err';
+        return;
+      }
+      ketcherStatus.textContent = 'Переносим…';
+      ketcherStatus.className = 'draw-status';
+      k.getSmiles()
+        .then((smiles) => {
+          if (!smiles) {
+            ketcherStatus.textContent = 'В редакторе пока ничего не нарисовано.';
+            ketcherStatus.className = 'draw-status err';
+            return;
+          }
+          smilesInput.value = smiles;
+          renderSmiles(smiles);
+          ketcherStatus.textContent = 'Структура перенесена в поле SMILES ниже.';
+          ketcherStatus.className = 'draw-status ok';
+        })
+        .catch((err) => {
+          console.error('Ketcher getSmiles() failed', err);
+          ketcherStatus.textContent = 'Не удалось прочитать структуру из редактора.';
+          ketcherStatus.className = 'draw-status err';
+        });
+    });
+  })();
+
   btnLookup.addEventListener('click', async () => {
     const code = lookupInput.value.trim();
     if (!code) return;
@@ -126,10 +187,26 @@
       ? noteField.value + (reagentsNote ? '\n' + reagentsNote : '')
       : reagentsNote;
 
+    // The cache carries each reaction's structure as a ready-made SVG
+    // picture (data: URI), pulled from OdanLab when odanlab-cache.sql was
+    // generated — no SMILES/redrawing needed. Show it immediately and let
+    // it be submitted as-is; the SMILES field stays empty/editable in case
+    // someone wants to redraw or refine it instead.
+    let structureNote = '';
+    if (row.structure_image) {
+      preview.innerHTML = `<img src="${row.structure_image}" alt="${row.name || ''}" style="max-width:100%; max-height:100%;">`;
+      lastGoodPng = row.structure_image;
+      btnAdd.disabled = false;
+      drawStatus.textContent = 'Структура подставлена из кэша OdanLab (без перерисовки).';
+      drawStatus.className = 'draw-status ok';
+    } else {
+      structureNote = ' В кэше нет картинки структуры для этого шифра — нарисуйте её выше или вставьте SMILES вручную.';
+    }
+
     const already = row.already_tracked
       ? ' Эта реакция уже есть в основной таблице сайта (data/molecules.json) — вероятно, добавлять её заново не нужно.'
       : '';
-    lookupStatus.textContent = `Найдено: «${row.name || '(без названия)'}». Название, выход и реагенты подставлены в форму ниже — осталось указать структуру (SMILES) и категорию.${already}`;
+    lookupStatus.textContent = `Найдено: «${row.name || '(без названия)'}». Название, выход, реагенты и структура подставлены ниже.${structureNote}${already}`;
     lookupStatus.className = 'draw-status ok';
   });
 
