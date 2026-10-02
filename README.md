@@ -173,23 +173,32 @@ separate, read-only `odanlab_cache` table, and `add.html` queries *that*
 table directly from your browser (which has normal internet access). This
 table is not shown anywhere on the site — it only backs the "Найти" lookup.
 
-One-time setup (in addition to the `drafts` table setup above): run
-`odanlab-cache.sql` in Supabase's SQL Editor. It creates `odanlab_cache`
-and bulk-inserts every reaction's code/name/reagents/yield **and structure
-picture** (as a base64 SVG, pulled straight from OdanLab) known as of
-generation time. The file is bigger than before (~1.7MB) because of the
-pictures — still well within what Supabase's SQL Editor and free tier
-handle fine. If you already ran an older version of this script, just
-re-run the new one: it's migration-safe (adds the missing column instead
-of erroring).
+One-time setup (in addition to the `drafts` table setup above): run the
+files in **`odanlab-cache-sql/`** in Supabase's SQL Editor, **in order**:
+first `00_schema.sql` (creates `odanlab_cache` and clears it), then
+`01.sql`, `02.sql`, `03.sql`, ... up through the last-numbered file (one
+"Run" per file — each is its own query in the SQL Editor, pasted and run
+separately). Together they bulk-insert every reaction's
+code/name/reagents/yield **and structure picture** (as a base64 SVG,
+pulled straight from OdanLab) known as of generation time.
 
-**Keeping the cache current:** ask Claude to regenerate `odanlab-cache.sql`
-from OdanLab whenever you want the lookup to reflect new/changed reactions
-(it re-derives every reaction's code from its OdanLab `display_id` and
-overwrites the whole table via `truncate` + `insert` — safe, since this
-table is just a lookup cache, never the source of truth for what's on the
-site). Re-running it is the same "generate a file, paste it into Supabase's
-SQL Editor" pattern as the original schema setup — not an automatic sync.
+It's split into ~20-row chunks (instead of one big file) because Supabase's
+SQL Editor rejects a single query above a certain size ("Query is too large
+to be run via the SQL Editor") once the structure pictures are included —
+the old single `odanlab-cache.sql` doesn't work for that reason and has
+been replaced by this folder. If you already have `odanlab_cache` from an
+even older version (no pictures at all), running `00_schema.sql` first is
+migration-safe — it adds the missing column instead of erroring — then the
+numbered files fill in the pictures.
+
+**Keeping the cache current:** ask Claude to regenerate the
+`odanlab-cache-sql/` files from OdanLab whenever you want the lookup to
+reflect new/changed reactions (each reaction's code is re-derived from its
+OdanLab `display_id`; `00_schema.sql` truncates the table so the numbered
+files always load a clean, fully up-to-date set — safe, since this table is
+just a lookup cache, never the source of truth for what's on the site).
+Re-running it is the same "generate files, paste each into Supabase's SQL
+Editor" pattern as the original schema setup — not an automatic sync.
 
 ## Who can see and edit this site
 

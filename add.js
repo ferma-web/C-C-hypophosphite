@@ -171,7 +171,7 @@
     btnLookup.textContent = prevLabel;
 
     if (!row) {
-      lookupStatus.textContent = `Шифр «${code}» не найден в кэше OdanLab (odanlab_cache). Либо опечатка, либо реакция появилась в OdanLab уже после последней загрузки кэша — попросите Claude обновить odanlab-cache.sql. Можно заполнить форму вручную.`;
+      lookupStatus.textContent = `Шифр «${code}» не найден в кэше OdanLab (odanlab_cache). Либо опечатка, либо реакция появилась в OdanLab уже после последней загрузки кэша — попросите Claude обновить кэш (odanlab-cache-sql/). Можно заполнить форму вручную.`;
       lookupStatus.className = 'draw-status err';
       return;
     }
@@ -188,7 +188,7 @@
       : reagentsNote;
 
     // The cache carries each reaction's structure as a ready-made SVG
-    // picture (data: URI), pulled from OdanLab when odanlab-cache.sql was
+    // picture (data: URI), pulled from OdanLab when odanlab-cache-sql/ was
     // generated — no SMILES/redrawing needed. Show it immediately and let
     // it be submitted as-is; the SMILES field stays empty/editable in case
     // someone wants to redraw or refine it instead.
