@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-10-02T16:21:07Z",
+    "generated_at": "2026-10-02T16:30:01Z",
     "source": "OdanLab (pulled via Claude's OdanLab connector)",
-    "count": 24
+    "count": 25
   },
   "molecules": [
     {
@@ -482,6 +482,26 @@
         }
       ],
       "image": "assets/structures/6f52e1befe9146f499c87ce5cd822881.svg",
+      "mass_measured_mg": null,
+      "melt_point_c": null
+    },
+    {
+      "id": "639564d4688c43ffb23eafb8ffdccf76",
+      "category": 3,
+      "name": "1-nitro-4-[(E)-2-nitroethenyl]benzene",
+      "formula": "C8H6N2O4",
+      "cas": "5576-98-7",
+      "loading_umol": null,
+      "yield_analyt": 32,
+      "yield_iso": null,
+      "note": "Выход по ЯМР низкий (32%); в OdanLab запись продукта пока совпадает по формуле с исходным нитроалкеном — похоже, восстановление прошло не полностью.",
+      "reactions": [
+        {
+          "code": "AAP-56",
+          "id": "44c48c7e-fb24-4510-a63b-b31254081205"
+        }
+      ],
+      "image": "assets/structures/639564d4688c43ffb23eafb8ffdccf76.svg",
       "mass_measured_mg": null,
       "melt_point_c": null
     }
