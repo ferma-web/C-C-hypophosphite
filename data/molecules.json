@@ -1,30 +1,10 @@
 {
   "meta": {
-    "generated_at": "2026-10-02T16:30:01Z",
-    "source": "OdanLab (pulled via Claude's OdanLab connector)",
+    "generated_at": "2026-10-03T19:19:26.87744+00:00",
+    "source": "Supabase (архив, обновляется автоматически)",
     "count": 25
   },
   "molecules": [
-    {
-      "id": "cc048c4cc5c5af36d19e86a6482ba917",
-      "category": 1,
-      "name": "Methyl 2-cyano-3-(4-methoxyphenyl)propanoate",
-      "formula": "C12H13NO3",
-      "cas": null,
-      "loading_umol": 500,
-      "yield_analyt": 95,
-      "yield_iso": 74,
-      "note": null,
-      "reactions": [
-        {
-          "code": "KIR-46",
-          "id": "0adbeb44-793d-497a-b8bb-2018274d0071"
-        }
-      ],
-      "image": "assets/structures/cc048c4cc5c5af36d19e86a6482ba917.png",
-      "mass_measured_mg": 74,
-      "melt_point_c": null
-    },
     {
       "id": "04cebaffcfc3be1d06e2a6e6a21accf5",
       "category": 1,
@@ -32,338 +12,54 @@
       "formula": "C11H10ClNO2",
       "cas": null,
       "loading_umol": 447.1,
-      "yield_analyt": 61,
+      "yield_analyt": 90,
       "yield_iso": 72,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-36",
-          "id": "62607e6a-2131-4614-bba1-451508784123"
-        }
-      ],
-      "image": "assets/structures/04cebaffcfc3be1d06e2a6e6a21accf5.png",
       "mass_measured_mg": 72,
-      "melt_point_c": null
-    },
-    {
-      "id": "3c6ec9843135e581f1e4331c16f49804",
-      "category": 1,
-      "name": "Methyl 2-cyano-3-(4-methylphenyl)propanoate",
-      "formula": "C12H13NO2",
-      "cas": "75140-51-1",
-      "loading_umol": 492,
-      "yield_analyt": 76,
-      "yield_iso": 63,
-      "note": null,
+      "melt_point_c": null,
+      "note": "Выход по ароматике",
+      "smiles": "COC(C(C#N)CC1=CC=C(Cl)C=C1)=O",
+      "molfile": null,
       "reactions": [
         {
-          "code": "AAP-35",
-          "id": "27b9bde1-d0b6-4a2e-a19d-65808886bee2"
+          "id": "62607e6a-2131-4614-bba1-451508784123",
+          "code": "AAP-36"
         }
       ],
-      "image": "assets/structures/3c6ec9843135e581f1e4331c16f49804.png",
-      "mass_measured_mg": 63,
-      "melt_point_c": null
-    },
-    {
-      "id": "a26b48b3e926dc1a08079b6c0740e6cf",
-      "category": 1,
-      "name": "1-Methoxy-2-(2-nitroethyl)benzene",
-      "formula": "C9H11NO3",
-      "cas": null,
-      "loading_umol": 500,
-      "yield_analyt": 87,
-      "yield_iso": 62.58589139174702,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-46",
-          "id": "675ac361-c28d-4930-a04a-d0846fec196b"
-        }
-      ],
-      "image": "assets/structures/a26b48b3e926dc1a08079b6c0740e6cf.png",
-      "mass_measured_mg": 56.7,
-      "melt_point_c": null
-    },
-    {
-      "id": "b6e055b2b1d5d50f9341e62c2a3e0c93",
-      "category": 1,
-      "name": "1-Methoxy-4-(2-nitroethyl)benzene",
-      "formula": "C9H11NO3",
-      "cas": "31236-71-2",
-      "loading_umol": 500,
-      "yield_analyt": 51,
-      "yield_iso": 54.41771509017862,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-44",
-          "id": "cd9553c9-1f49-46cb-80d5-c90107c2ea5a"
-        }
-      ],
-      "image": "assets/structures/b6e055b2b1d5d50f9341e62c2a3e0c93.png",
-      "mass_measured_mg": 49.3,
-      "melt_point_c": null
-    },
-    {
-      "id": "dc68d01df0b32d774e97129550eb564a",
-      "category": 2,
-      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
-      "formula": "C11H13NO4",
-      "cas": null,
-      "loading_umol": 500,
-      "yield_analyt": 65,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "KIR-53",
-          "id": "0ea61de1-67dd-4f5a-b04f-bec030d0fa2e"
-        }
-      ],
-      "image": "assets/structures/dc68d01df0b32d774e97129550eb564a.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "c16111e7a413de3fdf3cb13e37b3c1ee",
-      "category": 1,
-      "name": "2-(2-Nitroethyl)naphthalene",
-      "formula": "C12H11NO2",
-      "cas": null,
-      "loading_umol": 500,
-      "yield_analyt": 63,
-      "yield_iso": 74.5,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-49",
-          "id": "3aff15b1-8d9c-48a4-b967-ca470d04234a"
-        }
-      ],
-      "image": "assets/structures/c16111e7a413de3fdf3cb13e37b3c1ee.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "eeee70f6cbdddd35eab6f545fa5aaa55",
-      "category": 3,
-      "name": "1-Fluoro-4-(2-nitroethyl)benzene",
-      "formula": "C8H8FNO2",
-      "cas": "947177-23-3",
-      "loading_umol": 239.3,
-      "yield_analyt": 63,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "EGZ-25",
-          "id": "0e8c300b-edad-4ccd-8c86-d0643b3f844b"
-        }
-      ],
-      "image": "assets/structures/eeee70f6cbdddd35eab6f545fa5aaa55.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "e944bbbac3acf5699fd26bb535a5946f",
-      "category": 3,
-      "name": "2-(2-Nitroethyl)furan",
-      "formula": "C6H7NO3",
-      "cas": "5462-90-8",
-      "loading_umol": 700,
-      "yield_analyt": 59,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-47",
-          "id": "57f92d5a-8fc6-4550-8e05-3059709e0c9b"
-        }
-      ],
-      "image": "assets/structures/e944bbbac3acf5699fd26bb535a5946f.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "a00d231a9574de78ad34c227ff8b7ae9",
-      "category": 3,
-      "name": "Methyl 2-cyano-3-[4-(dimethylamino)phenyl]propanoate",
-      "formula": "C13H16N2O2",
-      "cas": null,
-      "loading_umol": 236.8,
-      "yield_analyt": 40,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "EGZ-36",
-          "id": "e34911ae-83b8-4962-bbac-144f3de9d075"
-        }
-      ],
-      "image": "assets/structures/a00d231a9574de78ad34c227ff8b7ae9.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "d2537ef2a0c73b6abfe4a3be1531c441",
-      "category": 3,
-      "name": "methyl 3-(7-azabicyclo[4.3.0]nona-1(6),2,4,8-tetraen-9-yl)-2-cyanopropanoate",
-      "formula": "C13H12N2O2",
-      "cas": null,
-      "loading_umol": 176.8,
-      "yield_analyt": 25,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "EGZ-35",
-          "id": "cc4a1cc3-9cde-40f3-bcfe-ac1f8ec97587"
-        }
-      ],
-      "image": "assets/structures/d2537ef2a0c73b6abfe4a3be1531c441.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "922aa0792024a48e8fba3d2031f4cc0b",
-      "category": 3,
-      "name": "1-Methyl-4-(2-nitroethyl)benzene",
-      "formula": "C9H11NO2",
-      "cas": null,
-      "loading_umol": 605.4,
-      "yield_analyt": 52,
-      "yield_iso": 15,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-41",
-          "id": "c19743ec-8ff1-4ada-8840-9924fc43d905"
-        }
-      ],
-      "image": "assets/structures/922aa0792024a48e8fba3d2031f4cc0b.png",
-      "mass_measured_mg": 15,
-      "melt_point_c": null
-    },
-    {
-      "id": "43b06813fdb9d9d12d312a3358f75ea9",
-      "category": 3,
-      "name": "3-Phenylpropanal",
-      "formula": "C9H10O",
-      "cas": "1335-10-0",
-      "loading_umol": 1000,
-      "yield_analyt": 2,
-      "yield_iso": null,
-      "note": "17% восстановленного альдегида",
-      "reactions": [
-        {
-          "code": "AAP-23",
-          "id": "8b78c218-cd4e-43ee-a293-c67ff3086d7b"
-        }
-      ],
-      "image": "assets/structures/43b06813fdb9d9d12d312a3358f75ea9.png",
-      "mass_measured_mg": null,
-      "melt_point_c": 47
-    },
-    {
-      "id": "38f41d8ff7aaffb52e226ef074f6dd9f",
-      "category": 3,
-      "name": "3-(4-Chlorophenyl)-1-phenylpropan-1-one",
-      "formula": "C15H13ClO",
-      "cas": "5739-39-9",
-      "loading_umol": 122.6,
-      "yield_analyt": 2,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-21",
-          "id": "db765382-d924-44ac-9ead-bde568451c8f"
-        }
-      ],
-      "image": "assets/structures/38f41d8ff7aaffb52e226ef074f6dd9f.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "730ffe2ff3e6b4d5e40db741fb6dfc7f",
-      "category": 3,
-      "name": "1,5-Diphenylpentan-3-one",
-      "formula": "C17H18O",
-      "cas": "5396-91-8",
-      "loading_umol": 1000,
-      "yield_analyt": 0,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "KIR-24",
-          "id": "e1ad31e5-3282-49ce-b60c-a50266ce5702"
-        }
-      ],
-      "image": "assets/structures/730ffe2ff3e6b4d5e40db741fb6dfc7f.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "419711440673f5d18aa6789d93462768",
-      "category": 3,
-      "name": "4-Фенилбутан-2-он",
-      "formula": "C10H12O",
-      "cas": "2550-26-7",
-      "loading_umol": 1000,
-      "yield_analyt": 0,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "KIR-22",
-          "id": "bffcec55-6eb9-4c5a-9b94-183d2203f6de"
-        }
-      ],
-      "image": "assets/structures/419711440673f5d18aa6789d93462768.png",
-      "mass_measured_mg": null,
-      "melt_point_c": 13
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T19:07:56.976653+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Цианоэфиры"
     },
     {
       "id": "08e3f4d13ec666cad04ebee4751838eb",
       "category": 4,
-      "name": "CID 13957536",
+      "name": "Methyl 2-cyano-3-(4-phenylmethoxyphenyl)propanoate",
       "formula": "C18H17NO3",
       "cas": null,
       "loading_umol": 250,
       "yield_analyt": null,
       "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
       "note": null,
+      "smiles": "C1=CC(=CC=C1OCC1=CC=CC=C1)CC(C#N)C(=O)OC",
+      "molfile": null,
       "reactions": [
         {
-          "code": "KIR-54",
-          "id": "02364e64-5981-4fab-b930-f9f5111452a7"
+          "id": "02364e64-5981-4fab-b930-f9f5111452a7",
+          "code": "KIR-54"
         }
       ],
-      "image": "assets/structures/08e3f4d13ec666cad04ebee4751838eb.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "92c60a163a3fd3d5fb8c6ff5702a1ad6",
-      "category": 3,
-      "name": "Thiophene, 2-(2-nitroethyl)-",
-      "formula": "C6H7NO2S",
-      "cas": "30807-46-6",
-      "loading_umol": 700,
-      "yield_analyt": 54,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-50",
-          "id": "89c18923-f43d-42db-9911-27e793ef5155"
-        }
-      ],
-      "image": "assets/structures/92c60a163a3fd3d5fb8c6ff5702a1ad6.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Цианоэфиры"
     },
     {
       "id": "096e5c11dd834a949e98eabbdbdd078b",
@@ -374,16 +70,24 @@
       "loading_umol": 400,
       "yield_analyt": null,
       "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
       "note": null,
+      "smiles": "C12=CC(=CC=C1C=CC=C2)CC(C#N)C(=O)OC",
+      "molfile": null,
       "reactions": [
         {
-          "code": "KIR-55",
-          "id": "1d244cf4-decc-4ef2-8cae-7b1c5c98a7e7"
+          "id": "1d244cf4-decc-4ef2-8cae-7b1c5c98a7e7",
+          "code": "KIR-55"
         }
       ],
-      "image": "assets/structures/096e5c11dd834a949e98eabbdbdd078b.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Цианоэфиры"
     },
     {
       "id": "16ef18d3c2e074ecc217f506e1321937",
@@ -394,56 +98,24 @@
       "loading_umol": 500,
       "yield_analyt": null,
       "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
       "note": null,
+      "smiles": "[O-][N+](=O)CCC=1C=CC(Cl)=CC=1",
+      "molfile": null,
       "reactions": [
         {
-          "code": "AAP-45",
-          "id": "301178b7-8e0b-4b01-acdb-8d018ffe91ee"
+          "id": "301178b7-8e0b-4b01-acdb-8d018ffe91ee",
+          "code": "AAP-45"
         }
       ],
-      "image": "assets/structures/16ef18d3c2e074ecc217f506e1321937.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "dab5c8374520fb57936c50c4b1d34aa6",
-      "category": 4,
-      "name": "methyl 2-cyano-3-(4-((prop-2-yn-1-yl)oxy)phenyl)propanoate",
-      "formula": "C14H13NO3",
-      "cas": null,
-      "loading_umol": 207.3,
-      "yield_analyt": null,
-      "yield_iso": null,
-      "note": null,
-      "reactions": [
-        {
-          "code": "EGZ-38",
-          "id": "2892b47a-959d-4183-ab51-dc6fc475be94"
-        }
-      ],
-      "image": "assets/structures/dab5c8374520fb57936c50c4b1d34aa6.png",
-      "mass_measured_mg": null,
-      "melt_point_c": null
-    },
-    {
-      "id": "ad0eaf6cd4fc46419338e3b4f8f2a6cb",
-      "category": 1,
-      "name": "2-(cyclopentyloxy)-1-methoxy-4-(2-nitroethyl)benzene",
-      "formula": "C14H19NO4",
-      "cas": null,
-      "loading_umol": null,
-      "yield_analyt": 75,
-      "yield_iso": 46.3,
-      "note": null,
-      "reactions": [
-        {
-          "code": "AAP-51",
-          "id": "fdef5c74-d358-4000-b59b-620265e314fd"
-        }
-      ],
-      "image": "assets/structures/ad0eaf6cd4fc46419338e3b4f8f2a6cb.svg",
-      "mass_measured_mg": null,
-      "melt_point_c": null
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
     },
     {
       "id": "38178dfb96744fbface5016b90e1b70c",
@@ -454,36 +126,136 @@
       "loading_umol": null,
       "yield_analyt": null,
       "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
       "note": null,
+      "smiles": "C1(OC)=CC(=CC(=C1OC)OC)C=C[N+](=O)[O-]",
+      "molfile": null,
       "reactions": [
         {
-          "code": "AAP-57",
-          "id": "0141fabf-3716-4934-9e68-b3b2eea13887"
+          "id": "0141fabf-3716-4934-9e68-b3b2eea13887",
+          "code": "AAP-57"
         }
       ],
-      "image": "assets/structures/38178dfb96744fbface5016b90e1b70c.svg",
-      "mass_measured_mg": null,
-      "melt_point_c": null
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
     },
     {
-      "id": "6f52e1befe9146f499c87ce5cd822881",
-      "category": 2,
-      "name": "N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
-      "formula": "C10H12N2O2",
-      "cas": "2604-08-2",
-      "loading_umol": null,
-      "yield_analyt": null,
+      "id": "38f41d8ff7aaffb52e226ef074f6dd9f",
+      "category": 3,
+      "name": "3-(4-Chlorophenyl)-1-phenylpropan-1-one",
+      "formula": "C15H13ClO",
+      "cas": "5739-39-9",
+      "loading_umol": 122.6,
+      "yield_analyt": 2,
       "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
       "note": null,
+      "smiles": "O=C(CCC=1C=CC(Cl)=CC=1)C=1C=CC=CC=1",
+      "molfile": null,
       "reactions": [
         {
-          "code": "AAP-58",
-          "id": "5a27fe63-de83-4f0f-a412-436ac2a032ac"
+          "id": "db765382-d924-44ac-9ead-bde568451c8f",
+          "code": "AAP-21"
         }
       ],
-      "image": "assets/structures/6f52e1befe9146f499c87ce5cd822881.svg",
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:07:02.828531+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Халконы"
+    },
+    {
+      "id": "3c6ec9843135e581f1e4331c16f49804",
+      "category": 1,
+      "name": "Methyl 2-cyano-3-(4-methylphenyl)propanoate",
+      "formula": "C12H13NO2",
+      "cas": "75140-51-1",
+      "loading_umol": 492,
+      "yield_analyt": 88,
+      "yield_iso": 63,
+      "mass_measured_mg": 63,
+      "melt_point_c": null,
+      "note": "Выход по ароматике",
+      "smiles": "CC1=CC=C(CC(C(OC)=O)C#N)C=C1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "27b9bde1-d0b6-4a2e-a19d-65808886bee2",
+          "code": "AAP-35"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T19:03:51.376757+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Цианоэфиры"
+    },
+    {
+      "id": "419711440673f5d18aa6789d93462768",
+      "category": 3,
+      "name": "4-Фенилбутан-2-он",
+      "formula": "C10H12O",
+      "cas": "2550-26-7",
+      "loading_umol": 1000,
+      "yield_analyt": 0,
+      "yield_iso": null,
       "mass_measured_mg": null,
-      "melt_point_c": null
+      "melt_point_c": 13,
+      "note": null,
+      "smiles": "CC(=O)CCC1=CC=CC=C1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "bffcec55-6eb9-4c5a-9b94-183d2203f6de",
+          "code": "KIR-22"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:07:17.788229+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Халконы"
+    },
+    {
+      "id": "43b06813fdb9d9d12d312a3358f75ea9",
+      "category": 3,
+      "name": "3-Phenylpropanal",
+      "formula": "C9H10O",
+      "cas": "1335-10-0",
+      "loading_umol": 1000,
+      "yield_analyt": 2,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": 47,
+      "note": "17% восстановленного альдегида",
+      "smiles": "C1=CC=C(C=C1)CCC=O",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "8b78c218-cd4e-43ee-a293-c67ff3086d7b",
+          "code": "AAP-23"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:10:41.028206+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Другие"
     },
     {
       "id": "639564d4688c43ffb23eafb8ffdccf76",
@@ -494,16 +266,444 @@
       "loading_umol": null,
       "yield_analyt": 32,
       "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
       "note": "Выход по ЯМР низкий (32%); в OdanLab запись продукта пока совпадает по формуле с исходным нитроалкеном — похоже, восстановление прошло не полностью.",
+      "smiles": "[O-][N+](=O)C=CC=1C=CC(=CC=1)[N+]([O-])=O",
+      "molfile": null,
       "reactions": [
         {
-          "code": "AAP-56",
-          "id": "44c48c7e-fb24-4510-a63b-b31254081205"
+          "id": "44c48c7e-fb24-4510-a63b-b31254081205",
+          "code": "AAP-56"
         }
       ],
-      "image": "assets/structures/639564d4688c43ffb23eafb8ffdccf76.svg",
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "6f52e1befe9146f499c87ce5cd822881",
+      "category": 2,
+      "name": "N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
+      "formula": "C10H12N2O2",
+      "cas": "2604-08-2",
+      "loading_umol": null,
+      "yield_analyt": null,
+      "yield_iso": null,
       "mass_measured_mg": null,
-      "melt_point_c": null
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "CN(C)C=1C=CC(C=C[N+]([O-])=O)=CC=1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "5a27fe63-de83-4f0f-a412-436ac2a032ac",
+          "code": "AAP-58"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "730ffe2ff3e6b4d5e40db741fb6dfc7f",
+      "category": 3,
+      "name": "1,5-Diphenylpentan-3-one",
+      "formula": "C17H18O",
+      "cas": "5396-91-8",
+      "loading_umol": 1000,
+      "yield_analyt": 0,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "C=1(CCC(CCC2=CC=CC=C2)=O)C=CC=CC=1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "e1ad31e5-3282-49ce-b60c-a50266ce5702",
+          "code": "KIR-24"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:07:11.079825+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Халконы"
+    },
+    {
+      "id": "922aa0792024a48e8fba3d2031f4cc0b",
+      "category": 3,
+      "name": "1-Methyl-4-(2-nitroethyl)benzene",
+      "formula": "C9H11NO2",
+      "cas": "72538-33-1",
+      "loading_umol": 605.4,
+      "yield_analyt": 52,
+      "yield_iso": 15,
+      "mass_measured_mg": 15,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "CC1=CC=C(CC[N+]([O-])=O)C=C1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "c19743ec-8ff1-4ada-8840-9924fc43d905",
+          "code": "AAP-41"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "92c60a163a3fd3d5fb8c6ff5702a1ad6",
+      "category": 3,
+      "name": "Thiophene, 2-(2-nitroethyl)-",
+      "formula": "C6H7NO2S",
+      "cas": "30807-46-6",
+      "loading_umol": 700,
+      "yield_analyt": 54,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "[O-][N+](CCC=1SC=CC=1)=O",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "89c18923-f43d-42db-9911-27e793ef5155",
+          "code": "AAP-50"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "a00d231a9574de78ad34c227ff8b7ae9",
+      "category": 3,
+      "name": "Methyl 2-cyano-3-[4-(dimethylamino)phenyl]propanoate",
+      "formula": "C13H16N2O2",
+      "cas": null,
+      "loading_umol": 236.8,
+      "yield_analyt": 40,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "C(C(OC)=O)(C#N)CC1=CC=C(C=C1)N(C)C",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "e34911ae-83b8-4962-bbac-144f3de9d075",
+          "code": "EGZ-36"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Цианоэфиры"
+    },
+    {
+      "id": "a26b48b3e926dc1a08079b6c0740e6cf",
+      "category": 1,
+      "name": "1-Methoxy-2-(2-nitroethyl)benzene",
+      "formula": "C9H11NO3",
+      "cas": "86255-46-1",
+      "loading_umol": 500,
+      "yield_analyt": 87,
+      "yield_iso": 62.59,
+      "mass_measured_mg": 56.7,
+      "melt_point_c": null,
+      "note": "Выход по ароматике",
+      "smiles": "[O-][N+](=O)CCC=1C=CC=CC=1OC",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "675ac361-c28d-4930-a04a-d0846fec196b",
+          "code": "AAP-46"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T19:12:35.59835+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "ad0eaf6cd4fc46419338e3b4f8f2a6cb",
+      "category": 1,
+      "name": "2-(cyclopentyloxy)-1-methoxy-4-(2-nitroethyl)benzene",
+      "formula": "C14H19NO4",
+      "cas": null,
+      "loading_umol": null,
+      "yield_analyt": 75,
+      "yield_iso": 46.3,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "C=1C(OC)=C(OC2CCCC2)C=C(CC[N+](=O)[O-])C=1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "fdef5c74-d358-4000-b59b-620265e314fd",
+          "code": "AAP-51"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "b6e055b2b1d5d50f9341e62c2a3e0c93",
+      "category": 1,
+      "name": "1-Methoxy-4-(2-nitroethyl)benzene",
+      "formula": "C9H11NO3",
+      "cas": "31236-71-2",
+      "loading_umol": 500,
+      "yield_analyt": 62.3,
+      "yield_iso": 54.42,
+      "mass_measured_mg": 49.3,
+      "melt_point_c": null,
+      "note": "Выход по ароматике",
+      "smiles": "COC=1C=CC(CC[N+](=O)[O-])=CC=1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "cd9553c9-1f49-46cb-80d5-c90107c2ea5a",
+          "code": "AAP-44"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T19:09:07.335829+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "c16111e7a413de3fdf3cb13e37b3c1ee",
+      "category": 1,
+      "name": "2-(2-Nitroethyl)naphthalene",
+      "formula": "C12H11NO2",
+      "cas": "115149-31-0",
+      "loading_umol": 500,
+      "yield_analyt": 60,
+      "yield_iso": 74.5,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": "Выход по ароматике.\nИзолированный продукт еще не просушен.\nРеакцию поставил Антон, выделение проводил Кирилл.",
+      "smiles": "C1=CC2=C(C=C1)C=CC(=C2)CC[N+]([O-])=O",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "3aff15b1-8d9c-48a4-b967-ca470d04234a",
+          "code": "AAP-49"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T19:19:26.87744+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "cc048c4cc5c5af36d19e86a6482ba917",
+      "category": 1,
+      "name": "Methyl 2-cyano-3-(4-methoxyphenyl)propanoate",
+      "formula": "C12H13NO3",
+      "cas": null,
+      "loading_umol": 500,
+      "yield_analyt": 95,
+      "yield_iso": 74,
+      "mass_measured_mg": 74,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "COC=1C=CC(CC(C(OC)=O)C#N)=CC=1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "0adbeb44-793d-497a-b8bb-2018274d0071",
+          "code": "KIR-46"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Цианоэфиры"
+    },
+    {
+      "id": "d2537ef2a0c73b6abfe4a3be1531c441",
+      "category": 3,
+      "name": "methyl 3-(7-azabicyclo[4.3.0]nona-1(6),2,4,8-tetraen-9-yl)-2-cyanopropanoate",
+      "formula": "C13H12N2O2",
+      "cas": null,
+      "loading_umol": 176.8,
+      "yield_analyt": 25,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "C=1C=CC=2NC=C(CC(C#N)C(OC)=O)C=2C=1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "cc4a1cc3-9cde-40f3-bcfe-ac1f8ec97587",
+          "code": "EGZ-35"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Цианоэфиры"
+    },
+    {
+      "id": "dab5c8374520fb57936c50c4b1d34aa6",
+      "category": 4,
+      "name": "methyl 2-cyano-3-(4-((prop-2-yn-1-yl)oxy)phenyl)propanoate",
+      "formula": "C14H13NO3",
+      "cas": null,
+      "loading_umol": 207.3,
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "C#CCOC1=CC=C(CC(C(OC)=O)C#N)C=C1",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "2892b47a-959d-4183-ab51-dc6fc475be94",
+          "code": "EGZ-38"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Цианоэфиры"
+    },
+    {
+      "id": "dc68d01df0b32d774e97129550eb564a",
+      "category": 2,
+      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
+      "formula": "C11H13NO4",
+      "cas": null,
+      "loading_umol": 500,
+      "yield_analyt": 65,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "0ea61de1-67dd-4f5a-b04f-bec030d0fa2e",
+          "code": "KIR-53"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитроэфиры"
+    },
+    {
+      "id": "e944bbbac3acf5699fd26bb535a5946f",
+      "category": 3,
+      "name": "2-(2-Nitroethyl)furan",
+      "formula": "C6H7NO3",
+      "cas": "5462-90-8",
+      "loading_umol": 700,
+      "yield_analyt": 59,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "[O-][N+](CCC=1OC=CC=1)=O",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "57f92d5a-8fc6-4550-8e05-3059709e0c9b",
+          "code": "AAP-47"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
+    },
+    {
+      "id": "eeee70f6cbdddd35eab6f545fa5aaa55",
+      "category": 3,
+      "name": "1-Fluoro-4-(2-nitroethyl)benzene",
+      "formula": "C8H8FNO2",
+      "cas": "947177-23-3",
+      "loading_umol": 239.3,
+      "yield_analyt": 63,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "melt_point_c": null,
+      "note": null,
+      "smiles": "[O-][N+](CCC=1C=CC(F)=CC=1)=O",
+      "molfile": null,
+      "reactions": [
+        {
+          "id": "0e8c300b-edad-4ccd-8c86-d0643b3f844b",
+          "code": "EGZ-25"
+        }
+      ],
+      "image": null,
+      "source": "odanlab",
+      "deleted": false,
+      "created_at": "2026-10-03T09:44:31.055951+00:00",
+      "updated_at": "2026-10-03T17:28:02.480556+00:00",
+      "updated_by": "классы: заглавная буква",
+      "compound_class": "Нитростиролы"
     }
   ]
 }
