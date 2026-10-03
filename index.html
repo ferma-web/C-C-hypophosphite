@@ -7,8 +7,12 @@
 <title>Catalysis Screen — восстановленные соединения</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>
+  // тема до отрисовки, чтобы не мигало: сохранённый выбор или системная настройка
+  try { var t = localStorage.getItem('cs.theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 </head>
 <body>
 
@@ -19,7 +23,10 @@
       <h1>Hypophosphite C=C Reduction — молекулы</h1>
     </div>
     <div class="stats-row" id="stats-row"></div>
-    <button class="btn primary" id="btn-new" type="button">+ Новая карточка</button>
+    <div class="top-actions">
+      <button class="theme-btn" id="btn-theme" type="button" title="Тёмная / светлая тема" aria-label="Переключить тему">☾</button>
+      <button class="btn primary" id="btn-new" type="button">+ Новая карточка</button>
+    </div>
   </div>
   <div class="search-row">
     <input id="search" type="text" placeholder="Поиск по названию, формуле или шифру (AAP-35, KIR-46, …)" autocomplete="off">
@@ -110,10 +117,6 @@
             <label for="f-loading">Загрузка, мкмоль</label>
             <input type="number" id="f-loading" step="any" min="0">
           </div>
-          <div class="field">
-            <label for="f-mass">Масса, мг</label>
-            <input type="number" id="f-mass" step="any" min="0">
-          </div>
         </div>
         <div class="field-row">
           <div class="field">
@@ -123,10 +126,6 @@
           <div class="field">
             <label for="f-extra-codes">Другие шифры (через запятую)</label>
             <input type="text" id="f-extra-codes" class="mono" placeholder="KIR-44, KIR-45">
-          </div>
-          <div class="field">
-            <label for="f-mp">Т. пл., °C</label>
-            <input type="number" id="f-mp" step="any">
           </div>
         </div>
         <div class="field">
@@ -138,10 +137,6 @@
 
     <div class="ed-error" id="ed-error" hidden></div>
     <div class="ed-foot">
-      <div class="field who">
-        <label for="f-who">Кто правит</label>
-        <input type="text" id="f-who" placeholder="ваше имя" autocomplete="name">
-      </div>
       <span class="hint" id="ed-meta"></span>
       <span class="spacer"></span>
       <button type="button" class="btn danger" id="btn-delete" hidden>Удалить</button>

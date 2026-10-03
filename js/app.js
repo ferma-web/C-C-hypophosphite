@@ -126,7 +126,7 @@
           ${showDeleted ? `<div class="deleted-list">${deleted.map((d) => `
             <div class="deleted-row">
               <span class="name">${esc(d.name)}</span>
-              <span class="hint">${esc((d.reactions || []).map((r) => r.code).join(', '))} · удалил(а) ${esc(d.updated_by || '—')}, ${esc(fmtDate(d.updated_at))}</span>
+              <span class="hint">${esc((d.reactions || []).map((r) => r.code).join(', '))} · удалена ${esc(fmtDate(d.updated_at))}</span>
               <button type="button" class="btn small" data-restore="${esc(d.id)}">Восстановить</button>
             </div>`).join('')}</div>` : ''}
         </section>`;
@@ -176,7 +176,7 @@
     if (restore) {
       restore.disabled = true;
       try {
-        const res = await Store.update(restore.dataset.restore, { deleted: false, updated_by: Editor.who() });
+        const res = await Store.update(restore.dataset.restore, { deleted: false, updated_by: 'сайт' });
         if (res.row) { upsertLocal(res.row); toast('Карточка восстановлена'); }
       } catch (err) { toast('Не удалось восстановить: ' + err.message, 'err'); restore.disabled = false; }
     }
@@ -196,7 +196,7 @@
     const f = {
       code: $('f-code'), name: $('f-name'), category: $('f-category'), formula: $('f-formula'), cas: $('f-cas'),
       yieldIso: $('f-yield-iso'), yieldAnalyt: $('f-yield-analyt'), loading: $('f-loading'), mass: $('f-mass'),
-      extraCodes: $('f-extra-codes'), mp: $('f-mp'), note: $('f-note'), smiles: $('f-smiles'), who: $('f-who'),
+      extraCodes: $('f-extra-codes'), note: $('f-note'), smiles: $('f-smiles'),
       find: $('f-find'),
     };
     const EMPTY_MOL = '\n  Ketcher\n\n  0  0  0  0  0  0  0  0  0  0999 V2000\nM  END\n';
@@ -216,9 +216,7 @@
     let loadToken = 0;
     let smilesTyped = false;     // пользователь вписал SMILES руками и не перенёс в редактор
 
-    f.who.value = lsGet('cs.who') || '';
-    f.who.addEventListener('change', () => lsSet('cs.who', f.who.value.trim()));
-    function who() { return (f.who.value || lsGet('cs.who') || '').trim() || 'аноним'; }
+    function who() { return 'сайт'; }
 
     function setStatus(id, text, kind) {
       const el = $(id);
@@ -374,8 +372,6 @@
       setNum(f.yieldIso, d && d.yield_iso);
       setNum(f.yieldAnalyt, d && d.yield_analyt);
       setNum(f.loading, d && d.loading_umol);
-      setNum(f.mass, d && d.mass_measured_mg);
-      setNum(f.mp, d && d.melt_point_c);
       f.note.value = d ? d.note || '' : '';
       f.smiles.value = d ? d.smiles || '' : '';
       f.find.value = '';
@@ -412,7 +408,7 @@
       $('ed-title').textContent = d ? 'Редактирование карточки' : 'Новая карточка';
       $('btn-delete').hidden = !d;
       $('ed-error').hidden = true;
-      $('ed-meta').textContent = d && d.updated_at ? `изменено ${fmtDate(d.updated_at)}${d.updated_by ? ' · ' + d.updated_by : ''}` : '';
+      $('ed-meta').textContent = d && d.updated_at ? `изменено ${fmtDate(d.updated_at)}` : '';
       setStatus('lookup-status', d ? 'Поиск по шифру, CAS или названию перезапишет поля карточки.' : 'Шифр подтянет данные реакции из OdanLab, CAS или название — структуру и названия из PubChem. Или просто нарисуйте молекулу ниже: название и CAS подставятся сами.');
       setStatus('ketcher-status', ketcherState === 'ready' ? 'рисуйте или правьте молекулу' : 'редактор загружается…');
       if (!dlg.open) dlg.showModal();
@@ -452,7 +448,6 @@
       if (row.cas) { f.cas.value = row.cas; lastAutoCas = row.cas; }
       setNum(f.yieldIso, row.yield_iso);
       setNum(f.yieldAnalyt, row.yield_analyt);
-      setNum(f.mass, row.mass_measured_mg);
       if (row.loading_umol) setNum(f.loading, row.loading_umol);
       if (!current) f.category.value = row.yield_iso != null ? '1' : (row.yield_analyt != null ? '2' : '4');
       if (row.smiles) { loadStructure(row.smiles); lastEnrichedSmiles = ''; enrichFromStructure(row.smiles); }
@@ -503,7 +498,7 @@
       // выбор шифра из выпадающего списка — подтягиваем сразу
       if (await Store.lookupCode(f.find.value)) lookup();
     });
-    form.addEventListener('input', (e) => { if (e.target !== f.who) dirty = true; });
+    form.addEventListener('input', () => { dirty = true; });
 
     async function readStructure() {
       // Возвращает { smiles, molfile, changed } относительно сохранённой версии карточки.
@@ -537,7 +532,6 @@
       btn.textContent = 'Сохраняю…';
       $('ed-error').hidden = true;
       try {
-        lsSet('cs.who', f.who.value.trim());
         const st = await readStructure();
         const row = {
           name: f.name.value.trim(),
@@ -547,8 +541,6 @@
           yield_iso: num(f.yieldIso),
           yield_analyt: num(f.yieldAnalyt),
           loading_umol: num(f.loading),
-          mass_measured_mg: num(f.mass),
-          melt_point_c: num(f.mp),
           note: str(f.note),
           reactions: await buildReactions(),
           updated_by: who(),
@@ -563,7 +555,7 @@
           let res = await Store.update(current.id, row, current.updated_at);
           if (res.conflict) {
             const c = res.conflict;
-            const ok = confirm(`Пока вы редактировали, карточку изменил(а) ${c ? c.updated_by || 'кто-то' : 'кто-то'} (${c ? fmtDate(c.updated_at) : ''}).\n\nПерезаписать её вашей версией?`);
+            const ok = confirm(`Пока вы редактировали, карточку изменил кто-то другой (${c ? fmtDate(c.updated_at) : ''}).\n\nПерезаписать её вашей версией?`);
             if (!ok) { if (c) upsertLocal(c); throw new Error('Не сохранено: карточку изменили параллельно. Откройте её заново, чтобы увидеть свежую версию.'); }
             res = await Store.update(current.id, row, null);
           }
@@ -606,7 +598,7 @@
 
     function onRemoteChange(row) {
       if (dlg.open && current && row.id === current.id && row.updated_at !== current.updated_at) {
-        $('ed-meta').innerHTML = `<span class="warn">⚠ карточку только что изменил(а) ${esc(row.updated_by || 'кто-то')}</span>`;
+        $('ed-meta').innerHTML = `<span class="warn">⚠ эту карточку только что изменил кто-то другой</span>`;
       }
     }
 
@@ -617,6 +609,23 @@
     if (Store.isReadOnly()) { toast('Редактирование недоступно: нет связи с базой', 'err'); return; }
     Editor.open(null);
   });
+
+  // ---------- тема ----------
+  (function themeToggle() {
+    const btn = $('btn-theme');
+    const root = document.documentElement;
+    const isDark = () => root.getAttribute('data-theme') === 'dark' ||
+      (!root.hasAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const sync = () => { btn.textContent = isDark() ? '☀' : '☾'; btn.title = isDark() ? 'Светлая тема' : 'Тёмная тема'; };
+    btn.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      lsSet('cs.theme', next);
+      sync();
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sync);
+    sync();
+  })();
 
   // ---------- init ----------
   async function init() {
