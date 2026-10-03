@@ -42,7 +42,10 @@ jobs:
             gh release download "$KETCHER_VERSION" --repo epam/ketcher --pattern '*standalone*.zip' --dir "$tmp"
           fi
           ls -la "$tmp"
-          unzip -q "$tmp"/*.zip -d "$tmp/unz"
+          # в релизе может быть несколько архивов — берём основной (без версии в имени, иначе первый)
+          zip=$(ls "$tmp"/ketcher-standalone.zip 2>/dev/null || ls "$tmp"/*.zip | head -1)
+          echo "using $zip"
+          unzip -q "$zip" -d "$tmp/unz"
           idx=$(find "$tmp/unz" -name index.html -printf '%d %p\n' | sort -n | head -1 | cut -d' ' -f2-)
           test -n "$idx"
           rm -rf ketcher
