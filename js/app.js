@@ -79,7 +79,7 @@
       ${d.compound_class ? `<span class="class-chip">${esc(d.compound_class)}</span>` : ''}
       <div class="formula mono">${meta.join(' · ')}</div>
       <div class="yields">${pills}</div>
-      <div class="mini-yield mono ${isoY ? 'iso' : (anY ? 'analyt' : 'none')}">${isoY || anY || '—'}</div>`;
+      <div class="mini-yield mono">${anY ? `<span class="a">${anY}</span>` : ''}${isoY ? `<span class="i">${anY ? ' ' : ''}(${isoY})</span>` : ''}${!anY && !isoY ? '<span class="n">—</span>' : ''}</div>`;
 
     const wrap = primary
       ? `<a class="card-link" draggable="false" href="${esc(ODANLAB_URL(primary.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primary.code)} в OdanLab">${body}</a>`
@@ -88,7 +88,7 @@
     const search = [d.name, d.formula, d.cas, d.note, d.compound_class, reactions.map((r) => r.code).join(' ')].join(' ').toLowerCase();
 
     return `
-      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}"${Store.isReadOnly() ? '' : ' draggable="true"'} title="${esc([d.name, reactions.map((r) => r.code).join(', '), [isoY && 'выделено ' + isoY, anY && 'ЯМР ' + anY].filter(Boolean).join(', ')].filter(Boolean).join('\n'))}">
+      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}"${Store.isReadOnly() ? '' : ' data-drag="1"'} title="${esc([d.name, reactions.map((r) => r.code).join(', '), [isoY && 'выделено ' + isoY, anY && 'ЯМР ' + anY].filter(Boolean).join(', ')].filter(Boolean).join('\n'))}">
         ${Store.isReadOnly() ? '' : `<button type="button" class="edit-btn" data-edit="${esc(d.id)}" title="Редактировать карточку" aria-label="Редактировать «${esc(d.name)}»">✎</button>`}
         ${wrap}
         <div class="codes">
@@ -230,46 +230,94 @@
   });
 
   // ---------- перетаскивание карточек между разделами и классами ----------
-  let dragId = null;
+  // Своя реализация на pointer-событиях (а не HTML5 drag&drop): тащить можно за любую часть карточки,
+  // текст не выделяется, на телефоне — после долгого нажатия.
+  const drag = { id: null, card: null, ghost: null, active: false, startX: 0, startY: 0, timer: null, pointerId: null, target: null, dx: 0, dy: 0 };
   function dropTargetOf(el) {
     if (!el || !el.closest) return null;
     return el.closest('.class-col') || el.closest('section.category');
   }
   function clearDropMarks() { mainEl.querySelectorAll('.drop-target').forEach((x) => x.classList.remove('drop-target')); }
 
-  mainEl.addEventListener('dragstart', (e) => {
-    const card = e.target.closest && e.target.closest('.card[draggable="true"]');
-    if (!card) return;
-    dragId = card.dataset.id;
-    e.dataTransfer.effectAllowed = 'move';
-    try { e.dataTransfer.setData('text/plain', dragId); } catch (err) { /* ignore */ }
-    requestAnimationFrame(() => card.classList.add('dragging'));
+  function startDrag(e) {
+    drag.active = true;
+    const r = drag.card.getBoundingClientRect();
+    drag.dx = drag.startX - r.left; drag.dy = drag.startY - r.top;
+    const g = drag.card.cloneNode(true);
+    g.classList.add('drag-ghost');
+    g.removeAttribute('data-id');
+    g.style.width = r.width + 'px';
+    g.style.height = r.height + 'px';
+    document.body.appendChild(g);
+    drag.ghost = g;
+    drag.card.classList.add('dragging');
     document.body.classList.add('is-dragging');
-  });
-  mainEl.addEventListener('dragend', () => {
-    dragId = null;
-    clearDropMarks();
-    mainEl.querySelectorAll('.dragging').forEach((x) => x.classList.remove('dragging'));
+    moveGhost(e.clientX, e.clientY);
+  }
+  function moveGhost(x, y) {
+    if (!drag.ghost) return;
+    drag.ghost.style.transform = `translate(${x - drag.dx}px, ${y - drag.dy}px) rotate(1.5deg)`;
+    const el = document.elementFromPoint(x, y);
+    const t = dropTargetOf(el);
+    if (t !== drag.target) { clearDropMarks(); if (t) t.classList.add('drop-target'); drag.target = t; }
+    // автопрокрутка у краёв окна
+    const edge = 70;
+    if (y < edge) window.scrollBy(0, -Math.ceil((edge - y) / 4));
+    else if (y > window.innerHeight - edge) window.scrollBy(0, Math.ceil((y - (window.innerHeight - edge)) / 4));
+  }
+  function endDrag(cancel) {
+    clearTimeout(drag.timer);
+    const wasActive = drag.active;
+    const target = drag.target;
+    const id = drag.id;
+    if (drag.ghost) drag.ghost.remove();
+    if (drag.card) drag.card.classList.remove('dragging', 'press');
     document.body.classList.remove('is-dragging');
-  });
-  mainEl.addEventListener('dragover', (e) => {
-    if (!dragId) return;
-    const t = dropTargetOf(e.target);
-    if (!t) return;
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    if (!t.classList.contains('drop-target')) { clearDropMarks(); t.classList.add('drop-target'); }
-  });
-  mainEl.addEventListener('drop', async (e) => {
-    if (!dragId) return;
-    const t = dropTargetOf(e.target);
-    if (!t) return;
-    e.preventDefault();
-    const id = dragId;
     clearDropMarks();
+    Object.assign(drag, { id: null, card: null, ghost: null, active: false, timer: null, pointerId: null, target: null });
+    if (wasActive) {
+      // клик после перетаскивания не должен открывать ссылку на OdanLab
+      const block = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
+      window.addEventListener('click', block, { capture: true, once: true });
+      setTimeout(() => window.removeEventListener('click', block, { capture: true }), 50);
+      if (!cancel && target) dropCard(id, target);
+    }
+  }
+
+  mainEl.addEventListener('pointerdown', (e) => {
+    if (Store.isReadOnly() || e.button !== 0) return;
+    if (e.target.closest('.edit-btn, button, input')) return;
+    const card = e.target.closest('.card[data-id]');
+    if (!card) return;
+    Object.assign(drag, { id: card.dataset.id, card, startX: e.clientX, startY: e.clientY, pointerId: e.pointerId, active: false });
+    if (e.pointerType === 'mouse') {
+      e.preventDefault(); // не выделять текст и не тащить ссылку браузером
+    } else {
+      // на сенсорном экране — долгое нажатие, чтобы обычная прокрутка не превращалась в перетаскивание
+      drag.timer = setTimeout(() => { if (drag.card === card) { card.classList.add('press'); startDrag(e); } }, 350);
+    }
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!drag.card || e.pointerId !== drag.pointerId) return;
+    if (!drag.active) {
+      const moved = Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY);
+      if (e.pointerType !== 'mouse') { if (moved > 10) { clearTimeout(drag.timer); Object.assign(drag, { id: null, card: null }); } return; }
+      if (moved < 6) return;
+      startDrag(e);
+    }
+    moveGhost(e.clientX, e.clientY);
+  });
+  window.addEventListener('touchmove', (e) => { if (drag.active) e.preventDefault(); }, { passive: false });
+  window.addEventListener('pointerup', (e) => { if (drag.card && e.pointerId === drag.pointerId) endDrag(false); });
+  window.addEventListener('pointercancel', (e) => { if (drag.card && e.pointerId === drag.pointerId) endDrag(true); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drag.active) endDrag(true); });
+  mainEl.addEventListener('dragstart', (e) => e.preventDefault()); // отключаем встроенное перетаскивание ссылок/картинок
+
+  async function dropCard(id, t) {
     const d = docs.find((x) => x.id === id);
     if (!d) return;
     const sec = t.closest('section.category');
+    if (!sec) return;
     const patch = {};
     const cat = Number(sec.dataset.cat);
     if (cat !== d.category) patch.category = cat;
@@ -293,7 +341,7 @@
       render();
       toast('Не удалось перенести: ' + err.message, 'err');
     }
-  });
+  }
 
   function upsertLocal(row) {
     const i = docs.findIndex((d) => d.id === row.id);
