@@ -34,7 +34,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
+          set -eu
           tmp=$(mktemp -d)
           if [ "$KETCHER_VERSION" = "latest" ]; then
             gh release download --repo epam/ketcher --pattern '*standalone*.zip' --dir "$tmp"
@@ -42,16 +42,26 @@ jobs:
             gh release download "$KETCHER_VERSION" --repo epam/ketcher --pattern '*standalone*.zip' --dir "$tmp"
           fi
           ls -la "$tmp"
-          # в релизе может быть несколько архивов — берём основной (без версии в имени, иначе первый)
-          zip=$(ls "$tmp"/ketcher-standalone.zip 2>/dev/null || ls "$tmp"/*.zip | head -1)
-          echo "using $zip"
-          unzip -q "$zip" -d "$tmp/unz"
-          idx=$(find "$tmp/unz" -name index.html -printf '%d %p\n' | sort -n | head -1 | cut -d' ' -f2-)
-          test -n "$idx"
+          # распаковываем каждый архив в свою папку (unzip возвращает 1 на безобидные предупреждения)
+          for z in "$tmp"/*.zip; do
+            d="$tmp/unz/$(basename "$z" .zip)"
+            mkdir -p "$d"
+            unzip -o -q "$z" -d "$d" || [ $? -eq 1 ]
+          done
+          echo "--- index.html candidates:"
+          find "$tmp/unz" -name index.html -not -path '*/node_modules/*' | tee "$tmp/cands.txt"
+          # берём index.html, рядом с которым лежит папка static (собранное приложение Ketcher)
+          idx=""
+          while IFS= read -r f; do
+            if [ -d "$(dirname "$f")/static" ]; then idx="$f"; break; fi
+          done < "$tmp/cands.txt"
+          if [ -z "$idx" ]; then idx=$(head -n 1 "$tmp/cands.txt"); fi
+          if [ -z "$idx" ]; then echo "Ketcher index.html not found"; exit 1; fi
+          echo "using $idx"
           rm -rf ketcher
           mkdir ketcher
           cp -r "$(dirname "$idx")"/. ketcher/
-          ls ketcher | head -20
+          ls -la ketcher
 
       - uses: actions/configure-pages@v5
         with:
