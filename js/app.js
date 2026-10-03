@@ -59,8 +59,9 @@
     const primary = reactions.find((r) => r.id);
     const structure = d.molfile || d.smiles;
     let img;
-    if (d.image) img = `<img src="${esc(d.image)}" alt="${esc(d.name)}" loading="lazy">`;
-    else if (structure) img = `<div class="rd" data-structure="${esc(structure)}"><span class="ph">рисую…</span></div>`;
+    // структуры рисуем единообразно по SMILES/molfile; готовая картинка — только если структуры нет
+    if (structure) img = `<div class="rd" data-structure="${esc(structure)}"><span class="ph">рисую…</span></div>`;
+    else if (d.image) img = `<img src="${esc(d.image)}" alt="${esc(d.name)}" loading="lazy">`;
     else img = `<span class="ph">нет структуры</span>`;
 
     const meta = [];
@@ -196,6 +197,7 @@
       code: $('f-code'), name: $('f-name'), category: $('f-category'), formula: $('f-formula'), cas: $('f-cas'),
       yieldIso: $('f-yield-iso'), yieldAnalyt: $('f-yield-analyt'), loading: $('f-loading'), mass: $('f-mass'),
       extraCodes: $('f-extra-codes'), mp: $('f-mp'), note: $('f-note'), smiles: $('f-smiles'), who: $('f-who'),
+      find: $('f-find'),
     };
     const EMPTY_MOL = '\n  Ketcher\n\n  0  0  0  0  0  0  0  0  0  0999 V2000\nM  END\n';
 
@@ -203,6 +205,11 @@
     let lookedUp = null;         // строка справочника OdanLab, подтянутая по шифру
     let baselineSmiles = '';     // что было в редакторе после загрузки
     let lastAutoFormula = '';
+    let lastAutoName = '';
+    let lastAutoCas = '';
+    let lastEnrichedSmiles = '';
+    let pcName = '', pcCas = '';   // что подставлено именно из PubChem
+    let enrichToken = 0;
     let ketcherState = 'idle';   // idle | loading | ready | missing
     let ketcherPromise = null;
     let dirty = false;
@@ -249,7 +256,7 @@
           console.warn(err);
           ketcherState = 'missing';
           $('ketcher-wrap').hidden = true;
-          $('ketcher-missing').hidden = false;
+          $('smiles-row').hidden = false;
           setStatus('ketcher-status', '');
           return null;
         });
@@ -277,7 +284,43 @@
             lastAutoFormula = formula;
           }
         }
+        enrichFromStructure(smi);
       } catch (e) { console.warn('ketcher read failed', e); }
+    }
+
+    // Нарисовали/изменили молекулу → ищем её в PubChem и подставляем систематическое название и CAS
+    // (только в пустые поля или в те, что мы сами подставили раньше — ручной ввод не трогаем).
+    async function enrichFromStructure(smi) {
+      if (!smi) { setStatus('pubchem-status', ''); lastEnrichedSmiles = ''; return; }
+      if (smi === lastEnrichedSmiles) return;
+      lastEnrichedSmiles = smi;
+      const token = ++enrichToken;
+      setStatus('pubchem-status', 'Ищу вещество в PubChem…');
+      let res = null;
+      try { res = await Lookup.bySmiles(smi); } catch (e) {
+        if (token === enrichToken) setStatus('pubchem-status', 'PubChem не ответил — название и CAS можно вписать вручную.', 'warn');
+        return;
+      }
+      if (token !== enrichToken) return;
+      if (!res) {
+        // убираем то, что сами подставили из PubChem для прошлой структуры — оно уже не про эту молекулу
+        if (lastAutoName && lastAutoName === pcName && f.name.value.trim() === lastAutoName) { f.name.value = ''; lastAutoName = ''; }
+        if (lastAutoCas && lastAutoCas === pcCas && f.cas.value.trim() === lastAutoCas) { f.cas.value = ''; lastAutoCas = ''; }
+        pcName = ''; pcCas = '';
+        setStatus('pubchem-status', 'Такого вещества в PubChem нет — впишите название (и CAS, если есть) вручную.', 'warn');
+        return;
+      }
+      applyAuto(res);
+      const parts = [`PubChem CID ${res.cid}`];
+      parts.push(res.cas ? `CAS ${res.cas}` : 'CAS в PubChem не указан');
+      setStatus('pubchem-status', `Найдено: ${res.iupac || res.title || '—'} (${parts.join(', ')}).`, 'ok');
+    }
+
+    function applyAuto(res) {
+      const name = res.iupac || res.title;
+      if (name && (!f.name.value.trim() || f.name.value.trim() === lastAutoName)) { f.name.value = name; lastAutoName = name; pcName = name; }
+      if (res.cas && (!f.cas.value.trim() || f.cas.value.trim() === lastAutoCas)) { f.cas.value = res.cas; lastAutoCas = res.cas; pcCas = res.cas; }
+      if (res.formula && (!f.formula.value.trim() || f.formula.value.trim() === lastAutoFormula)) { f.formula.value = res.formula; lastAutoFormula = res.formula; }
     }
 
     // asBaseline = true: это сохранённая структура карточки (от неё считаем «изменено/не изменено»)
@@ -308,18 +351,12 @@
       Chem.renderInto(el, structure);
     }
 
-    $('btn-smiles-to-ketcher').addEventListener('click', async () => {
+    f.smiles.addEventListener('input', () => { smilesTyped = true; dirty = true; });
+    f.smiles.addEventListener('input', debounce(() => {
       const smi = f.smiles.value.trim();
-      dirty = true;
-      smilesTyped = false;
       renderMiniPreview(smi);
-      const k = await ensureKetcher();
-      if (k) {
-        try { await k.setMolecule(smi || EMPTY_MOL); } catch (e) { toast('Ketcher не понял этот SMILES', 'err'); }
-      }
-    });
-    f.smiles.addEventListener('input', () => { smilesTyped = true; });
-    f.smiles.addEventListener('input', debounce(() => renderMiniPreview(f.smiles.value.trim()), 400));
+      if (ketcherState !== 'ready') enrichFromStructure(smi);
+    }, 600));
 
     // --- fill/read form ---
     function num(el) { const v = el.value.trim(); return v === '' ? null : Number(v.replace(',', '.')); }
@@ -341,7 +378,14 @@
       setNum(f.mp, d && d.melt_point_c);
       f.note.value = d ? d.note || '' : '';
       f.smiles.value = d ? d.smiles || '' : '';
+      f.find.value = '';
       lastAutoFormula = '';
+      lastAutoName = '';
+      lastAutoCas = '';
+      pcName = ''; pcCas = '';
+      lastEnrichedSmiles = d ? d.smiles || '' : '';
+      enrichToken++;
+      setStatus('pubchem-status', '');
     }
 
     async function buildReactions() {
@@ -369,14 +413,14 @@
       $('btn-delete').hidden = !d;
       $('ed-error').hidden = true;
       $('ed-meta').textContent = d && d.updated_at ? `изменено ${fmtDate(d.updated_at)}${d.updated_by ? ' · ' + d.updated_by : ''}` : '';
-      setStatus('lookup-status', d ? 'Можно заново подтянуть данные из OdanLab по шифру — поля перезапишутся.' : 'Введите шифр — название, выходы, формула и структура подставятся сами. Или нарисуйте структуру вручную ниже.');
+      setStatus('lookup-status', d ? 'Поиск по шифру, CAS или названию перезапишет поля карточки.' : 'Шифр подтянет данные реакции из OdanLab, CAS или название — структуру и названия из PubChem. Или просто нарисуйте молекулу ниже: название и CAS подставятся сами.');
       setStatus('ketcher-status', ketcherState === 'ready' ? 'рисуйте или правьте молекулу' : 'редактор загружается…');
       if (!dlg.open) dlg.showModal();
       history.replaceState(null, '', d ? '#edit=' + encodeURIComponent(d.id) : '#new');
       fillCodeList();
       loadStructure(d ? (d.molfile || d.smiles || '') : '', true);
-      if (opts && opts.code) { f.code.value = opts.code; lookup(); }
-      else if (!d) f.code.focus();
+      if (opts && opts.code) { f.find.value = opts.code; lookup(); }
+      else if (!d) f.find.focus();
     }
 
     async function fillCodeList() {
@@ -388,42 +432,76 @@
     }
 
     async function lookup() {
-      const code = Store.normCode(f.code.value);
-      if (!code) return;
-      const row = await Store.lookupCode(code);
-      if (!row) {
-        setStatus('lookup-status', `Шифр «${code}» не найден в справочнике OdanLab. Справочник обновляется раз в день; можно заполнить карточку вручную.`, 'err');
-        return;
-      }
+      const q = f.find.value.trim();
+      if (!q) return;
+      const btn = $('btn-lookup');
+      btn.disabled = true;
+      try {
+        const row = await Store.lookupCode(q);
+        if (row) await fillFromOdanLab(row);
+        else await fillFromPubChem(q);
+      } finally { btn.disabled = false; }
+    }
+
+    async function fillFromOdanLab(row) {
       lookedUp = row;
       dirty = true;
       f.code.value = row.code;
-      if (row.name) f.name.value = row.name;
-      if (row.formula) f.formula.value = row.formula;
-      if (row.cas) f.cas.value = row.cas;
+      if (row.name) { f.name.value = row.name; lastAutoName = row.name; }
+      if (row.formula) { f.formula.value = row.formula; lastAutoFormula = row.formula; }
+      if (row.cas) { f.cas.value = row.cas; lastAutoCas = row.cas; }
       setNum(f.yieldIso, row.yield_iso);
       setNum(f.yieldAnalyt, row.yield_analyt);
       setNum(f.mass, row.mass_measured_mg);
       if (row.loading_umol) setNum(f.loading, row.loading_umol);
       if (!current) f.category.value = row.yield_iso != null ? '1' : (row.yield_analyt != null ? '2' : '4');
-      if (row.smiles) loadStructure(row.smiles);
+      if (row.smiles) { loadStructure(row.smiles); lastEnrichedSmiles = ''; enrichFromStructure(row.smiles); }
 
       const dup = docs.find((d) => !d.deleted && d !== current && (d.reactions || []).some((r) => Store.normCode(r.code) === row.code));
-      let msg = `Подставлено из OdanLab: ${row.name || '(без названия)'}.`;
+      let msg = `Подставлено из OdanLab (${row.code}): ${row.name || '(без названия)'}.`;
       if (row.reagents) msg += ` Реагенты: ${row.reagents}.`;
       setStatus('lookup-status', msg, 'ok');
-      if (dup) {
-        const s = $('lookup-status');
-        s.className = 'hint warn';
-        s.innerHTML = esc(`Внимание: карточка с шифром ${row.code} уже есть — «${dup.name}». `) + `<button type="button" class="linkish" id="open-dup">открыть её</button>`;
-        $('open-dup').onclick = () => open(dup);
-      }
+      if (dup) showDup(dup, `карточка с шифром ${row.code} уже есть`);
     }
+
+    async function fillFromPubChem(q) {
+      const cas = Lookup.isCAS(q);
+      setStatus('lookup-status', `Ищу «${q}» в PubChem…`);
+      let res = null;
+      try { res = await Lookup.byName(q); } catch (e) { console.warn(e); }
+      if (!res) {
+        setStatus('lookup-status', cas
+          ? `CAS ${q} не найден ни в PubChem, ни в NCI. Нарисуйте структуру — остальное подставится.`
+          : `«${q}» не найдено: это не шифр из справочника OdanLab и не название/CAS из PubChem.`, 'err');
+        return;
+      }
+      dirty = true;
+      // поиск явный — перезаписываем название/CAS/формулу
+      lastAutoName = f.name.value.trim(); lastAutoCas = f.cas.value.trim(); lastAutoFormula = f.formula.value.trim();
+      applyAuto(res);
+      if (res.smiles) {
+        await loadStructure(res.smiles);
+        lastEnrichedSmiles = f.smiles.value.trim() || res.smiles;
+      }
+      setStatus('lookup-status', `Найдено в PubChem: ${res.iupac || res.title || q}${res.cas ? ', CAS ' + res.cas : ''}.`, 'ok');
+      setStatus('pubchem-status', '');
+      const casNow = f.cas.value.trim();
+      const dup = casNow && docs.find((d) => !d.deleted && d !== current && d.cas === casNow);
+      if (dup) showDup(dup, `карточка с CAS ${casNow} уже есть`);
+    }
+
+    function showDup(dup, what) {
+      const s = $('lookup-status');
+      s.className = 'hint warn';
+      s.innerHTML = esc(`Внимание: ${what} — «${dup.name}». `) + `<button type="button" class="linkish" id="open-dup">открыть её</button>`;
+      $('open-dup').onclick = () => open(dup);
+    }
+
     $('btn-lookup').addEventListener('click', lookup);
-    f.code.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); lookup(); } });
-    f.code.addEventListener('change', async () => {
-      // выбор из выпадающего списка у новой карточки — подтягиваем сразу
-      if (!current && !f.name.value.trim() && (await Store.lookupCode(f.code.value))) lookup();
+    f.find.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); lookup(); } });
+    f.find.addEventListener('change', async () => {
+      // выбор шифра из выпадающего списка — подтягиваем сразу
+      if (await Store.lookupCode(f.find.value)) lookup();
     });
     form.addEventListener('input', (e) => { if (e.target !== f.who) dirty = true; });
 

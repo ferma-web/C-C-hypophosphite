@@ -17,13 +17,33 @@ window.Chem = (function () {
       s.onload = () => {
         if (typeof window.initRDKitModule !== 'function') return reject(new Error('RDKit: initRDKitModule missing'));
         window.initRDKitModule({ locateFile: () => RDKIT_BASE + 'RDKit_minimal.wasm' })
-          .then(resolve, reject);
+          .then((R) => { try { R.prefer_coordgen(true); } catch (e) { /* нет в этой версии */ } resolve(R); }, reject);
       };
       s.onerror = () => reject(new Error('RDKit.js не загрузился (нет интернета или CDN заблокирован)'));
       document.head.appendChild(s);
     }).catch((e) => { console.warn(e); return null; });
     return rdkitPromise;
   }
+
+  // Единый стиль: углерод и связи цветом текста страницы (currentColor — работает и в тёмной теме),
+  // гетероатомы — приглушённые цвета, одинаковая длина связи и шрифт на всех карточках.
+  const PALETTE = {
+    7: [0.16, 0.38, 0.80],  // N
+    8: [0.80, 0.22, 0.18],  // O
+    9: [0.13, 0.55, 0.35],  // F
+    15: [0.85, 0.45, 0.10], // P
+    16: [0.72, 0.58, 0.05], // S
+    17: [0.13, 0.55, 0.35], // Cl
+    35: [0.60, 0.25, 0.15], // Br
+    53: [0.45, 0.20, 0.60], // I
+  };
+  const DRAW_OPTS = JSON.stringify({
+    width: 280, height: 180, padding: 0.08,
+    bondLineWidth: 1.6, scaleBondWidth: false, fixedBondLength: 24,
+    multipleBondOffset: 0.18, baseFontSize: 0.62, additionalAtomLabelPadding: 0.08,
+    clearBackground: false, addStereoAnnotation: false, explicitMethyl: false,
+    atomColourPalette: PALETTE,
+  });
 
   function svgFor(RDKit, input) {
     if (svgCache.has(input)) return svgCache.get(input);
@@ -32,10 +52,12 @@ window.Chem = (function () {
     try {
       mol = RDKit.get_mol(input);
       if (mol && mol.is_valid()) {
-        svg = mol.get_svg_with_highlights(JSON.stringify({
-          width: 260, height: 170, bondLineWidth: 1.4, fixedBondLength: 22,
-          clearBackground: false, addStereoAnnotation: false, padding: 0.06,
-        }));
+        try { mol.set_new_coords(true); } catch (e) { /* старые версии RDKit.js */ }
+        svg = mol.get_svg_with_highlights(DRAW_OPTS)
+          .replace(/<\?xml[^>]*>\s*/, '')
+          .replace(/<rect[^>]*style=['"][^'"]*fill:#FFFFFF[^'"]*['"][^>]*>(<\/rect>)?/i, '')
+          .replace(/#000000/g, 'currentColor')
+          .replace(/<svg /, '<svg class="mol" ');
       }
     } catch (e) {
       console.warn('RDKit render failed for', input, e);

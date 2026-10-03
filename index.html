@@ -46,13 +46,13 @@
       <section class="ed-lookup">
         <div class="field-row" style="align-items:flex-end;">
           <div class="field" style="flex:1;">
-            <label for="f-code">Шифр реакции в OdanLab</label>
-            <input type="text" id="f-code" list="codes-list" placeholder="например: AAP-36" autocomplete="off">
+            <label for="f-find">Найти вещество</label>
+            <input type="text" id="f-find" list="codes-list" placeholder="шифр OdanLab (AAP-36), CAS (104-55-2) или название" autocomplete="off">
             <datalist id="codes-list"></datalist>
           </div>
-          <button type="button" class="btn" id="btn-lookup">Подтянуть из OdanLab</button>
+          <button type="button" class="btn" id="btn-lookup">Найти</button>
         </div>
-        <div class="hint" id="lookup-status">Введите шифр — название, выходы, формула и структура подставятся сами. Или нарисуйте структуру вручную ниже.</div>
+        <div class="hint" id="lookup-status">Шифр подтянет данные реакции из OdanLab, CAS или название — структуру и названия из PubChem. Или просто нарисуйте молекулу ниже: название и CAS подставятся сами.</div>
       </section>
 
       <section class="ed-structure">
@@ -63,22 +63,19 @@
         <div id="ketcher-wrap">
           <iframe id="ketcher-frame" title="Ketcher — редактор структур"></iframe>
         </div>
-        <div id="ketcher-missing" class="hint" hidden>
-          Встроенный Ketcher недоступен (он подкладывается при деплое на GitHub Pages). Вставьте SMILES в поле ниже — превью нарисуется автоматически.
-        </div>
-        <div class="smiles-row">
+        <div class="smiles-row" id="smiles-row" hidden>
           <div class="field" style="flex:1; margin:0;">
-            <label for="f-smiles">SMILES</label>
-            <input type="text" id="f-smiles" class="mono" placeholder="можно вставить SMILES и нажать «В редактор»" autocomplete="off" spellcheck="false">
+            <label for="f-smiles">SMILES (редактор структур недоступен)</label>
+            <input type="text" id="f-smiles" class="mono" autocomplete="off" spellcheck="false">
           </div>
-          <button type="button" class="btn small" id="btn-smiles-to-ketcher">В редактор ↑</button>
           <div class="mini-preview" id="smiles-preview" aria-hidden="true"></div>
         </div>
+        <div class="hint" id="pubchem-status"></div>
       </section>
 
       <section class="ed-fields">
         <div class="field">
-          <label for="f-name">Название *</label>
+          <label for="f-name">Название * <span class="label-hint">(систематическое подставляется из PubChem)</span></label>
           <input type="text" id="f-name" required>
         </div>
         <div class="field-row">
@@ -120,6 +117,10 @@
         </div>
         <div class="field-row">
           <div class="field">
+            <label for="f-code">Шифр реакции</label>
+            <input type="text" id="f-code" class="mono" placeholder="AAP-36" autocomplete="off">
+          </div>
+          <div class="field">
             <label for="f-extra-codes">Другие шифры (через запятую)</label>
             <input type="text" id="f-extra-codes" class="mono" placeholder="KIR-44, KIR-45">
           </div>
@@ -156,6 +157,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="js/chem.js"></script>
 <script src="js/store.js"></script>
+<script src="js/lookup.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
