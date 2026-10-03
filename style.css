@@ -437,3 +437,40 @@ dialog#editor::backdrop{background:rgba(10,12,16,.5);}
 .theme-btn:hover{border-color:var(--accent); color:var(--accent);}
 .top-actions{display:flex; gap:8px; align-items:center;}
 .brand .eyebrow{color:var(--accent);}
+
+/* ---- столбцы по классам ---- */
+.view-btn{
+  margin-left:8px; font:inherit; font-size:12px; font-weight:500;
+  padding:4px 10px; border-radius:8px; cursor:pointer;
+  border:1px solid var(--border); background:var(--surface); color:var(--ink-muted);
+}
+.view-btn:hover{border-color:var(--accent); color:var(--accent);}
+.view-btn.on, #btn-classes-all.on{background:var(--accent-soft); border-color:var(--accent); color:var(--accent);}
+.class-cols{
+  display:grid; grid-auto-flow:column; grid-auto-columns:minmax(250px, 1fr);
+  gap:14px; overflow-x:auto; padding-bottom:8px; align-items:start;
+}
+.class-col{
+  background:var(--surface-2); border:1px solid var(--border-soft); border-radius:16px;
+  padding:10px; display:flex; flex-direction:column; gap:10px; min-height:120px;
+}
+.class-col.no-class{border-style:dashed;}
+.class-col-head{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 4px 0; font-size:13px; font-weight:600;}
+.class-col.no-class .class-col-head{color:var(--ink-muted); font-weight:500;}
+.class-col-head .count{font-size:11px; color:var(--ink-muted); background:var(--surface); border:1px solid var(--border-soft); padding:0 7px; border-radius:999px;}
+.class-col-body{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:10px;}
+.col-empty{grid-column:1 / -1;}
+.col-empty{font-size:12px; color:var(--ink-faint); text-align:center; padding:18px 6px; border:1px dashed var(--border); border-radius:12px;}
+.class-chip{
+  align-self:flex-start; font-size:10.5px; font-weight:500; color:var(--accent);
+  background:var(--accent-soft); padding:1px 8px; border-radius:999px;
+}
+.class-col .class-chip{display:none;}
+
+/* ---- перетаскивание ---- */
+.card[draggable="true"]{cursor:grab;}
+.card[draggable="true"] .card-link{cursor:pointer;}
+.card.dragging{opacity:.4; transform:none !important;}
+body.is-dragging .card:hover{transform:none; box-shadow:var(--shadow);}
+.drop-target{outline:2px dashed var(--accent); outline-offset:4px; border-radius:16px; background-color:var(--accent-soft) !important;}
+section.category.drop-target{outline-offset:8px;}

@@ -24,6 +24,7 @@
     </div>
     <div class="stats-row" id="stats-row"></div>
     <div class="top-actions">
+      <button class="btn" id="btn-classes-all" type="button" title="Разложить все разделы по классам / вернуть сетку">▥ По классам</button>
       <button class="theme-btn" id="btn-theme" type="button" title="Тёмная / светлая тема" aria-label="Переключить тему">☾</button>
       <button class="btn primary" id="btn-new" type="button">+ Новая карточка</button>
     </div>
@@ -94,6 +95,11 @@
               <option value="4">Ожидает ЯМР / только запланировано</option>
               <option value="3">Низкий аналитический выход</option>
             </select>
+          </div>
+          <div class="field">
+            <label for="f-class">Класс вещества</label>
+            <input type="text" id="f-class" list="classes-list" placeholder="выберите или впишите новый" autocomplete="off">
+            <datalist id="classes-list"></datalist>
           </div>
           <div class="field">
             <label for="f-formula">Формула</label>

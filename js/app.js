@@ -19,6 +19,10 @@
   let docs = [];          // все строки, включая удалённые
   let source = 'live';
   let showDeleted = false;
+  const NO_CLASS = 'Без класса';
+  let classView = {};             // { [category]: true } — раздел показан столбцами по классам
+  try { classView = JSON.parse(lsGet0('cs.classView') || '{}') || {}; } catch (e) { classView = {}; }
+  function lsGet0(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
   // ---------- helpers ----------
   function esc(s) {
@@ -72,22 +76,23 @@
       ${d.source === 'manual' ? '<span class="draft-badge">добавлено вручную</span>' : ''}
       <div class="imgbox">${img}</div>
       <div class="name">${esc(d.name)}</div>
+      ${d.compound_class ? `<span class="class-chip">${esc(d.compound_class)}</span>` : ''}
       <div class="formula mono">${meta.join(' · ')}</div>
       <div class="yields">${pills}</div>`;
 
     const wrap = primary
-      ? `<a class="card-link" href="${esc(ODANLAB_URL(primary.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primary.code)} в OdanLab">${body}</a>`
+      ? `<a class="card-link" draggable="false" href="${esc(ODANLAB_URL(primary.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primary.code)} в OdanLab">${body}</a>`
       : `<div class="card-link">${body}</div>`;
 
-    const search = [d.name, d.formula, d.cas, d.note, reactions.map((r) => r.code).join(' ')].join(' ').toLowerCase();
+    const search = [d.name, d.formula, d.cas, d.note, d.compound_class, reactions.map((r) => r.code).join(' ')].join(' ').toLowerCase();
 
     return `
-      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}">
+      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}"${Store.isReadOnly() ? '' : ' draggable="true"'}>
         ${Store.isReadOnly() ? '' : `<button type="button" class="edit-btn" data-edit="${esc(d.id)}" title="Редактировать карточку" aria-label="Редактировать «${esc(d.name)}»">✎</button>`}
         ${wrap}
         <div class="codes">
           ${codesShown.map((r) => r.id
-            ? `<a class="code-chip" href="${esc(ODANLAB_URL(r.id))}" target="_blank" rel="noopener" title="Открыть в OdanLab">${esc(r.code)}</a>`
+            ? `<a class="code-chip" draggable="false" href="${esc(ODANLAB_URL(r.id))}" target="_blank" rel="noopener" title="Открыть в OdanLab">${esc(r.code)}</a>`
             : `<span class="code-chip">${esc(r.code)}</span>`).join('')}
           ${extra > 0 ? `<span class="code-chip">+${extra}</span>` : ''}
         </div>
@@ -108,6 +113,11 @@
     }
     for (const cat of CATS) {
       const items = byCat[cat.id] || [];
+      const byClass = !!classView[cat.id];
+      let body;
+      if (!items.length) body = `<div class="empty-cat">Категория пока пуста${Store.isReadOnly() ? '' : ' — перетащите сюда карточку'}.</div>`;
+      else if (byClass) body = renderClassColumns(items);
+      else body = `<div class="grid">${items.map(renderCard).join('')}</div>`;
       html += `
         <section class="category" data-cat="${cat.id}">
           <div class="cat-head" style="--cat-color:${cat.color}">
@@ -115,8 +125,10 @@
             <h2>${cat.title}</h2>
             <span class="count mono">${items.length}</span>
             <span class="cat-desc">${cat.desc}</span>
+            <button type="button" class="view-btn${byClass ? ' on' : ''}" data-classview="${cat.id}" aria-pressed="${byClass}"
+              title="${byClass ? 'Показать сеткой' : 'Разложить по классам веществ в столбцы'}">${byClass ? '▦ Сеткой' : '▥ По классам'}</button>
           </div>
-          ${items.length ? `<div class="grid">${items.map(renderCard).join('')}</div>` : `<div class="empty-cat">Категория пока пуста.</div>`}
+          ${body}
         </section>`;
     }
     if (deleted.length && !Store.isReadOnly()) {
@@ -132,9 +144,40 @@
         </section>`;
     }
     mainEl.innerHTML = html;
+    syncAllBtn();
     applySearch();
     updateStats();
     drawStructures();
+  }
+
+  function allClasses() {
+    const set = new Set();
+    docs.forEach((d) => { if (!d.deleted && d.compound_class) set.add(d.compound_class); });
+    return [...set].sort((a, b) => a.localeCompare(b, 'ru'));
+  }
+
+  function renderClassColumns(items) {
+    const groups = new Map();
+    for (const d of items) {
+      const k = d.compound_class || '';
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(d);
+    }
+    const keys = [...groups.keys()].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru'));
+    if (groups.has('')) keys.push('');
+    // пустые столбцы для остальных классов — чтобы можно было перетащить карточку в любой класс
+    const extra = allClasses().filter((c) => !groups.has(c));
+    const col = (k, list) => `
+      <div class="class-col${k ? '' : ' no-class'}" data-class="${esc(k)}">
+        <div class="class-col-head"><span>${esc(k || NO_CLASS)}</span><span class="count mono">${list.length}</span></div>
+        <div class="class-col-body">${list.map(renderCard).join('') || '<div class="col-empty">перетащите сюда</div>'}</div>
+      </div>`;
+    return `<div class="class-cols">${keys.map((k) => col(k, groups.get(k))).join('')}${extra.map((k) => col(k, [])).join('')}</div>`;
+  }
+
+  function setClassView(cat, on) {
+    if (on) classView[cat] = true; else delete classView[cat];
+    lsSet('cs.classView', JSON.stringify(classView));
   }
 
   function drawStructures() {
@@ -172,6 +215,8 @@
       return;
     }
     if (e.target.id === 'toggle-deleted') { showDeleted = !showDeleted; render(); return; }
+    const viewBtn = e.target.closest('[data-classview]');
+    if (viewBtn) { const c = viewBtn.dataset.classview; setClassView(c, !classView[c]); render(); return; }
     const restore = e.target.closest('[data-restore]');
     if (restore) {
       restore.disabled = true;
@@ -179,6 +224,72 @@
         const res = await Store.update(restore.dataset.restore, { deleted: false, updated_by: 'сайт' });
         if (res.row) { upsertLocal(res.row); toast('Карточка восстановлена'); }
       } catch (err) { toast('Не удалось восстановить: ' + err.message, 'err'); restore.disabled = false; }
+    }
+  });
+
+  // ---------- перетаскивание карточек между разделами и классами ----------
+  let dragId = null;
+  function dropTargetOf(el) {
+    if (!el || !el.closest) return null;
+    return el.closest('.class-col') || el.closest('section.category');
+  }
+  function clearDropMarks() { mainEl.querySelectorAll('.drop-target').forEach((x) => x.classList.remove('drop-target')); }
+
+  mainEl.addEventListener('dragstart', (e) => {
+    const card = e.target.closest && e.target.closest('.card[draggable="true"]');
+    if (!card) return;
+    dragId = card.dataset.id;
+    e.dataTransfer.effectAllowed = 'move';
+    try { e.dataTransfer.setData('text/plain', dragId); } catch (err) { /* ignore */ }
+    requestAnimationFrame(() => card.classList.add('dragging'));
+    document.body.classList.add('is-dragging');
+  });
+  mainEl.addEventListener('dragend', () => {
+    dragId = null;
+    clearDropMarks();
+    mainEl.querySelectorAll('.dragging').forEach((x) => x.classList.remove('dragging'));
+    document.body.classList.remove('is-dragging');
+  });
+  mainEl.addEventListener('dragover', (e) => {
+    if (!dragId) return;
+    const t = dropTargetOf(e.target);
+    if (!t) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (!t.classList.contains('drop-target')) { clearDropMarks(); t.classList.add('drop-target'); }
+  });
+  mainEl.addEventListener('drop', async (e) => {
+    if (!dragId) return;
+    const t = dropTargetOf(e.target);
+    if (!t) return;
+    e.preventDefault();
+    const id = dragId;
+    clearDropMarks();
+    const d = docs.find((x) => x.id === id);
+    if (!d) return;
+    const sec = t.closest('section.category');
+    const patch = {};
+    const cat = Number(sec.dataset.cat);
+    if (cat !== d.category) patch.category = cat;
+    if (t.classList.contains('class-col')) {
+      const cls = t.dataset.class || null;
+      if (cls !== (d.compound_class || null)) patch.compound_class = cls;
+    }
+    if (!Object.keys(patch).length) return;
+    const before = Object.assign({}, d);
+    Object.assign(d, patch);
+    render();
+    try {
+      const res = await Store.update(id, Object.assign({ updated_by: 'сайт' }, patch), null);
+      if (res.row) upsertLocal(res.row);
+      const what = [];
+      if ('category' in patch) what.push('раздел «' + CATS.find((c) => c.id === patch.category).title + '»');
+      if ('compound_class' in patch) what.push('класс «' + (patch.compound_class || NO_CLASS) + '»');
+      toast('Перенесено: ' + what.join(', '));
+    } catch (err) {
+      Object.assign(d, before);
+      render();
+      toast('Не удалось перенести: ' + err.message, 'err');
     }
   });
 
@@ -196,7 +307,7 @@
     const f = {
       code: $('f-code'), name: $('f-name'), category: $('f-category'), formula: $('f-formula'), cas: $('f-cas'),
       yieldIso: $('f-yield-iso'), yieldAnalyt: $('f-yield-analyt'), loading: $('f-loading'), mass: $('f-mass'),
-      extraCodes: $('f-extra-codes'), note: $('f-note'), smiles: $('f-smiles'),
+      extraCodes: $('f-extra-codes'), note: $('f-note'), smiles: $('f-smiles'), cls: $('f-class'),
       find: $('f-find'),
     };
     const EMPTY_MOL = '\n  Ketcher\n\n  0  0  0  0  0  0  0  0  0  0999 V2000\nM  END\n';
@@ -373,6 +484,8 @@
       setNum(f.yieldAnalyt, d && d.yield_analyt);
       setNum(f.loading, d && d.loading_umol);
       f.note.value = d ? d.note || '' : '';
+      f.cls.value = d ? d.compound_class || '' : '';
+      $('classes-list').innerHTML = allClasses().map((c) => `<option value="${esc(c)}"></option>`).join('');
       f.smiles.value = d ? d.smiles || '' : '';
       f.find.value = '';
       lastAutoFormula = '';
@@ -542,6 +655,7 @@
           yield_analyt: num(f.yieldAnalyt),
           loading_umol: num(f.loading),
           note: str(f.note),
+          compound_class: str(f.cls),
           reactions: await buildReactions(),
           updated_by: who(),
         };
@@ -609,6 +723,18 @@
     if (Store.isReadOnly()) { toast('Редактирование недоступно: нет связи с базой', 'err'); return; }
     Editor.open(null);
   });
+
+  $('btn-classes-all').addEventListener('click', () => {
+    const allOn = CATS.every((c) => classView[c.id]);
+    CATS.forEach((c) => setClassView(c.id, !allOn));
+    render();
+  });
+  function syncAllBtn() {
+    const allOn = CATS.every((c) => classView[c.id]);
+    const b = $('btn-classes-all');
+    b.textContent = allOn ? '▦ Сеткой' : '▥ По классам';
+    b.classList.toggle('on', allOn);
+  }
 
   // ---------- тема ----------
   (function themeToggle() {
