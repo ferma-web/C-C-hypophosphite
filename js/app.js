@@ -151,6 +151,15 @@
     drawStructures();
   }
 
+  // Класс всегда с заглавной буквы; «нитростиролы» и «Нитростиролы» — один и тот же класс
+  function normClass(v) {
+    const t = String(v || '').trim().replace(/\s+/g, ' ');
+    if (!t) return null;
+    const cap = t.charAt(0).toLocaleUpperCase('ru') + t.slice(1);
+    const existing = allClasses().find((c) => c.toLocaleLowerCase('ru') === cap.toLocaleLowerCase('ru'));
+    return existing || cap;
+  }
+
   function allClasses() {
     const set = new Set();
     docs.forEach((d) => { if (!d.deleted && d.compound_class) set.add(d.compound_class); });
@@ -705,7 +714,7 @@
           yield_analyt: num(f.yieldAnalyt),
           loading_umol: num(f.loading),
           note: str(f.note),
-          compound_class: str(f.cls),
+          compound_class: normClass(f.cls.value),
           reactions: await buildReactions(),
           updated_by: who(),
         };
