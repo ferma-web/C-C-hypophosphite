@@ -20,8 +20,36 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      # Версия редактора структур Ketcher (https://github.com/epam/ketcher/releases).
+      # "latest" — последняя; можно закрепить конкретный тег, например "v3.4.0".
+      KETCHER_VERSION: latest
     steps:
       - uses: actions/checkout@v4
+
+      # Ketcher (≈30 МБ) не храним в репозитории — подкладываем при каждом деплое.
+      # Он должен лежать на том же домене, что и сайт, иначе страница не сможет
+      # прочитать нарисованную молекулу из iframe.
+      - name: Add Ketcher standalone build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tmp=$(mktemp -d)
+          if [ "$KETCHER_VERSION" = "latest" ]; then
+            gh release download --repo epam/ketcher --pattern '*standalone*.zip' --dir "$tmp"
+          else
+            gh release download "$KETCHER_VERSION" --repo epam/ketcher --pattern '*standalone*.zip' --dir "$tmp"
+          fi
+          ls -la "$tmp"
+          unzip -q "$tmp"/*.zip -d "$tmp/unz"
+          idx=$(find "$tmp/unz" -name index.html -printf '%d %p\n' | sort -n | head -1 | cut -d' ' -f2-)
+          test -n "$idx"
+          rm -rf ketcher
+          mkdir ketcher
+          cp -r "$(dirname "$idx")"/. ketcher/
+          ls ketcher | head -20
+
       - uses: actions/configure-pages@v5
         with:
           enablement: true

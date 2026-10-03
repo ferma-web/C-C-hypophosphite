@@ -19,7 +19,7 @@
       <h1>Hypophosphite C=C Reduction — молекулы</h1>
     </div>
     <div class="stats-row" id="stats-row"></div>
-    <a class="nav-link" href="add.html">+ Добавить структуру вручную</a>
+    <button class="btn primary" id="btn-new" type="button">+ Новая карточка</button>
   </div>
   <div class="search-row">
     <input id="search" type="text" placeholder="Поиск по названию, формуле или шифру (AAP-35, KIR-46, …)" autocomplete="off">
@@ -27,16 +27,135 @@
   </div>
 </header>
 
-<main id="main"></main>
+<main id="main"><div class="banner info">Загрузка…</div></main>
 
 <footer>
-  <span>Данные выгружены из OdanLab. Как обновить — см. <a href="scripts/refresh_data.py" class="mono">scripts/refresh_data.py</a> и README.</span>
+  <span>Правки сохраняются сразу и видны всем, у кого есть ссылка. Копия данных автоматически архивируется в GitHub (<span class="mono">data/molecules.json</span>).</span>
   <span id="footer-updated"></span>
 </footer>
 
+<!-- Редактор карточки -->
+<dialog id="editor" aria-labelledby="ed-title">
+  <form id="ed-form" method="dialog" novalidate>
+    <div class="ed-head">
+      <h2 id="ed-title">Новая карточка</h2>
+      <button type="button" class="icon-btn" id="ed-close" aria-label="Закрыть">✕</button>
+    </div>
+
+    <div class="ed-body">
+      <section class="ed-lookup">
+        <div class="field-row" style="align-items:flex-end;">
+          <div class="field" style="flex:1;">
+            <label for="f-code">Шифр реакции в OdanLab</label>
+            <input type="text" id="f-code" list="codes-list" placeholder="например: AAP-36" autocomplete="off">
+            <datalist id="codes-list"></datalist>
+          </div>
+          <button type="button" class="btn" id="btn-lookup">Подтянуть из OdanLab</button>
+        </div>
+        <div class="hint" id="lookup-status">Введите шифр — название, выходы, формула и структура подставятся сами. Или нарисуйте структуру вручную ниже.</div>
+      </section>
+
+      <section class="ed-structure">
+        <div class="ed-section-head">
+          <span class="label">Структура</span>
+          <span class="hint" id="ketcher-status">редактор загружается…</span>
+        </div>
+        <div id="ketcher-wrap">
+          <iframe id="ketcher-frame" title="Ketcher — редактор структур"></iframe>
+        </div>
+        <div id="ketcher-missing" class="hint" hidden>
+          Встроенный Ketcher недоступен (он подкладывается при деплое на GitHub Pages). Вставьте SMILES в поле ниже — превью нарисуется автоматически.
+        </div>
+        <div class="smiles-row">
+          <div class="field" style="flex:1; margin:0;">
+            <label for="f-smiles">SMILES</label>
+            <input type="text" id="f-smiles" class="mono" placeholder="можно вставить SMILES и нажать «В редактор»" autocomplete="off" spellcheck="false">
+          </div>
+          <button type="button" class="btn small" id="btn-smiles-to-ketcher">В редактор ↑</button>
+          <div class="mini-preview" id="smiles-preview" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="ed-fields">
+        <div class="field">
+          <label for="f-name">Название *</label>
+          <input type="text" id="f-name" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-category">Категория</label>
+            <select id="f-category">
+              <option value="1">Есть препаративный выход</option>
+              <option value="2">Ожидает выделения</option>
+              <option value="4">Ожидает ЯМР / только запланировано</option>
+              <option value="3">Низкий аналитический выход</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-formula">Формула</label>
+            <input type="text" id="f-formula" class="mono" placeholder="из структуры">
+          </div>
+          <div class="field">
+            <label for="f-cas">CAS</label>
+            <input type="text" id="f-cas" class="mono">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-yield-iso">Выделенный выход, %</label>
+            <input type="number" id="f-yield-iso" step="any" min="0" max="100">
+          </div>
+          <div class="field">
+            <label for="f-yield-analyt">Выход по ЯМР, %</label>
+            <input type="number" id="f-yield-analyt" step="any" min="0" max="100">
+          </div>
+          <div class="field">
+            <label for="f-loading">Загрузка, мкмоль</label>
+            <input type="number" id="f-loading" step="any" min="0">
+          </div>
+          <div class="field">
+            <label for="f-mass">Масса, мг</label>
+            <input type="number" id="f-mass" step="any" min="0">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-extra-codes">Другие шифры (через запятую)</label>
+            <input type="text" id="f-extra-codes" class="mono" placeholder="KIR-44, KIR-45">
+          </div>
+          <div class="field">
+            <label for="f-mp">Т. пл., °C</label>
+            <input type="number" id="f-mp" step="any">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-note">Примечание</label>
+          <textarea id="f-note" rows="2"></textarea>
+        </div>
+      </section>
+    </div>
+
+    <div class="ed-error" id="ed-error" hidden></div>
+    <div class="ed-foot">
+      <div class="field who">
+        <label for="f-who">Кто правит</label>
+        <input type="text" id="f-who" placeholder="ваше имя" autocomplete="name">
+      </div>
+      <span class="hint" id="ed-meta"></span>
+      <span class="spacer"></span>
+      <button type="button" class="btn danger" id="btn-delete" hidden>Удалить</button>
+      <button type="button" class="btn" id="btn-cancel">Отмена</button>
+      <button type="submit" class="btn primary" id="btn-save">Сохранить</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="drafts.js"></script>
-<script src="script.js"></script>
+<script src="js/chem.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,580 @@
+(function () {
+  'use strict';
+
+  const GROUP_ID = '25214cf7-ea57-4a35-bfd1-167ad307f306';
+  const PROJECT_ID = '4e03047f-ba01-4986-8f9b-c077ed367195';
+  const ODANLAB_URL = (id) => `https://lab.odanchem.org/app/group/${GROUP_ID}/project/${PROJECT_ID}/reaction/${id}`;
+
+  const CATS = [
+    { id: 1, title: 'Есть препаративный выход', desc: 'вещество выделено, масса/чистота подтверждены', color: 'var(--iso)' },
+    { id: 2, title: 'Ожидает выделения', desc: 'аналитический выход есть, выделение запланировано', color: 'var(--planned)' },
+    { id: 4, title: 'Ожидает ЯМР / только запланировано', desc: 'реакция поставлена, данных по выходу пока нет', color: 'var(--ink-faint)' },
+    { id: 3, title: 'Субстраты с низким аналитическим выходом', desc: 'выход по ЯМР низкий — реакция требует пересмотра условий', color: 'var(--danger)' },
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const mainEl = $('main');
+  const searchInput = $('search');
+
+  let docs = [];          // все строки, включая удалённые
+  let source = 'live';
+  let showDeleted = false;
+
+  // ---------- helpers ----------
+  function esc(s) {
+    return (s ?? '').toString().replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  function fmtYield(v) {
+    if (v === null || v === undefined || v === '') return null;
+    const n = Math.round(Number(v) * 10) / 10;
+    return (Number.isInteger(n) ? n : n.toFixed(1)) + '%';
+  }
+  function fmtDate(s) {
+    if (!s) return '';
+    const d = new Date(s);
+    return d.toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function toast(msg, kind) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.className = 'show' + (kind ? ' ' + kind : '');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => { t.className = ''; }, 3500);
+  }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+
+  // ---------- cards ----------
+  function renderCard(d) {
+    const reactions = Array.isArray(d.reactions) ? d.reactions : [];
+    const codesShown = reactions.slice(0, 6);
+    const extra = reactions.length - codesShown.length;
+    const isoY = fmtYield(d.yield_iso);
+    const anY = fmtYield(d.yield_analyt);
+    let pills = '';
+    if (isoY) pills += `<span class="pill iso">выделено ${isoY}</span>`;
+    if (anY) pills += `<span class="pill analyt">ЯМР ${anY}</span>`;
+    if (!isoY && !anY) pills = `<span class="pill none">нет данных</span>`;
+
+    const primary = reactions.find((r) => r.id);
+    const structure = d.molfile || d.smiles;
+    let img;
+    if (d.image) img = `<img src="${esc(d.image)}" alt="${esc(d.name)}" loading="lazy">`;
+    else if (structure) img = `<div class="rd" data-structure="${esc(structure)}"><span class="ph">рисую…</span></div>`;
+    else img = `<span class="ph">нет структуры</span>`;
+
+    const meta = [];
+    if (d.formula) meta.push(esc(d.formula));
+    if (d.loading_umol) meta.push('загрузка: ' + esc(d.loading_umol) + ' мкмоль');
+
+    const body = `
+      ${d.source === 'manual' ? '<span class="draft-badge">добавлено вручную</span>' : ''}
+      <div class="imgbox">${img}</div>
+      <div class="name">${esc(d.name)}</div>
+      <div class="formula mono">${meta.join(' · ')}</div>
+      <div class="yields">${pills}</div>`;
+
+    const wrap = primary
+      ? `<a class="card-link" href="${esc(ODANLAB_URL(primary.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primary.code)} в OdanLab">${body}</a>`
+      : `<div class="card-link">${body}</div>`;
+
+    const search = [d.name, d.formula, d.cas, d.note, reactions.map((r) => r.code).join(' ')].join(' ').toLowerCase();
+
+    return `
+      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}">
+        ${Store.isReadOnly() ? '' : `<button type="button" class="edit-btn" data-edit="${esc(d.id)}" title="Редактировать карточку" aria-label="Редактировать «${esc(d.name)}»">✎</button>`}
+        ${wrap}
+        <div class="codes">
+          ${codesShown.map((r) => r.id
+            ? `<a class="code-chip" href="${esc(ODANLAB_URL(r.id))}" target="_blank" rel="noopener" title="Открыть в OdanLab">${esc(r.code)}</a>`
+            : `<span class="code-chip">${esc(r.code)}</span>`).join('')}
+          ${extra > 0 ? `<span class="code-chip">+${extra}</span>` : ''}
+        </div>
+        ${d.note ? `<div class="note-line">${esc(d.note)}</div>` : ''}
+      </div>`;
+  }
+
+  function render() {
+    const active = docs.filter((d) => !d.deleted);
+    const deleted = docs.filter((d) => d.deleted);
+    const byCat = {};
+    for (const d of active) (byCat[d.category] ||= []).push(d);
+    for (const k in byCat) byCat[k].sort((a, b) => (b.yield_iso ?? b.yield_analyt ?? -1) - (a.yield_iso ?? a.yield_analyt ?? -1));
+
+    let html = '';
+    if (source === 'archive') {
+      html += `<div class="banner warn">База недоступна — показана архивная копия из GitHub, редактирование временно отключено.</div>`;
+    }
+    for (const cat of CATS) {
+      const items = byCat[cat.id] || [];
+      html += `
+        <section class="category" data-cat="${cat.id}">
+          <div class="cat-head" style="--cat-color:${cat.color}">
+            <span class="cat-dot"></span>
+            <h2>${cat.title}</h2>
+            <span class="count mono">${items.length}</span>
+            <span class="cat-desc">${cat.desc}</span>
+          </div>
+          ${items.length ? `<div class="grid">${items.map(renderCard).join('')}</div>` : `<div class="empty-cat">Категория пока пуста.</div>`}
+        </section>`;
+    }
+    if (deleted.length && !Store.isReadOnly()) {
+      html += `
+        <section class="deleted">
+          <button type="button" class="linkish" id="toggle-deleted">${showDeleted ? '▾' : '▸'} Удалённые карточки (${deleted.length})</button>
+          ${showDeleted ? `<div class="deleted-list">${deleted.map((d) => `
+            <div class="deleted-row">
+              <span class="name">${esc(d.name)}</span>
+              <span class="hint">${esc((d.reactions || []).map((r) => r.code).join(', '))} · удалил(а) ${esc(d.updated_by || '—')}, ${esc(fmtDate(d.updated_at))}</span>
+              <button type="button" class="btn small" data-restore="${esc(d.id)}">Восстановить</button>
+            </div>`).join('')}</div>` : ''}
+        </section>`;
+    }
+    mainEl.innerHTML = html;
+    applySearch();
+    updateStats();
+    drawStructures();
+  }
+
+  function drawStructures() {
+    const els = mainEl.querySelectorAll('.rd[data-structure]');
+    els.forEach((el) => Chem.renderInto(el, el.dataset.structure));
+  }
+
+  function applySearch() {
+    const q = searchInput.value.trim().toLowerCase();
+    document.querySelectorAll('.card').forEach((c) => c.classList.toggle('hidden-by-search', !!q && !c.dataset.search.includes(q)));
+    document.querySelectorAll('section.category').forEach((sec) => {
+      const visible = sec.querySelectorAll('.card:not(.hidden-by-search)').length;
+      sec.style.display = q && !visible ? 'none' : '';
+    });
+  }
+  searchInput.addEventListener('input', applySearch);
+
+  function updateStats() {
+    const active = docs.filter((d) => !d.deleted);
+    const codes = new Set();
+    active.forEach((d) => (d.reactions || []).forEach((r) => codes.add(r.code)));
+    $('stats-row').innerHTML = `
+      <div class="stat"><span class="n mono">${active.length}</span><span class="l">веществ</span></div>
+      <div class="stat"><span class="n mono">${codes.size}</span><span class="l">реакций</span></div>`;
+    const last = active.reduce((m, d) => (d.updated_at && d.updated_at > m ? d.updated_at : m), '');
+    $('sync-note').textContent = source === 'live' ? 'онлайн · изменено ' + fmtDate(last) : 'архив';
+  }
+
+  mainEl.addEventListener('click', async (e) => {
+    const editBtn = e.target.closest('[data-edit]');
+    if (editBtn) {
+      e.preventDefault();
+      const d = docs.find((x) => x.id === editBtn.dataset.edit);
+      if (d) Editor.open(d);
+      return;
+    }
+    if (e.target.id === 'toggle-deleted') { showDeleted = !showDeleted; render(); return; }
+    const restore = e.target.closest('[data-restore]');
+    if (restore) {
+      restore.disabled = true;
+      try {
+        const res = await Store.update(restore.dataset.restore, { deleted: false, updated_by: Editor.who() });
+        if (res.row) { upsertLocal(res.row); toast('Карточка восстановлена'); }
+      } catch (err) { toast('Не удалось восстановить: ' + err.message, 'err'); restore.disabled = false; }
+    }
+  });
+
+  function upsertLocal(row) {
+    const i = docs.findIndex((d) => d.id === row.id);
+    if (i >= 0) docs[i] = row; else docs.push(row);
+    render();
+  }
+
+  // ---------- editor ----------
+  const Editor = (function () {
+    const dlg = $('editor');
+    const form = $('ed-form');
+    const frame = $('ketcher-frame');
+    const f = {
+      code: $('f-code'), name: $('f-name'), category: $('f-category'), formula: $('f-formula'), cas: $('f-cas'),
+      yieldIso: $('f-yield-iso'), yieldAnalyt: $('f-yield-analyt'), loading: $('f-loading'), mass: $('f-mass'),
+      extraCodes: $('f-extra-codes'), mp: $('f-mp'), note: $('f-note'), smiles: $('f-smiles'), who: $('f-who'),
+    };
+    const EMPTY_MOL = '\n  Ketcher\n\n  0  0  0  0  0  0  0  0  0  0999 V2000\nM  END\n';
+
+    let current = null;          // редактируемая строка (null = новая)
+    let lookedUp = null;         // строка справочника OdanLab, подтянутая по шифру
+    let baselineSmiles = '';     // что было в редакторе после загрузки
+    let lastAutoFormula = '';
+    let ketcherState = 'idle';   // idle | loading | ready | missing
+    let ketcherPromise = null;
+    let dirty = false;
+    let loadToken = 0;
+    let smilesTyped = false;     // пользователь вписал SMILES руками и не перенёс в редактор
+
+    f.who.value = lsGet('cs.who') || '';
+    f.who.addEventListener('change', () => lsSet('cs.who', f.who.value.trim()));
+    function who() { return (f.who.value || lsGet('cs.who') || '').trim() || 'аноним'; }
+
+    function setStatus(id, text, kind) {
+      const el = $(id);
+      el.textContent = text;
+      el.className = 'hint' + (kind ? ' ' + kind : '');
+    }
+
+    // --- Ketcher ---
+    function ensureKetcher() {
+      if (ketcherPromise) return ketcherPromise;
+      ketcherState = 'loading';
+      ketcherPromise = fetch('ketcher/index.html', { method: 'HEAD', cache: 'no-store' })
+        .then((r) => {
+          if (!r.ok) throw new Error('ketcher/ not deployed');
+          frame.src = 'ketcher/index.html';
+          return new Promise((resolve, reject) => {
+            const started = Date.now();
+            (function poll() {
+              let k = null;
+              try { k = frame.contentWindow && frame.contentWindow.ketcher; } catch (e) { /* not ready */ }
+              if (k && typeof k.getSmiles === 'function') return resolve(k);
+              if (Date.now() - started > 60000) return reject(new Error('Ketcher не загрузился за 60 с'));
+              setTimeout(poll, 250);
+            })();
+          });
+        })
+        .then((k) => {
+          ketcherState = 'ready';
+          try {
+            k.editor.subscribe('change', debounce(onKetcherChange, 400));
+          } catch (e) { console.warn('ketcher change subscription failed', e); }
+          return k;
+        })
+        .catch((err) => {
+          console.warn(err);
+          ketcherState = 'missing';
+          $('ketcher-wrap').hidden = true;
+          $('ketcher-missing').hidden = false;
+          setStatus('ketcher-status', '');
+          return null;
+        });
+      return ketcherPromise;
+    }
+
+    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+    let suppressChange = false;
+    async function onKetcherChange() {
+      if (suppressChange || !dlg.open) return;
+      const k = await ensureKetcher();
+      if (!k) return;
+      try {
+        const smi = await k.getSmiles();
+        if (smi !== baselineSmiles) dirty = true;
+        f.smiles.value = smi || '';
+        smilesTyped = false;
+        renderMiniPreview(smi);
+        if (smi) {
+          const mf = await k.getMolfile();
+          const formula = Chem.formulaFromMolfile(mf);
+          if (formula && (!f.formula.value.trim() || f.formula.value.trim() === lastAutoFormula)) {
+            f.formula.value = formula;
+            lastAutoFormula = formula;
+          }
+        }
+      } catch (e) { console.warn('ketcher read failed', e); }
+    }
+
+    // asBaseline = true: это сохранённая структура карточки (от неё считаем «изменено/не изменено»)
+    async function loadStructure(structure, asBaseline) {
+      const token = ++loadToken;
+      if (structure && !structure.includes('\n')) f.smiles.value = structure;
+      smilesTyped = false;
+      renderMiniPreview(structure);
+      const k = await ensureKetcher();
+      if (!k || token !== loadToken) return;
+      setStatus('ketcher-status', 'рисуйте или правьте молекулу');
+      suppressChange = true;
+      try {
+        await k.setMolecule(structure || EMPTY_MOL);
+        if (asBaseline) baselineSmiles = structure ? await k.getSmiles() : '';
+        else if (structure) f.smiles.value = await k.getSmiles();
+      } catch (e) {
+        console.warn('setMolecule failed', e);
+        setStatus('ketcher-status', 'не удалось загрузить структуру в редактор', 'err');
+      } finally {
+        setTimeout(() => { suppressChange = false; }, 500);
+      }
+    }
+
+    function renderMiniPreview(structure) {
+      const el = $('smiles-preview');
+      if (!structure) { el.innerHTML = ''; return; }
+      Chem.renderInto(el, structure);
+    }
+
+    $('btn-smiles-to-ketcher').addEventListener('click', async () => {
+      const smi = f.smiles.value.trim();
+      dirty = true;
+      smilesTyped = false;
+      renderMiniPreview(smi);
+      const k = await ensureKetcher();
+      if (k) {
+        try { await k.setMolecule(smi || EMPTY_MOL); } catch (e) { toast('Ketcher не понял этот SMILES', 'err'); }
+      }
+    });
+    f.smiles.addEventListener('input', () => { smilesTyped = true; });
+    f.smiles.addEventListener('input', debounce(() => renderMiniPreview(f.smiles.value.trim()), 400));
+
+    // --- fill/read form ---
+    function num(el) { const v = el.value.trim(); return v === '' ? null : Number(v.replace(',', '.')); }
+    function str(el) { const v = el.value.trim(); return v === '' ? null : v; }
+    function setNum(el, v) { el.value = v === null || v === undefined ? '' : String(Math.round(Number(v) * 100) / 100); }
+
+    function fill(d) {
+      const r = (d && d.reactions) || [];
+      f.code.value = r[0] ? r[0].code : '';
+      f.extraCodes.value = r.slice(1).map((x) => x.code).join(', ');
+      f.name.value = d ? d.name || '' : '';
+      f.category.value = String(d ? d.category || 4 : 4);
+      f.formula.value = d ? d.formula || '' : '';
+      f.cas.value = d ? d.cas || '' : '';
+      setNum(f.yieldIso, d && d.yield_iso);
+      setNum(f.yieldAnalyt, d && d.yield_analyt);
+      setNum(f.loading, d && d.loading_umol);
+      setNum(f.mass, d && d.mass_measured_mg);
+      setNum(f.mp, d && d.melt_point_c);
+      f.note.value = d ? d.note || '' : '';
+      f.smiles.value = d ? d.smiles || '' : '';
+      lastAutoFormula = '';
+    }
+
+    async function buildReactions() {
+      const map = await Store.loadReactions();
+      const prev = new Map(((current && current.reactions) || []).map((r) => [Store.normCode(r.code), r.id]));
+      const codes = [f.code.value, ...f.extraCodes.value.split(/[,;\s]+/)].map(Store.normCode).filter(Boolean);
+      const seen = new Set();
+      const out = [];
+      for (const c of codes) {
+        if (seen.has(c)) continue;
+        seen.add(c);
+        const hit = map.get(c);
+        out.push({ code: c, id: (hit && hit.reaction_id) || prev.get(c) || null });
+      }
+      return out;
+    }
+
+    async function open(d, opts) {
+      current = d || null;
+      lookedUp = null;
+      dirty = false;
+      baselineSmiles = '';
+      fill(d);
+      $('ed-title').textContent = d ? 'Редактирование карточки' : 'Новая карточка';
+      $('btn-delete').hidden = !d;
+      $('ed-error').hidden = true;
+      $('ed-meta').textContent = d && d.updated_at ? `изменено ${fmtDate(d.updated_at)}${d.updated_by ? ' · ' + d.updated_by : ''}` : '';
+      setStatus('lookup-status', d ? 'Можно заново подтянуть данные из OdanLab по шифру — поля перезапишутся.' : 'Введите шифр — название, выходы, формула и структура подставятся сами. Или нарисуйте структуру вручную ниже.');
+      setStatus('ketcher-status', ketcherState === 'ready' ? 'рисуйте или правьте молекулу' : 'редактор загружается…');
+      if (!dlg.open) dlg.showModal();
+      history.replaceState(null, '', d ? '#edit=' + encodeURIComponent(d.id) : '#new');
+      fillCodeList();
+      loadStructure(d ? (d.molfile || d.smiles || '') : '', true);
+      if (opts && opts.code) { f.code.value = opts.code; lookup(); }
+      else if (!d) f.code.focus();
+    }
+
+    async function fillCodeList() {
+      const map = await Store.loadReactions();
+      const dl = $('codes-list');
+      if (dl.options.length) return;
+      const codes = [...map.values()].sort((a, b) => a.code.localeCompare(b.code, 'en', { numeric: true }));
+      dl.innerHTML = codes.map((r) => `<option value="${esc(r.code)}">${esc(r.name || '')}</option>`).join('');
+    }
+
+    async function lookup() {
+      const code = Store.normCode(f.code.value);
+      if (!code) return;
+      const row = await Store.lookupCode(code);
+      if (!row) {
+        setStatus('lookup-status', `Шифр «${code}» не найден в справочнике OdanLab. Справочник обновляется раз в день; можно заполнить карточку вручную.`, 'err');
+        return;
+      }
+      lookedUp = row;
+      dirty = true;
+      f.code.value = row.code;
+      if (row.name) f.name.value = row.name;
+      if (row.formula) f.formula.value = row.formula;
+      if (row.cas) f.cas.value = row.cas;
+      setNum(f.yieldIso, row.yield_iso);
+      setNum(f.yieldAnalyt, row.yield_analyt);
+      setNum(f.mass, row.mass_measured_mg);
+      if (row.loading_umol) setNum(f.loading, row.loading_umol);
+      if (!current) f.category.value = row.yield_iso != null ? '1' : (row.yield_analyt != null ? '2' : '4');
+      if (row.smiles) loadStructure(row.smiles);
+
+      const dup = docs.find((d) => !d.deleted && d !== current && (d.reactions || []).some((r) => Store.normCode(r.code) === row.code));
+      let msg = `Подставлено из OdanLab: ${row.name || '(без названия)'}.`;
+      if (row.reagents) msg += ` Реагенты: ${row.reagents}.`;
+      setStatus('lookup-status', msg, 'ok');
+      if (dup) {
+        const s = $('lookup-status');
+        s.className = 'hint warn';
+        s.innerHTML = esc(`Внимание: карточка с шифром ${row.code} уже есть — «${dup.name}». `) + `<button type="button" class="linkish" id="open-dup">открыть её</button>`;
+        $('open-dup').onclick = () => open(dup);
+      }
+    }
+    $('btn-lookup').addEventListener('click', lookup);
+    f.code.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); lookup(); } });
+    f.code.addEventListener('change', async () => {
+      // выбор из выпадающего списка у новой карточки — подтягиваем сразу
+      if (!current && !f.name.value.trim() && (await Store.lookupCode(f.code.value))) lookup();
+    });
+    form.addEventListener('input', (e) => { if (e.target !== f.who) dirty = true; });
+
+    async function readStructure() {
+      // Возвращает { smiles, molfile, changed } относительно сохранённой версии карточки.
+      const origSmiles = current ? current.smiles || null : null;
+      const typed = f.smiles.value.trim() || null;
+      if (ketcherState === 'ready' && !smilesTyped) {
+        const k = await ensureKetcher();
+        let smi = '';
+        try { smi = await k.getSmiles(); } catch (e) { smi = ''; }
+        if (smi === baselineSmiles) return { smiles: origSmiles, molfile: current ? current.molfile || null : null, changed: false };
+        let mf = null;
+        if (smi) { try { mf = await k.getMolfile(); } catch (e) { mf = null; } }
+        return { smiles: smi || null, molfile: mf, changed: true };
+      }
+      // Ketcher недоступен или SMILES вписан руками — берём из поля
+      if (typed === origSmiles) return { smiles: origSmiles, molfile: current ? current.molfile || null : null, changed: false };
+      return { smiles: typed, molfile: null, changed: true };
+    }
+
+    function showError(msg) {
+      const el = $('ed-error');
+      el.textContent = msg;
+      el.hidden = false;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!f.name.value.trim()) { f.name.focus(); showError('Укажите название вещества.'); return; }
+      const btn = $('btn-save');
+      btn.disabled = true;
+      btn.textContent = 'Сохраняю…';
+      $('ed-error').hidden = true;
+      try {
+        lsSet('cs.who', f.who.value.trim());
+        const st = await readStructure();
+        const row = {
+          name: f.name.value.trim(),
+          category: Number(f.category.value),
+          formula: str(f.formula),
+          cas: str(f.cas),
+          yield_iso: num(f.yieldIso),
+          yield_analyt: num(f.yieldAnalyt),
+          loading_umol: num(f.loading),
+          mass_measured_mg: num(f.mass),
+          melt_point_c: num(f.mp),
+          note: str(f.note),
+          reactions: await buildReactions(),
+          updated_by: who(),
+        };
+        if (st.changed) { row.smiles = st.smiles; row.molfile = st.molfile; row.image = null; }
+        let saved;
+        if (!current) {
+          row.id = (crypto.randomUUID ? crypto.randomUUID() : 'm-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+          row.source = lookedUp ? 'odanlab' : 'manual';
+          saved = await Store.insert(row);
+        } else {
+          let res = await Store.update(current.id, row, current.updated_at);
+          if (res.conflict) {
+            const c = res.conflict;
+            const ok = confirm(`Пока вы редактировали, карточку изменил(а) ${c ? c.updated_by || 'кто-то' : 'кто-то'} (${c ? fmtDate(c.updated_at) : ''}).\n\nПерезаписать её вашей версией?`);
+            if (!ok) { if (c) upsertLocal(c); throw new Error('Не сохранено: карточку изменили параллельно. Откройте её заново, чтобы увидеть свежую версию.'); }
+            res = await Store.update(current.id, row, null);
+          }
+          saved = res.row;
+        }
+        upsertLocal(saved);
+        dirty = false;
+        close(true);
+        toast('Сохранено — изменения уже видны всем');
+      } catch (err) {
+        console.error(err);
+        showError(err.message || String(err));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Сохранить';
+      }
+    });
+
+    $('btn-delete').addEventListener('click', async () => {
+      if (!current) return;
+      if (!confirm(`Удалить карточку «${current.name}»?\n\nЕё можно будет восстановить внизу страницы («Удалённые карточки»).`)) return;
+      try {
+        const res = await Store.update(current.id, { deleted: true, updated_by: who() }, null);
+        if (res.row) upsertLocal(res.row);
+        dirty = false;
+        close(true);
+        toast('Карточка удалена (её можно восстановить внизу страницы)');
+      } catch (err) { showError(err.message); }
+    });
+
+    function close(force) {
+      if (!force && dirty && !confirm('Закрыть без сохранения?')) return false;
+      dlg.close();
+      history.replaceState(null, '', location.pathname + location.search);
+      return true;
+    }
+    $('ed-close').addEventListener('click', () => close());
+    $('btn-cancel').addEventListener('click', () => close());
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+
+    function onRemoteChange(row) {
+      if (dlg.open && current && row.id === current.id && row.updated_at !== current.updated_at) {
+        $('ed-meta').innerHTML = `<span class="warn">⚠ карточку только что изменил(а) ${esc(row.updated_by || 'кто-то')}</span>`;
+      }
+    }
+
+    return { open, who, onRemoteChange, prewarm: ensureKetcher };
+  })();
+
+  $('btn-new').addEventListener('click', () => {
+    if (Store.isReadOnly()) { toast('Редактирование недоступно: нет связи с базой', 'err'); return; }
+    Editor.open(null);
+  });
+
+  // ---------- init ----------
+  async function init() {
+    try {
+      const res = await Store.loadMolecules();
+      docs = res.rows;
+      source = res.source;
+    } catch (err) {
+      mainEl.innerHTML = `<div class="banner warn">Не удалось загрузить данные: ${esc(err.message)}</div>`;
+      return;
+    }
+    render();
+    $('btn-new').hidden = Store.isReadOnly();
+
+    Store.subscribe((p) => {
+      const row = p.new && p.new.id ? p.new : null;
+      if (!row) return;
+      Editor.onRemoteChange(row);
+      upsertLocal(row);
+    });
+    document.addEventListener('visibilitychange', async () => {
+      if (document.visibilityState !== 'visible' || $('editor').open) return;
+      try { const res = await Store.loadMolecules(); docs = res.rows; source = res.source; render(); } catch (e) { /* ignore */ }
+    });
+
+    const h = decodeURIComponent(location.hash || '');
+    if (!Store.isReadOnly()) {
+      if (h === '#new') Editor.open(null);
+      else if (h.startsWith('#edit=')) { const d = docs.find((x) => x.id === h.slice(6)); if (d) Editor.open(d); }
+      else if (h.startsWith('#code=')) Editor.open(null, { code: h.slice(6) });
+      // прогреваем редактор структур в фоне, чтобы при первом открытии он был готов
+      const warm = () => { Editor.prewarm(); document.removeEventListener('pointerover', onOver); };
+      const onOver = (e) => { if (e.target.closest && e.target.closest('.card, #btn-new')) warm(); };
+      document.addEventListener('pointerover', onOver);
+    }
+  }
+
+  init();
+})();

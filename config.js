@@ -1,13 +1,6 @@
-// Fill these in from your Supabase project: Settings -> API -> Project URL
-// / anon public key. See README.md ("Adding a structure by hand") for how
-// to create the project and run supabase-schema.sql.
-//
-// The anon key is *meant* to be public (Supabase's model is: this key goes
-// into client-side JS, and access is controlled by the table's Row Level
-// Security policies, not by keeping the key secret). With the policies in
-// supabase-schema.sql, that means: anyone who has this site's URL (and so
-// can read this file) can also read and add structures. That matches an
-// "anyone with the link" access model, not a login-gated one — see the
-// README for what to do if you need real per-person access control later.
+// Подключение к базе Supabase (проект ltagfebavqqjjggwinzq).
+// anon-ключ публичный по задумке Supabase: доступ регулируется политиками RLS
+// (см. supabase/schema.sql) — читать и править карточки может любой, у кого есть ссылка на сайт.
+// Этот же файл читает GitHub Action, который архивирует данные в data/*.json.
 window.SUPABASE_URL = 'https://ltagfebavqqjjggwinzq.supabase.co';
 window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0YWdmZWJhdnFxampnZ3dpbnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3MzUxMzcsImV4cCI6MjEwNjMxMTEzN30.cfqbg28zymUcbJbyTosFqjMS5CGUgRV9CKcZQPFnDJ0';

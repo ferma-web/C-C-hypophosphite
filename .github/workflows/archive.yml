@@ -1,0 +1,36 @@
+name: Archive data from Supabase
+
+# Каждые ~10 минут забирает данные сайта из Supabase и коммитит их в data/*.json,
+# если что-то изменилось. Так в GitHub хранится копия и полная история всех правок.
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export Supabase → data/*.json
+        run: python3 scripts/export_from_supabase.py
+      - name: Commit if changed
+        run: |
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Без изменений"
+            exit 0
+          fi
+          git config user.name "data-archive-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          who=$(python3 -c "import json;m=json.load(open('data/molecules.json'))['molecules'];m.sort(key=lambda x:x.get('updated_at') or '');print(m[-1].get('updated_by') or '—' if m else '—')")
+          git commit -m "Архив данных сайта (последняя правка: $who)"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git push
