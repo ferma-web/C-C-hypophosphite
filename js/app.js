@@ -78,7 +78,8 @@
       <div class="name">${esc(d.name)}</div>
       ${d.compound_class ? `<span class="class-chip">${esc(d.compound_class)}</span>` : ''}
       <div class="formula mono">${meta.join(' · ')}</div>
-      <div class="yields">${pills}</div>`;
+      <div class="yields">${pills}</div>
+      <div class="mini-yield mono ${isoY ? 'iso' : (anY ? 'analyt' : 'none')}">${isoY || anY || '—'}</div>`;
 
     const wrap = primary
       ? `<a class="card-link" draggable="false" href="${esc(ODANLAB_URL(primary.id))}" target="_blank" rel="noopener" title="Открыть реакцию ${esc(primary.code)} в OdanLab">${body}</a>`
@@ -87,7 +88,7 @@
     const search = [d.name, d.formula, d.cas, d.note, d.compound_class, reactions.map((r) => r.code).join(' ')].join(' ').toLowerCase();
 
     return `
-      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}"${Store.isReadOnly() ? '' : ' draggable="true"'}>
+      <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}"${Store.isReadOnly() ? '' : ' draggable="true"'} title="${esc([d.name, reactions.map((r) => r.code).join(', '), [isoY && 'выделено ' + isoY, anY && 'ЯМР ' + anY].filter(Boolean).join(', ')].filter(Boolean).join('\n'))}">
         ${Store.isReadOnly() ? '' : `<button type="button" class="edit-btn" data-edit="${esc(d.id)}" title="Редактировать карточку" aria-label="Редактировать «${esc(d.name)}»">✎</button>`}
         ${wrap}
         <div class="codes">
@@ -165,10 +166,11 @@
     }
     const keys = [...groups.keys()].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru'));
     if (groups.has('')) keys.push('');
-    // пустые столбцы для остальных классов — чтобы можно было перетащить карточку в любой класс
+    // классы, которых нет в этом разделе, не показываем; их пустые столбцы появляются
+    // только во время перетаскивания — чтобы карточку можно было бросить в любой класс
     const extra = allClasses().filter((c) => !groups.has(c));
     const col = (k, list) => `
-      <div class="class-col${k ? '' : ' no-class'}" data-class="${esc(k)}">
+      <div class="class-col${k ? '' : ' no-class'}${list.length ? '' : ' ghost-col'}" data-class="${esc(k)}">
         <div class="class-col-head"><span>${esc(k || NO_CLASS)}</span><span class="count mono">${list.length}</span></div>
         <div class="class-col-body">${list.map(renderCard).join('') || '<div class="col-empty">перетащите сюда</div>'}</div>
       </div>`;
@@ -735,6 +737,21 @@
     b.textContent = allOn ? '▦ Сеткой' : '▥ По классам';
     b.classList.toggle('on', allOn);
   }
+
+  // ---------- размер карточек ----------
+  const SIZES = ['l', 'm', 's'];
+  function applySize(sz) {
+    if (!SIZES.includes(sz)) sz = 'l';
+    SIZES.forEach((x) => document.body.classList.toggle('size-' + x, x === sz));
+    document.querySelectorAll('[data-size]').forEach((b) => {
+      const on = b.dataset.size === sz;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    lsSet('cs.size', sz);
+  }
+  document.querySelectorAll('[data-size]').forEach((b) => b.addEventListener('click', () => applySize(b.dataset.size)));
+  applySize(lsGet('cs.size') || 'l');
 
   // ---------- тема ----------
   (function themeToggle() {

@@ -474,3 +474,47 @@ dialog#editor::backdrop{background:rgba(10,12,16,.5);}
 body.is-dragging .card:hover{transform:none; box-shadow:var(--shadow);}
 .drop-target{outline:2px dashed var(--accent); outline-offset:4px; border-radius:16px; background-color:var(--accent-soft) !important;}
 section.category.drop-target{outline-offset:8px;}
+
+/* пустые столбцы классов видны только во время перетаскивания */
+.class-col.ghost-col{display:none;}
+body.is-dragging .class-col.ghost-col{display:flex;}
+
+/* ---- переключатель размера карточек ---- */
+.seg{display:inline-flex; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface);}
+.seg button{
+  width:34px; height:34px; border:0; background:transparent; color:var(--ink-muted);
+  font-size:15px; cursor:pointer; border-right:1px solid var(--border);
+}
+.seg button:last-child{border-right:0;}
+.seg button:hover{color:var(--accent);}
+.seg button.on{background:var(--accent-soft); color:var(--accent);}
+
+.mini-yield{display:none;}
+
+/* компактные карточки */
+body.size-m .grid{grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:10px;}
+body.size-m .class-col-body{grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));}
+body.size-m .class-cols{grid-auto-columns:minmax(190px, 1fr);}
+body.size-m .card{padding:10px; gap:6px; border-radius:14px;}
+body.size-m .card .imgbox{height:96px; padding:4px;}
+body.size-m .card .name{font-size:12px;}
+body.size-m .card .formula, body.size-m .card .note-line, body.size-m .card .draft-badge, body.size-m .card .class-chip{display:none;}
+body.size-m .card .codes{padding-top:0;}
+body.size-m .pill{font-size:10px; padding:1px 6px;}
+
+/* мелкие значки: только структура, шифр и выход; подробности — во всплывающей подсказке */
+body.size-s .grid{grid-template-columns:repeat(auto-fill, minmax(112px, 1fr)); gap:8px;}
+body.size-s .class-col-body{grid-template-columns:repeat(auto-fill, minmax(104px, 1fr)); gap:8px;}
+body.size-s .class-cols{grid-auto-columns:minmax(130px, 1fr);}
+body.size-s .card{padding:6px; gap:3px; border-radius:12px;}
+body.size-s .card .imgbox{height:76px; padding:2px; border:0; background:transparent;}
+body.size-s .card .name, body.size-s .card .formula, body.size-s .card .yields, body.size-s .card .note-line,
+body.size-s .card .draft-badge, body.size-s .card .class-chip{display:none;}
+body.size-s .card .codes{margin:0; padding:0; justify-content:space-between; align-items:center; flex-wrap:nowrap; overflow:hidden;}
+body.size-s .card .codes .code-chip:not(:first-child){display:none;}
+body.size-s .card .card-link{gap:2px;}
+body.size-s .mini-yield{display:block; position:absolute; left:8px; bottom:6px; font-size:10px; font-weight:600;}
+.mini-yield.iso{color:var(--iso-ink);} .mini-yield.analyt{color:var(--analyt-ink);} .mini-yield.none{color:var(--ink-faint);}
+body.size-s .card .codes{justify-content:flex-end;}
+body.size-s .edit-btn{width:24px; height:24px; font-size:12px; top:4px; right:4px; border-radius:6px;}
+body.size-s .card:hover{transform:none;}
