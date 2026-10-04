@@ -102,11 +102,15 @@
       </div>`;
   }
 
+  // Крупные «плакатные» галочка и крестик (залитые фигуры, а не символы шрифта)
+  const ICON_OK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 12.9 6 9.5l4 4L18 5.5l3.4 3.4L10 20.3z" fill="currentColor"/></svg>';
+  const ICON_NO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.3 7.7 7.7 4.3 12 8.6l4.3-4.3 3.4 3.4-4.3 4.3 4.3 4.3-3.4 3.4-4.3-4.3-4.3 4.3-3.4-3.4 4.3-4.3z" fill="currentColor"/></svg>';
+
   // ¹H / ¹³C: сняты ли спектры (только у веществ с препаративным выходом). Клик — переключить.
   function nmrBadges(d) {
     const ro = Store.isReadOnly();
     const b = (key, label, on) => `<button type="button" class="nmr-badge ${on ? 'ok' : 'no'}" data-nmr="${key}" data-id="${esc(d.id)}"
-      ${ro ? 'disabled' : ''} aria-pressed="${on}" title="${label.replace(/<[^>]+>/g, '')}: ${on ? 'спектр снят' : 'спектр не снят'}${ro ? '' : ' — нажмите, чтобы изменить'}"><span class="nuc">${label}</span><span class="mark">${on ? '✓' : '✗'}</span></button>`;
+      ${ro ? 'disabled' : ''} aria-pressed="${on}" title="${label.replace(/<[^>]+>/g, '')}: ${on ? 'спектр снят' : 'спектр не снят'}${ro ? '' : ' — нажмите, чтобы изменить'}"><span class="nuc">${label}</span><span class="mark">${on ? ICON_OK : ICON_NO}</span></button>`;
     return `<div class="nmr-row">${b('nmr_1h', '<sup>1</sup>H', !!d.nmr_1h)}${b('nmr_13c', '<sup>13</sup>C', !!d.nmr_13c)}</div>`;
   }
 
@@ -246,7 +250,7 @@
       d[key] = val;
       nmrBtn.classList.toggle('ok', val); nmrBtn.classList.toggle('no', !val);
       nmrBtn.setAttribute('aria-pressed', String(val));
-      nmrBtn.querySelector('.mark').textContent = val ? '✓' : '✗';
+      nmrBtn.querySelector('.mark').innerHTML = val ? ICON_OK : ICON_NO;
       try {
         const res = await Store.update(d.id, { [key]: val, updated_by: 'сайт' }, null);
         if (res.row) Object.assign(d, res.row);

@@ -501,7 +501,9 @@ body.size-m .class-cols{grid-auto-columns:minmax(190px, 1fr);}
 body.size-m .card{padding:10px; gap:6px; border-radius:14px;}
 body.size-m .card .imgbox{height:96px; padding:4px;}
 body.size-m .card .name{font-size:12px;}
-body.size-m .card .formula, body.size-m .card .note-line, body.size-m .card .draft-badge, body.size-m .card .class-chip{display:none;}
+body.size-m .card .draft-badge{display:none;}
+body.size-m .card .formula{font-size:10.5px;}
+body.size-m .card .note-line{font-size:10px;}
 body.size-m .card .codes{padding-top:0;}
 body.size-m .pill{font-size:10px; padding:1px 6px;}
 
@@ -533,13 +535,13 @@ body.size-s .card:hover{transform:none;}
 }
 .nmr-badge .nuc{display:inline-block;}
 .nmr-badge sup{font-size:.66em; vertical-align:.5em; line-height:0; margin-right:1px;}
-.nmr-badge .mark{font-size:12px; margin-left:2px;}
+.nmr-badge .mark{display:inline-flex; margin-left:3px;}
+.nmr-badge .mark svg{width:17px; height:17px; display:block;}
 .nmr-badge.ok{background:var(--iso-soft); border-color:color-mix(in srgb, var(--iso) 45%, transparent);}
-.nmr-badge.ok .mark{color:var(--iso);}
-.nmr-badge.no .mark{color:var(--danger);}
+.nmr-badge.ok .mark{color:#4cb81a;}
+.nmr-badge.no .mark{color:#d9411e;}
 .nmr-badge:not(:disabled):hover{border-color:var(--accent);}
 .nmr-badge:disabled{cursor:default;}
 body.size-m .nmr-badge{font-size:11px; padding:3px 6px;}
-body.size-s .nmr-row{justify-content:center; gap:4px;}
-body.size-s .nmr-badge{font-size:10px; padding:2px 5px; border-radius:6px;}
-body.size-s .nmr-badge .mark{font-size:10px;}
+body.size-s .nmr-row{display:none;}
+body.size-m .nmr-badge .mark svg{width:13px; height:13px;}
