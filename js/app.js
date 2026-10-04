@@ -91,6 +91,7 @@
       <div class="card${d.note ? ' is-note' : ''}${d.source === 'manual' ? ' is-draft' : ''}" data-id="${esc(d.id)}" data-search="${esc(search)}"${Store.isReadOnly() ? '' : ' data-drag="1"'} title="${esc([d.name, reactions.map((r) => r.code).join(', '), [isoY && 'выделено ' + isoY, anY && 'ЯМР ' + anY].filter(Boolean).join(', ')].filter(Boolean).join('\n'))}">
         ${Store.isReadOnly() ? '' : `<button type="button" class="edit-btn" data-edit="${esc(d.id)}" title="Редактировать карточку" aria-label="Редактировать «${esc(d.name)}»">✎</button>`}
         ${wrap}
+        ${Number(d.category) === 1 ? nmrBadges(d) : ''}
         <div class="codes">
           ${codesShown.map((r) => r.id
             ? `<a class="code-chip" draggable="false" href="${esc(ODANLAB_URL(r.id))}" target="_blank" rel="noopener" title="Открыть в OdanLab">${esc(r.code)}</a>`
@@ -99,6 +100,14 @@
         </div>
         ${d.note ? `<div class="note-line">${esc(d.note)}</div>` : ''}
       </div>`;
+  }
+
+  // ¹H / ¹³C: сняты ли спектры (только у веществ с препаративным выходом). Клик — переключить.
+  function nmrBadges(d) {
+    const ro = Store.isReadOnly();
+    const b = (key, label, on) => `<button type="button" class="nmr-badge ${on ? 'ok' : 'no'}" data-nmr="${key}" data-id="${esc(d.id)}"
+      ${ro ? 'disabled' : ''} aria-pressed="${on}" title="${label.replace(/<[^>]+>/g, '')}: ${on ? 'спектр снят' : 'спектр не снят'}${ro ? '' : ' — нажмите, чтобы изменить'}"><span class="nuc">${label}</span><span class="mark">${on ? '✓' : '✗'}</span></button>`;
+    return `<div class="nmr-row">${b('nmr_1h', '<sup>1</sup>H', !!d.nmr_1h)}${b('nmr_13c', '<sup>13</sup>C', !!d.nmr_13c)}</div>`;
   }
 
   function render() {
@@ -226,6 +235,28 @@
       return;
     }
     if (e.target.id === 'toggle-deleted') { showDeleted = !showDeleted; render(); return; }
+    const nmrBtn = e.target.closest('[data-nmr]');
+    if (nmrBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const d = docs.find((x) => x.id === nmrBtn.dataset.id);
+      if (!d || Store.isReadOnly()) return;
+      const key = nmrBtn.dataset.nmr;
+      const val = !d[key];
+      d[key] = val;
+      nmrBtn.classList.toggle('ok', val); nmrBtn.classList.toggle('no', !val);
+      nmrBtn.setAttribute('aria-pressed', String(val));
+      nmrBtn.querySelector('.mark').textContent = val ? '✓' : '✗';
+      try {
+        const res = await Store.update(d.id, { [key]: val, updated_by: 'сайт' }, null);
+        if (res.row) Object.assign(d, res.row);
+      } catch (err) {
+        d[key] = !val;
+        render();
+        toast('Не удалось сохранить: ' + err.message, 'err');
+      }
+      return;
+    }
     const viewBtn = e.target.closest('[data-classview]');
     if (viewBtn) { const c = viewBtn.dataset.classview; setClassView(c, !classView[c]); render(); return; }
     const restore = e.target.closest('[data-restore]');

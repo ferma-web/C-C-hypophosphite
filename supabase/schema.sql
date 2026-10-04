@@ -23,7 +23,9 @@ create table if not exists public.molecules (
   note             text,
   smiles           text,
   molfile          text,
-  compound_class   text,                                 -- класс вещества (нитростиролы, цианоэфиры, …)
+  compound_class   text,
+  nmr_1h           boolean not null default false,       -- снят ли ¹H ЯМР (для веществ с препаративным выходом)
+  nmr_13c          boolean not null default false,       -- снят ли ¹³C ЯМР                                 -- класс вещества (нитростиролы, цианоэфиры, …)
   reactions        jsonb not null default '[]'::jsonb,   -- [{ "code": "AAP-36", "id": "<uuid реакции в OdanLab>" }]
   image            text,                                 -- путь в репо или data: URI; null → рисуем по smiles
   source           text not null default 'manual',       -- 'odanlab' | 'manual'
