@@ -29,7 +29,9 @@
       "created_at": "2026-10-03T16:19:29.756554+00:00",
       "updated_at": "2026-10-03T16:20:00.627455+00:00",
       "updated_by": "аноним",
-      "compound_class": null
+      "compound_class": null,
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "96216801-58ff-4d64-8c43-1644b5b90154",
@@ -52,7 +54,9 @@
       "created_at": "2026-10-03T16:39:44.363255+00:00",
       "updated_at": "2026-10-03T16:40:55.970852+00:00",
       "updated_by": "аноним",
-      "compound_class": null
+      "compound_class": null,
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "724d30b9-19c0-4c15-a9f9-29048626a03a",
@@ -75,7 +79,9 @@
       "created_at": "2026-10-03T17:47:51.611046+00:00",
       "updated_at": "2026-10-03T17:49:08.724583+00:00",
       "updated_by": "сайт",
-      "compound_class": null
+      "compound_class": null,
+      "nmr_1h": false,
+      "nmr_13c": false
     }
   ]
 }

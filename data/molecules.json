@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-03T19:19:26.87744+00:00",
+    "generated_at": "2026-10-04T10:21:35.92997+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 25
   },
@@ -29,9 +29,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T19:07:56.976653+00:00",
+      "updated_at": "2026-10-04T08:28:38.323094+00:00",
       "updated_by": "сайт",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": true,
+      "nmr_13c": false
     },
     {
       "id": "08e3f4d13ec666cad04ebee4751838eb",
@@ -59,7 +61,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "096e5c11dd834a949e98eabbdbdd078b",
@@ -87,20 +91,22 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "16ef18d3c2e074ecc217f506e1321937",
-      "category": 4,
+      "category": 3,
       "name": "1-(4-Chlorophenyl)-2-nitroethane",
       "formula": "C8H8ClNO2",
       "cas": "60947-43-5",
       "loading_umol": 500,
-      "yield_analyt": null,
+      "yield_analyt": 39,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
-      "note": null,
+      "note": "Выход по DMF",
       "smiles": "[O-][N+](=O)CCC=1C=CC(Cl)=CC=1",
       "molfile": null,
       "reactions": [
@@ -113,37 +119,41 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T05:57:17.233621+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "38178dfb96744fbface5016b90e1b70c",
-      "category": 2,
+      "category": 4,
       "name": "1,2,3-trimethoxy-5-[(E)-2-nitrovinyl]benzene",
       "formula": "C11H13NO5",
       "cas": "6316-70-7",
-      "loading_umol": null,
+      "loading_umol": 400,
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
       "note": null,
-      "smiles": "C1(OC)=CC(=CC(=C1OC)OC)C=C[N+](=O)[O-]",
-      "molfile": null,
+      "smiles": "C1(C(OC)=C(OC)C=C(CC[N+]([O-])=O)C=1)OC",
+      "molfile": "\n  -INDIGO-10042611302D\n\n 17 17  0  0  0  0  0  0  0  0999 V2000\n    8.6329   -6.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.7669   -5.5953    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    7.7669   -4.5953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.4989   -5.5953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.3649   -6.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.3649   -7.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.4989   -7.5953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.6329   -7.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.7669   -7.5953    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    6.9008   -7.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.4989   -8.5953    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   10.3649   -9.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   11.2310   -5.5953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   12.0970   -6.0953    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   12.9630   -5.5953    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   12.9630   -4.5953    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   13.8290   -6.0953    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  2  3  1  0  0  0  0\n  1  4  2  0  0  0  0\n  4  5  1  0  0  0  0\n  5  6  2  0  0  0  0\n  6  7  1  0  0  0  0\n  7  8  2  0  0  0  0\n  8  1  1  0  0  0  0\n  8  9  1  0  0  0  0\n  9 10  1  0  0  0  0\n  7 11  1  0  0  0  0\n 11 12  1  0  0  0  0\n  5 13  1  0  0  0  0\n 13 14  1  0  0  0  0\n 14 15  1  0  0  0  0\n 15 16  2  0  0  0  0\n 15 17  1  0  0  0  0\nM  CHG  2  15   1  17  -1\nM  END\n",
       "reactions": [
         {
-          "id": "0141fabf-3716-4934-9e68-b3b2eea13887",
-          "code": "AAP-57"
+          "id": null,
+          "code": "AAP-59"
         }
       ],
       "image": null,
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T08:30:14.191344+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "38f41d8ff7aaffb52e226ef074f6dd9f",
@@ -171,7 +181,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:07:02.828531+00:00",
       "updated_by": "сайт",
-      "compound_class": "Халконы"
+      "compound_class": "Халконы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "3c6ec9843135e581f1e4331c16f49804",
@@ -197,9 +209,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T19:03:51.376757+00:00",
+      "updated_at": "2026-10-04T08:28:41.054347+00:00",
       "updated_by": "сайт",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": true,
+      "nmr_13c": false
     },
     {
       "id": "419711440673f5d18aa6789d93462768",
@@ -227,7 +241,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:07:17.788229+00:00",
       "updated_by": "сайт",
-      "compound_class": "Халконы"
+      "compound_class": "Халконы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "43b06813fdb9d9d12d312a3358f75ea9",
@@ -255,7 +271,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:10:41.028206+00:00",
       "updated_by": "сайт",
-      "compound_class": "Другие"
+      "compound_class": "Другие",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "639564d4688c43ffb23eafb8ffdccf76",
@@ -264,11 +282,11 @@
       "formula": "C8H6N2O4",
       "cas": "5576-98-7",
       "loading_umol": null,
-      "yield_analyt": 32,
+      "yield_analyt": 30,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
-      "note": "Выход по ЯМР низкий (32%); в OdanLab запись продукта пока совпадает по формуле с исходным нитроалкеном — похоже, восстановление прошло не полностью.",
+      "note": "Выход по DMF",
       "smiles": "[O-][N+](=O)C=CC=1C=CC(=CC=1)[N+]([O-])=O",
       "molfile": null,
       "reactions": [
@@ -281,37 +299,41 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T06:48:16.055798+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "6f52e1befe9146f499c87ce5cd822881",
-      "category": 2,
+      "category": 4,
       "name": "N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
       "formula": "C10H12N2O2",
       "cas": "2604-08-2",
-      "loading_umol": null,
+      "loading_umol": 500,
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
       "note": null,
-      "smiles": "CN(C)C=1C=CC(C=C[N+]([O-])=O)=CC=1",
-      "molfile": null,
+      "smiles": "CN(C1=CC=C(CC[N+](=O)[O-])C=C1)C",
+      "molfile": "\n  -INDIGO-10042611292D\n\n 14 14  0  0  0  0  0  0  0  0999 V2000\n    7.1149   -2.6385    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    7.6149   -3.5045    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    7.1149   -4.3705    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    8.6149   -3.5045    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.1149   -4.3705    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.1149   -4.3705    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   10.6149   -3.5045    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   11.6149   -3.5045    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   12.1149   -4.3705    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   13.1149   -4.3705    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   13.6149   -3.5045    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   13.6149   -5.2365    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   10.1149   -2.6385    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    9.1149   -2.6385    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0  0  0  0\n  2  3  1  0  0  0  0\n  2  4  1  0  0  0  0\n  4  5  1  0  0  0  0\n  5  6  2  0  0  0  0\n  6  7  1  0  0  0  0\n  7  8  1  0  0  0  0\n  8  9  1  0  0  0  0\n  9 10  1  0  0  0  0\n 10 11  1  0  0  0  0\n 10 12  2  0  0  0  0\n  7 13  2  0  0  0  0\n 13 14  1  0  0  0  0\n  4 14  2  0  0  0  0\nM  CHG  2  10   1  11  -1\nM  END\n",
       "reactions": [
         {
-          "id": "5a27fe63-de83-4f0f-a412-436ac2a032ac",
-          "code": "AAP-58"
+          "id": null,
+          "code": "AAP-60"
         }
       ],
       "image": null,
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T08:30:28.314207+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "730ffe2ff3e6b4d5e40db741fb6dfc7f",
@@ -339,20 +361,22 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:07:11.079825+00:00",
       "updated_by": "сайт",
-      "compound_class": "Халконы"
+      "compound_class": "Халконы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "922aa0792024a48e8fba3d2031f4cc0b",
-      "category": 3,
+      "category": 4,
       "name": "1-Methyl-4-(2-nitroethyl)benzene",
       "formula": "C9H11NO2",
       "cas": "72538-33-1",
-      "loading_umol": 605.4,
-      "yield_analyt": 52,
-      "yield_iso": 15,
+      "loading_umol": 500,
+      "yield_analyt": 63,
+      "yield_iso": 18.6,
       "mass_measured_mg": 15,
       "melt_point_c": null,
-      "note": null,
+      "note": "Выход по ЯМР\nНужно переставить реакцию",
       "smiles": "CC1=CC=C(CC[N+]([O-])=O)C=C1",
       "molfile": null,
       "reactions": [
@@ -365,9 +389,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T10:21:35.92997+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "92c60a163a3fd3d5fb8c6ff5702a1ad6",
@@ -376,11 +402,11 @@
       "formula": "C6H7NO2S",
       "cas": "30807-46-6",
       "loading_umol": 700,
-      "yield_analyt": 54,
+      "yield_analyt": 60,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
-      "note": null,
+      "note": "Выход по ароматике",
       "smiles": "[O-][N+](CCC=1SC=CC=1)=O",
       "molfile": null,
       "reactions": [
@@ -393,9 +419,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T06:35:02.586739+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "a00d231a9574de78ad34c227ff8b7ae9",
@@ -423,7 +451,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "a26b48b3e926dc1a08079b6c0740e6cf",
@@ -449,9 +479,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T19:12:35.59835+00:00",
+      "updated_at": "2026-10-04T07:01:19.225361+00:00",
       "updated_by": "сайт",
-      "compound_class": "Нитростиролы"
+      "compound_class": "Нитростиролы",
+      "nmr_1h": true,
+      "nmr_13c": false
     },
     {
       "id": "ad0eaf6cd4fc46419338e3b4f8f2a6cb",
@@ -460,11 +492,11 @@
       "formula": "C14H19NO4",
       "cas": null,
       "loading_umol": null,
-      "yield_analyt": 75,
+      "yield_analyt": 79,
       "yield_iso": 46.3,
       "mass_measured_mg": null,
       "melt_point_c": null,
-      "note": null,
+      "note": "Выход по DMF",
       "smiles": "C=1C(OC)=C(OC2CCCC2)C=C(CC[N+](=O)[O-])C=1",
       "molfile": null,
       "reactions": [
@@ -477,9 +509,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T07:01:28.060786+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": true,
+      "nmr_13c": false
     },
     {
       "id": "b6e055b2b1d5d50f9341e62c2a3e0c93",
@@ -505,9 +539,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T19:09:07.335829+00:00",
+      "updated_at": "2026-10-04T07:01:27.05948+00:00",
       "updated_by": "сайт",
-      "compound_class": "Нитростиролы"
+      "compound_class": "Нитростиролы",
+      "nmr_1h": true,
+      "nmr_13c": false
     },
     {
       "id": "c16111e7a413de3fdf3cb13e37b3c1ee",
@@ -533,9 +569,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T19:19:26.87744+00:00",
+      "updated_at": "2026-10-04T07:01:21.623269+00:00",
       "updated_by": "сайт",
-      "compound_class": "Нитростиролы"
+      "compound_class": "Нитростиролы",
+      "nmr_1h": true,
+      "nmr_13c": false
     },
     {
       "id": "cc048c4cc5c5af36d19e86a6482ba917",
@@ -563,7 +601,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "d2537ef2a0c73b6abfe4a3be1531c441",
@@ -591,7 +631,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "dab5c8374520fb57936c50c4b1d34aa6",
@@ -619,7 +661,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Цианоэфиры"
+      "compound_class": "Цианоэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "dc68d01df0b32d774e97129550eb564a",
@@ -647,7 +691,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитроэфиры"
+      "compound_class": "Нитроэфиры",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "e944bbbac3acf5699fd26bb535a5946f",
@@ -660,7 +706,7 @@
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
-      "note": null,
+      "note": "Выход по ароматике",
       "smiles": "[O-][N+](CCC=1OC=CC=1)=O",
       "molfile": null,
       "reactions": [
@@ -673,9 +719,11 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "updated_at": "2026-10-04T06:35:16.027543+00:00",
+      "updated_by": "сайт",
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     },
     {
       "id": "eeee70f6cbdddd35eab6f545fa5aaa55",
@@ -703,7 +751,9 @@
       "created_at": "2026-10-03T09:44:31.055951+00:00",
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
-      "compound_class": "Нитростиролы"
+      "compound_class": "Нитростиролы",
+      "nmr_1h": false,
+      "nmr_13c": false
     }
   ]
 }
