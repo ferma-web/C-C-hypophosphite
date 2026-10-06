@@ -1,6 +1,6 @@
 {
   "meta": {
-    "synced_at": "2026-10-05T03:50:44.039762+00:00",
+    "synced_at": "2026-10-06T03:50:18.722297+00:00",
     "count": 163
   },
   "reactions": [
@@ -919,8 +919,8 @@
       "cas": "21473-45-0",
       "smiles": "[O-][N+](=O)CCC=1C=CC(=CC=1)[N+]([O-])=O",
       "created_at": "2026-09-30T13:11:06+00:00",
-      "updated_at": "2026-10-04T09:12:06+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-05T10:38:36+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "AAP-57",
@@ -936,8 +936,8 @@
       "cas": "6316-70-7",
       "smiles": "C1(OC)=CC(=CC(=C1OC)OC)C=C[N+](=O)[O-]",
       "created_at": "2026-10-02T05:26:21+00:00",
-      "updated_at": "2026-10-04T08:47:14+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-05T19:38:18+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "AAP-58",
@@ -953,8 +953,8 @@
       "cas": "2604-08-2",
       "smiles": "CN(C)C=1C=CC(C=C[N+]([O-])=O)=CC=1",
       "created_at": "2026-10-02T05:43:01+00:00",
-      "updated_at": "2026-10-04T08:46:49+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-05T19:36:45+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "AAP-59",
@@ -1667,8 +1667,8 @@
       "cas": null,
       "smiles": "C(C(OC)=O)(C#N)CC1=CC=C(C=C1)N(C)C",
       "created_at": "2026-09-27T20:16:32+00:00",
-      "updated_at": "2026-10-04T18:59:32+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-05T11:06:43+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "EGZ-41",
@@ -1684,8 +1684,8 @@
       "cas": "32993-05-8",
       "smiles": "[CH-]1C=CC=C1.C1=CC=C(C=C1)P(C1=CC=CC=C1)C1=CC=CC=C1.C1=CC=C(C=C1)P(C1=CC=CC=C1)C1=CC=CC=C1.[Cl-].[Ru+2]",
       "created_at": "2026-10-04T19:14:09+00:00",
-      "updated_at": "2026-10-04T21:25:30+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-05T20:35:38+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "EGZ-42",
@@ -2645,7 +2645,7 @@
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-054",
       "name": "CID 13957536",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; methyl (Z)-2-cyano-3-(4-phenylmethoxyphenyl)prop-2-enoate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
-      "yield_analyt": null,
+      "yield_analyt": 60,
       "yield_iso": null,
       "mass_measured_mg": null,
       "loading_umol": 250,
@@ -2653,25 +2653,25 @@
       "cas": null,
       "smiles": "C1=CC(=CC=C1OCC1=CC=CC=C1)CC(C#N)C(=O)OC",
       "created_at": "2026-09-22T15:37:58+00:00",
-      "updated_at": "2026-10-04T18:44:46+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-05T11:33:26+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "KIR-55",
       "reaction_id": "1d244cf4-decc-4ef2-8cae-7b1c5c98a7e7",
-      "display_id": null,
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-055",
       "name": "Methyl 2-cyano-3-naphthalen-2-ylpropanoate",
       "reagents": "methyl (Z)-2-cyano-3-naphthalen-2-ylprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
       "yield_analyt": 95,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 87.24,
+      "mass_measured_mg": 83.5,
       "loading_umol": 400,
       "formula": "C15H13NO2",
       "cas": null,
       "smiles": "C12=CC(=CC=C1C=CC=C2)CC(C#N)C(=O)OC",
       "created_at": "2026-09-22T15:59:39+00:00",
-      "updated_at": "2026-10-02T10:52:51+00:00",
-      "synced_at": "2026-10-03T09:43:19.328188+00:00"
+      "updated_at": "2026-10-05T15:42:14+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "KIR-56",
@@ -2693,7 +2693,7 @@
     {
       "code": "KIR-57",
       "reaction_id": "83bb7e2e-eed5-4d9f-a0b3-c3d65a2a4035",
-      "display_id": null,
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-057",
       "name": "methyl (E)-3-(4-methoxyphenyl)-2-nitroprop-2-enoate",
       "reagents": "p-Anisaldehyde; Methyl nitroacetate; Titanium tetrachloride; 4-Methylmorpholine",
       "yield_analyt": null,
@@ -2704,8 +2704,8 @@
       "cas": null,
       "smiles": "C=1C(OC)=CC=C(C=C(C(OC)=O)[N+]([O-])=O)C=1",
       "created_at": "2026-09-30T11:45:18+00:00",
-      "updated_at": "2026-10-01T15:33:12+00:00",
-      "synced_at": "2026-10-03T09:43:19.328188+00:00"
+      "updated_at": "2026-10-05T11:06:07+00:00",
+      "synced_at": "2026-10-06T03:50:18.722297+00:00"
     },
     {
       "code": "KIR-6",

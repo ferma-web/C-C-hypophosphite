@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-04T15:44:08.302707+00:00",
+    "generated_at": "2026-10-06T03:50:18.722297+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 25
   },
@@ -42,7 +42,7 @@
       "formula": "C18H17NO3",
       "cas": null,
       "loading_umol": 250,
-      "yield_analyt": null,
+      "yield_analyt": 60,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
@@ -59,8 +59,8 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
+      "updated_at": "2026-10-06T03:50:18.722297+00:00",
+      "updated_by": "OdanLab (авто)",
       "compound_class": "Цианоэфиры",
       "nmr_1h": false,
       "nmr_13c": false
@@ -73,8 +73,8 @@
       "cas": null,
       "loading_umol": 400,
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 87.24,
+      "mass_measured_mg": 83.5,
       "melt_point_c": null,
       "note": null,
       "smiles": "C12=CC(=CC=C1C=CC=C2)CC(C#N)C(=O)OC",
@@ -89,8 +89,8 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-03T17:28:02.480556+00:00",
-      "updated_by": "классы: заглавная буква",
+      "updated_at": "2026-10-06T03:50:18.722297+00:00",
+      "updated_by": "OdanLab (авто)",
       "compound_class": "Цианоэфиры",
       "nmr_1h": false,
       "nmr_13c": false
