@@ -1,7 +1,7 @@
 {
   "meta": {
-    "synced_at": "2026-10-06T03:50:18.722297+00:00",
-    "count": 163
+    "synced_at": "2026-10-07T03:50:42.887219+00:00",
+    "count": 164
   },
   "reactions": [
     {
@@ -929,15 +929,15 @@
       "name": "1,2,3-trimethoxy-5-[(E)-2-nitrovinyl]benzene",
       "reagents": "3,4,5-Trimethoxybenzaldehyde; Nitromethane; Ammonium Acetate; Acetic Acid",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 15.68,
+      "mass_measured_mg": 300,
       "loading_umol": 8000,
       "formula": "C11H13NO5",
       "cas": "6316-70-7",
       "smiles": "C1(OC)=CC(=CC(=C1OC)OC)C=C[N+](=O)[O-]",
       "created_at": "2026-10-02T05:26:21+00:00",
-      "updated_at": "2026-10-05T19:38:18+00:00",
-      "synced_at": "2026-10-06T03:50:18.722297+00:00"
+      "updated_at": "2026-10-06T11:52:05+00:00",
+      "synced_at": "2026-10-07T03:50:42.887219+00:00"
     },
     {
       "code": "AAP-58",
@@ -946,15 +946,15 @@
       "name": "N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
       "reagents": "Nitromethane; 4-(Dimethylamino)benzaldehyde; Acetic Acid; Ammonium Acetate",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 34.73,
+      "mass_measured_mg": 534,
       "loading_umol": 8000,
       "formula": "C10H12N2O2",
       "cas": "2604-08-2",
       "smiles": "CN(C)C=1C=CC(C=C[N+]([O-])=O)=CC=1",
       "created_at": "2026-10-02T05:43:01+00:00",
-      "updated_at": "2026-10-05T19:36:45+00:00",
-      "synced_at": "2026-10-06T03:50:18.722297+00:00"
+      "updated_at": "2026-10-06T11:52:33+00:00",
+      "synced_at": "2026-10-07T03:50:42.887219+00:00"
     },
     {
       "code": "AAP-59",
@@ -2706,6 +2706,23 @@
       "created_at": "2026-09-30T11:45:18+00:00",
       "updated_at": "2026-10-05T11:06:07+00:00",
       "synced_at": "2026-10-06T03:50:18.722297+00:00"
+    },
+    {
+      "code": "KIR-58",
+      "reaction_id": "67448f84-d86d-42e4-a577-6d0f7fb00b67",
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-058",
+      "name": "CID 13957536",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; methyl (Z)-2-cyano-3-(4-phenylmethoxyphenyl)prop-2-enoate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 250,
+      "formula": "C18H17NO3",
+      "cas": null,
+      "smiles": "C1=CC(=CC=C1OCC1=CC=CC=C1)CC(C#N)C(=O)OC",
+      "created_at": "2026-10-06T11:57:27+00:00",
+      "updated_at": "2026-10-06T11:57:53+00:00",
+      "synced_at": "2026-10-07T03:50:42.887219+00:00"
     },
     {
       "code": "KIR-6",
