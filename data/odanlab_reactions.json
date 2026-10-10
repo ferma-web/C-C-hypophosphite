@@ -1,7 +1,7 @@
 {
   "meta": {
-    "synced_at": "2026-10-08T03:49:47.050439+00:00",
-    "count": 166
+    "synced_at": "2026-10-10T03:49:21.843848+00:00",
+    "count": 168
   },
   "reactions": [
     {
@@ -1023,6 +1023,40 @@
       "created_at": "2026-10-04T10:21:50+00:00",
       "updated_at": "2026-10-04T10:22:13+00:00",
       "synced_at": "2026-10-05T03:50:44.039762+00:00"
+    },
+    {
+      "code": "AAP-62",
+      "reaction_id": "3a3fd279-7e2f-4792-91d8-84352432e4b4",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-062",
+      "name": "N,N-dimethyl-4-(2-nitroethyl)aniline",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 500,
+      "formula": "C10H14N2O2",
+      "cas": null,
+      "smiles": "CN(C)C1=CC=C(CC[N+]([O-])=O)C=C1",
+      "created_at": "2026-10-08T11:30:19+00:00",
+      "updated_at": "2026-10-08T11:30:19+00:00",
+      "synced_at": "2026-10-10T03:49:21.843848+00:00"
+    },
+    {
+      "code": "AAP-63",
+      "reaction_id": "ebbe9d0d-4c05-40a7-8fb8-269e8055867e",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-063",
+      "name": "Methyl 3-(4-chlorophenyl)-2-nitroacrylate",
+      "reagents": "4-Chlorobenzaldehyde; Methyl nitroacetate; Titanium tetrachloride; 4-Methylmorpholine",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 6000,
+      "formula": "C10H8ClNO4",
+      "cas": null,
+      "smiles": "C=1C(=CC=C(C=C(C(OC)=O)[N+]([O-])=O)C=1)Cl",
+      "created_at": "2026-10-09T04:58:42+00:00",
+      "updated_at": "2026-10-09T10:36:58+00:00",
+      "synced_at": "2026-10-10T03:49:21.843848+00:00"
     },
     {
       "code": "AAP-7",
