@@ -1,7 +1,7 @@
 {
   "meta": {
-    "synced_at": "2026-10-13T03:50:57.329108+00:00",
-    "count": 174
+    "synced_at": "2026-10-14T03:50:14.219017+00:00",
+    "count": 178
   },
   "reactions": [
     {
@@ -1108,6 +1108,23 @@
       "created_at": "2026-10-10T08:39:16+00:00",
       "updated_at": "2026-10-10T08:39:37+00:00",
       "synced_at": "2026-10-10T08:49:56.931949+00:00"
+    },
+    {
+      "code": "AAP-67",
+      "reaction_id": "06f4396f-dc23-47aa-bd4b-16437a90a8d1",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-067",
+      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 500,
+      "formula": "C11H13NO4",
+      "cas": null,
+      "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
+      "created_at": "2026-10-13T17:03:13+00:00",
+      "updated_at": "2026-10-13T17:03:13+00:00",
+      "synced_at": "2026-10-14T03:50:14.219017+00:00"
     },
     {
       "code": "AAP-7",
@@ -2782,15 +2799,15 @@
       "name": "Methyl 2-cyano-3-naphthalen-2-ylpropanoate",
       "reagents": "methyl (Z)-2-cyano-3-naphthalen-2-ylprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
       "yield_analyt": 95,
-      "yield_iso": 87.24,
-      "mass_measured_mg": 83.5,
+      "yield_iso": 27.17,
+      "mass_measured_mg": 26,
       "loading_umol": 400,
       "formula": "C15H13NO2",
       "cas": null,
       "smiles": "C12=CC(=CC=C1C=CC=C2)CC(C#N)C(=O)OC",
       "created_at": "2026-09-22T15:59:39+00:00",
-      "updated_at": "2026-10-05T15:42:14+00:00",
-      "synced_at": "2026-10-06T03:50:18.722297+00:00"
+      "updated_at": "2026-10-13T17:03:59+00:00",
+      "synced_at": "2026-10-14T03:50:14.219017+00:00"
     },
     {
       "code": "KIR-56",
@@ -2849,7 +2866,7 @@
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-059",
       "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
-      "yield_analyt": null,
+      "yield_analyt": 80,
       "yield_iso": null,
       "mass_measured_mg": null,
       "loading_umol": 500,
@@ -2857,8 +2874,8 @@
       "cas": null,
       "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
       "created_at": "2026-10-07T15:58:33+00:00",
-      "updated_at": "2026-10-12T10:32:40+00:00",
-      "synced_at": "2026-10-13T03:50:57.329108+00:00"
+      "updated_at": "2026-10-13T17:03:12+00:00",
+      "synced_at": "2026-10-14T03:50:14.219017+00:00"
     },
     {
       "code": "KIR-6",
@@ -2910,6 +2927,57 @@
       "created_at": "2026-10-12T11:24:37+00:00",
       "updated_at": "2026-10-12T11:24:37+00:00",
       "synced_at": "2026-10-13T03:50:57.329108+00:00"
+    },
+    {
+      "code": "KIR-62",
+      "reaction_id": "63784445-069b-4a5f-baed-4aa54d1dabb2",
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-062",
+      "name": "Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 500,
+      "formula": "C11H13NO5",
+      "cas": null,
+      "smiles": "C1=CC(=CC=C1CC([N+]([O-])=O)C(=O)OC)OC",
+      "created_at": "2026-10-13T17:06:03+00:00",
+      "updated_at": "2026-10-13T17:08:45+00:00",
+      "synced_at": "2026-10-14T03:50:14.219017+00:00"
+    },
+    {
+      "code": "KIR-63",
+      "reaction_id": "0169cc48-47b0-4b45-aa83-d8ea52594599",
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-063",
+      "name": "Methyl 2-cyano-3-naphthalen-2-ylpropanoate",
+      "reagents": "methyl (Z)-2-cyano-3-naphthalen-2-ylprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 400,
+      "formula": "C15H13NO2",
+      "cas": null,
+      "smiles": "C12=CC(=CC=C1C=CC=C2)CC(C#N)C(=O)OC",
+      "created_at": "2026-10-13T17:19:46+00:00",
+      "updated_at": "2026-10-13T17:19:46+00:00",
+      "synced_at": "2026-10-14T03:50:14.219017+00:00"
+    },
+    {
+      "code": "KIR-64",
+      "reaction_id": "63e1fe55-638f-46b8-a62a-6857352892c9",
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-064",
+      "name": "CID 13957536",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; methyl (Z)-2-cyano-3-(4-phenylmethoxyphenyl)prop-2-enoate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 250,
+      "formula": "C18H17NO3",
+      "cas": null,
+      "smiles": "C1=CC(=CC=C1OCC1=CC=CC=C1)CC(C#N)C(=O)OC",
+      "created_at": "2026-10-13T17:47:32+00:00",
+      "updated_at": "2026-10-13T17:47:32+00:00",
+      "synced_at": "2026-10-14T03:50:14.219017+00:00"
     },
     {
       "code": "KIR-7",
