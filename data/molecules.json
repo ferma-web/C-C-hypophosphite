@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-19T11:04:52.281861+00:00",
+    "generated_at": "2026-10-19T15:49:03.421933+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 29
   },
@@ -869,9 +869,9 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-19T11:02:32.981304+00:00",
-      "updated_at": "2026-10-19T11:03:23.599056+00:00",
+      "updated_at": "2026-10-19T15:49:03.421933+00:00",
       "updated_by": "сайт",
-      "compound_class": null,
+      "compound_class": "Цианоэфиры",
       "nmr_1h": true,
       "nmr_13c": false
     }
