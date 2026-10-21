@@ -1,7 +1,7 @@
 {
   "meta": {
-    "synced_at": "2026-10-17T11:31:04.898616+00:00",
-    "count": 178
+    "synced_at": "2026-10-21T03:50:39.179302+00:00",
+    "count": 182
   },
   "reactions": [
     {
@@ -545,8 +545,8 @@
       "cas": "75140-51-1",
       "smiles": "CC1=CC=C(CC(C(OC)=O)C#N)C=C1",
       "created_at": "2026-09-03T15:50:24+00:00",
-      "updated_at": "2026-10-04T08:30:15+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-20T06:17:29+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-36",
@@ -562,8 +562,8 @@
       "cas": null,
       "smiles": "COC(C(C#N)CC1=CC=C(Cl)C=C1)=O",
       "created_at": "2026-09-03T15:53:17+00:00",
-      "updated_at": "2026-10-04T09:06:43+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-20T06:17:47+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-37",
@@ -749,8 +749,8 @@
       "cas": null,
       "smiles": "[O-][N+](=O)CCC=1C=CC=CC=1OC",
       "created_at": "2026-09-23T04:49:18+00:00",
-      "updated_at": "2026-10-04T08:33:23+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-20T06:18:14+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-47",
@@ -851,8 +851,8 @@
       "cas": null,
       "smiles": "C=1C(OC)=C(OC2CCCC2)C=C(CC[N+](=O)[O-])C=1",
       "created_at": "2026-09-30T12:53:55+00:00",
-      "updated_at": "2026-10-04T09:08:07+00:00",
-      "synced_at": "2026-10-05T03:50:44.039762+00:00"
+      "updated_at": "2026-10-20T06:19:47+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-52",
@@ -1014,15 +1014,15 @@
       "name": "1-Methyl-4-(2-nitroethyl)benzene",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; trans-4-Methyl-beta-nitrostyrene",
       "yield_analyt": 64.7,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 55.81,
+      "mass_measured_mg": 46.1,
       "loading_umol": 500,
       "formula": "C9H11NO2",
       "cas": null,
       "smiles": "CC1=CC=C(CC[N+]([O-])=O)C=C1",
       "created_at": "2026-10-04T10:21:50+00:00",
-      "updated_at": "2026-10-10T07:54:34+00:00",
-      "synced_at": "2026-10-10T08:49:56.931949+00:00"
+      "updated_at": "2026-10-17T07:59:47+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-62",
@@ -1030,7 +1030,7 @@
       "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-062",
       "name": "N,N-dimethyl-4-(2-nitroethyl)aniline",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
-      "yield_analyt": null,
+      "yield_analyt": 61,
       "yield_iso": null,
       "mass_measured_mg": null,
       "loading_umol": 500,
@@ -1038,8 +1038,8 @@
       "cas": null,
       "smiles": "CN(C)C1=CC=C(CC[N+]([O-])=O)C=C1",
       "created_at": "2026-10-08T11:30:19+00:00",
-      "updated_at": "2026-10-08T11:30:19+00:00",
-      "synced_at": "2026-10-10T03:49:21.843848+00:00"
+      "updated_at": "2026-10-17T08:51:16+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-63",
@@ -1048,15 +1048,15 @@
       "name": "Methyl 3-(4-chlorophenyl)-2-nitroacrylate",
       "reagents": "4-Chlorobenzaldehyde; Methyl nitroacetate; Titanium tetrachloride; 4-Methylmorpholine",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 6.9,
+      "mass_measured_mg": 100,
       "loading_umol": 6000,
       "formula": "C10H8ClNO4",
       "cas": null,
       "smiles": "C=1C(=CC=C(C=C(C(OC)=O)[N+]([O-])=O)C=1)Cl",
       "created_at": "2026-10-09T04:58:42+00:00",
-      "updated_at": "2026-10-12T09:25:10+00:00",
-      "synced_at": "2026-10-13T03:50:57.329108+00:00"
+      "updated_at": "2026-10-17T08:52:04+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-64",
@@ -1067,13 +1067,13 @@
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
-      "loading_umol": 400,
+      "loading_umol": 250,
       "formula": "C10H10ClNO4",
       "cas": null,
       "smiles": "C1(=CC=C(CC([N+]([O-])=O)C(=O)OC)C=C1)Cl",
       "created_at": "2026-10-10T07:48:12+00:00",
-      "updated_at": "2026-10-10T08:39:00+00:00",
-      "synced_at": "2026-10-10T08:49:56.931949+00:00"
+      "updated_at": "2026-10-19T17:27:18+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-65",
@@ -1082,15 +1082,15 @@
       "name": "methyl (2E)-3-(4-methylphenyl)-2-nitroprop-2-enoate",
       "reagents": "p-Tolualdehyde; Methyl nitroacetate; Titanium tetrachloride; 4-Methylmorpholine",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 9.79,
+      "mass_measured_mg": 130,
       "loading_umol": 6000,
       "formula": "C11H11NO4",
       "cas": null,
       "smiles": "C=1C(C)=CC=C(C=C(C(OC)=O)[N+]([O-])=O)C=1",
       "created_at": "2026-10-10T08:30:25+00:00",
-      "updated_at": "2026-10-16T09:24:54+00:00",
-      "synced_at": "2026-10-17T03:50:07.473377+00:00"
+      "updated_at": "2026-10-20T18:52:58+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-66",
@@ -1101,30 +1101,64 @@
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
-      "loading_umol": 400,
+      "loading_umol": 500,
       "formula": "C11H13NO4",
       "cas": null,
       "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
       "created_at": "2026-10-10T08:39:16+00:00",
-      "updated_at": "2026-10-10T08:39:37+00:00",
-      "synced_at": "2026-10-10T08:49:56.931949+00:00"
+      "updated_at": "2026-10-17T09:34:17+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-67",
       "reaction_id": "06f4396f-dc23-47aa-bd4b-16437a90a8d1",
       "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-067",
-      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
-      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
+      "name": "methyl (E)-2-nitro-3-(3,4,5-trimethoxyphenyl)prop-2-enoate",
+      "reagents": "Methyl nitroacetate; 3,4,5-Trimethoxybenzaldehyde; Titanium tetrachloride; 4-Methylmorpholine",
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
-      "loading_umol": 500,
-      "formula": "C11H13NO4",
-      "cas": null,
-      "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
+      "loading_umol": 4000,
+      "formula": "C13H15NO7",
+      "cas": "111705-24-9",
+      "smiles": "C1=C(C(=C(C=C1C=C([N+](=O)[O-])C(=O)OC)OC)OC)OC",
       "created_at": "2026-10-13T17:03:13+00:00",
-      "updated_at": "2026-10-13T17:03:13+00:00",
-      "synced_at": "2026-10-14T03:50:14.219017+00:00"
+      "updated_at": "2026-10-17T09:32:05+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
+    },
+    {
+      "code": "AAP-68",
+      "reaction_id": "5c165386-d517-4a1c-aa69-0f9da6975337",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-068",
+      "name": "1,2,3-Trimethoxy-5-(2-nitroethyl)benzene",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; 1,2,3-trimethoxy-5-[(E)-2-nitrovinyl]benzene",
+      "yield_analyt": 66,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 400,
+      "formula": "C11H15NO5",
+      "cas": "63909-39-7",
+      "smiles": "[O-][N+](=O)CCC=1C=C(C(=C(C=1)OC)OC)OC",
+      "created_at": "2026-10-19T16:22:21+00:00",
+      "updated_at": "2026-10-20T18:50:11+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
+    },
+    {
+      "code": "AAP-69",
+      "reaction_id": "978f2799-f23e-46f5-97fd-01507a72be46",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-069",
+      "name": "Thiophene, 2-(2-nitroethyl)-",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Thiophene, 2-(2-nitroethenyl)-",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 700,
+      "formula": "C6H7NO2S",
+      "cas": "30807-46-6",
+      "smiles": "[O-][N+](CCC=1SC=CC=1)=O",
+      "created_at": "2026-10-19T16:23:16+00:00",
+      "updated_at": "2026-10-19T16:23:16+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-7",
@@ -1142,6 +1176,23 @@
       "created_at": "2026-08-19T03:51:01+00:00",
       "updated_at": "2026-08-23T12:57:56+00:00",
       "synced_at": "2026-10-17T11:31:04.898616+00:00"
+    },
+    {
+      "code": "AAP-70",
+      "reaction_id": "e65c0bf5-d676-477b-a199-b099e78cf714",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-070",
+      "name": "2-(2-Nitroethyl)furan",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; 2-(2-Нитровинил)фуран",
+      "yield_analyt": 80,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 400,
+      "formula": "C6H7NO3",
+      "cas": "5462-90-8",
+      "smiles": "[O-][N+](CCC=1OC=CC=1)=O",
+      "created_at": "2026-10-19T16:23:27+00:00",
+      "updated_at": "2026-10-20T18:50:36+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "AAP-8",
@@ -2898,18 +2949,18 @@
       "code": "KIR-60",
       "reaction_id": "ac201965-5994-4583-a4dd-5b9c71e3c96d",
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-060",
-      "name": "methyl (2E)-3-(2-methylphenyl)-2-nitroprop-2-enoate",
-      "reagents": "2-Methylbenzaldehyde; Methyl nitroacetate; Titanium tetrachloride; 4-Methylmorpholine",
+      "name": "Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
+      "reagents": "Triphenylphosphine; Cyclopentadiene; Ruthenium(III) chloride trihydrate",
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
-      "loading_umol": 6000,
-      "formula": "C11H11NO4",
-      "cas": null,
-      "smiles": "C1=C(C)C(C=C([N+](=O)[O-])C(=O)OC)=CC=C1",
+      "loading_umol": 1912.3,
+      "formula": "C41H35ClP2Ru",
+      "cas": "32993-05-8",
+      "smiles": "[CH-]1C=CC=C1.C1=CC=C(C=C1)P(C1=CC=CC=C1)C1=CC=CC=C1.C1=CC=C(C=C1)P(C1=CC=CC=C1)C1=CC=CC=C1.[Cl-].[Ru+2]",
       "created_at": "2026-10-12T10:36:03+00:00",
-      "updated_at": "2026-10-12T13:27:35+00:00",
-      "synced_at": "2026-10-13T03:50:57.329108+00:00"
+      "updated_at": "2026-10-18T22:45:57+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "KIR-61",
@@ -2917,16 +2968,16 @@
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-061",
       "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
       "reagents": "methyl (2E)-3-(4-methylphenyl)-2-nitroprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
-      "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_analyt": 65,
+      "yield_iso": 43.01,
+      "mass_measured_mg": 48,
       "loading_umol": 500,
       "formula": "C11H13NO4",
       "cas": null,
       "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
       "created_at": "2026-10-12T11:24:37+00:00",
-      "updated_at": "2026-10-12T11:24:37+00:00",
-      "synced_at": "2026-10-13T03:50:57.329108+00:00"
+      "updated_at": "2026-10-18T22:41:39+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "KIR-62",
@@ -2934,16 +2985,16 @@
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-062",
       "name": "Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
-      "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_analyt": 80,
+      "yield_iso": 25.08,
+      "mass_measured_mg": 30,
       "loading_umol": 500,
       "formula": "C11H13NO5",
       "cas": null,
       "smiles": "C1=CC(=CC=C1CC([N+]([O-])=O)C(=O)OC)OC",
       "created_at": "2026-10-13T17:06:03+00:00",
-      "updated_at": "2026-10-13T17:08:45+00:00",
-      "synced_at": "2026-10-14T03:50:14.219017+00:00"
+      "updated_at": "2026-10-18T22:41:25+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "KIR-63",
@@ -2959,8 +3010,8 @@
       "cas": null,
       "smiles": "C12=CC(=CC=C1C=CC=C2)CC(C#N)C(=O)OC",
       "created_at": "2026-10-13T17:19:46+00:00",
-      "updated_at": "2026-10-13T17:19:46+00:00",
-      "synced_at": "2026-10-14T03:50:14.219017+00:00"
+      "updated_at": "2026-10-18T21:05:42+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "KIR-64",
@@ -2976,8 +3027,25 @@
       "cas": null,
       "smiles": "C1=CC(=CC=C1OCC1=CC=CC=C1)CC(C#N)C(=O)OC",
       "created_at": "2026-10-13T17:47:32+00:00",
-      "updated_at": "2026-10-13T17:47:32+00:00",
-      "synced_at": "2026-10-14T03:50:14.219017+00:00"
+      "updated_at": "2026-10-18T21:05:31+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
+    },
+    {
+      "code": "KIR-65",
+      "reaction_id": "51f48f13-8c63-41bc-a7b8-93755e956a64",
+      "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-065",
+      "name": "methyl (2E)-3-(2-methylphenyl)-2-nitroprop-2-enoate",
+      "reagents": "2-Methylbenzaldehyde; Methyl nitroacetate; Titanium tetrachloride; 4-Methylmorpholine",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 6000,
+      "formula": "C11H11NO4",
+      "cas": null,
+      "smiles": "C1=C(C)C(C=C([N+](=O)[O-])C(=O)OC)=CC=C1",
+      "created_at": "2026-10-18T21:07:18+00:00",
+      "updated_at": "2026-10-18T21:07:18+00:00",
+      "synced_at": "2026-10-21T03:50:39.179302+00:00"
     },
     {
       "code": "KIR-7",

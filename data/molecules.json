@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-20T06:19:50.964657+00:00",
+    "generated_at": "2026-10-21T03:50:39.179302+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 29
   },
@@ -793,8 +793,8 @@
       "cas": null,
       "loading_umol": 500,
       "yield_analyt": 80,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 25.08,
+      "mass_measured_mg": 30,
       "melt_point_c": null,
       "note": "Синтез и выделение исходника проводил Кирилл\nАнтон делал выделение колонкой: выделилось 30 мг продукта, непросушенного под вакуумом (25%), по ЯМР чистый, выделение будет переделано.",
       "smiles": "C1C(CC(C(OC)=O)[N+](=O)[O-])=CC=C(OC)C=1",
@@ -809,8 +809,8 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-17T08:41:49.146455+00:00",
-      "updated_at": "2026-10-17T08:47:38.830142+00:00",
-      "updated_by": "сайт",
+      "updated_at": "2026-10-21T03:50:39.179302+00:00",
+      "updated_by": "OdanLab (авто)",
       "compound_class": "Нитроэфиры",
       "nmr_1h": false,
       "nmr_13c": false
@@ -824,7 +824,7 @@
       "loading_umol": 500,
       "yield_analyt": 80,
       "yield_iso": 44,
-      "mass_measured_mg": null,
+      "mass_measured_mg": 48,
       "melt_point_c": null,
       "note": "будет перевыделено на этой недели (19.10- 23.10)",
       "smiles": "C1C(C)=CC=C(CC(C(OC)=O)[N+]([O-])=O)C=1",
@@ -839,8 +839,8 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-19T10:57:36.376756+00:00",
-      "updated_at": "2026-10-19T10:59:14.223239+00:00",
-      "updated_by": "сайт",
+      "updated_at": "2026-10-21T03:50:39.179302+00:00",
+      "updated_by": "OdanLab (авто)",
       "compound_class": null,
       "nmr_1h": false,
       "nmr_13c": false
