@@ -1,7 +1,7 @@
 {
   "meta": {
-    "synced_at": "2026-10-22T03:50:54.152945+00:00",
-    "count": 188
+    "synced_at": "2026-10-23T03:49:51.254281+00:00",
+    "count": 191
   },
   "reactions": [
     {
@@ -1098,7 +1098,7 @@
       "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-066",
       "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; methyl (2E)-3-(4-methylphenyl)-2-nitroprop-2-enoate",
-      "yield_analyt": null,
+      "yield_analyt": 53.4,
       "yield_iso": null,
       "mass_measured_mg": null,
       "loading_umol": 500,
@@ -1106,8 +1106,8 @@
       "cas": null,
       "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
       "created_at": "2026-10-10T08:39:16+00:00",
-      "updated_at": "2026-10-17T09:34:17+00:00",
-      "synced_at": "2026-10-21T03:50:39.179302+00:00"
+      "updated_at": "2026-10-22T12:24:16+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
     },
     {
       "code": "AAP-67",
@@ -1193,6 +1193,23 @@
       "created_at": "2026-10-19T16:23:27+00:00",
       "updated_at": "2026-10-20T18:50:36+00:00",
       "synced_at": "2026-10-21T03:50:39.179302+00:00"
+    },
+    {
+      "code": "AAP-71",
+      "reaction_id": "edd320d1-df10-4a61-81b6-9acb7195c1b1",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-071",
+      "name": "1,2,3-Trimethoxy-5-(2-nitroethyl)benzene",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; 1,2,3-trimethoxy-5-[(E)-2-nitrovinyl]benzene",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 400,
+      "formula": "C11H15NO5",
+      "cas": "63909-39-7",
+      "smiles": "[O-][N+](=O)CCC=1C=C(C(=C(C=1)OC)OC)OC",
+      "created_at": "2026-10-22T17:12:43+00:00",
+      "updated_at": "2026-10-22T17:12:43+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
     },
     {
       "code": "AAP-8",
@@ -1939,8 +1956,8 @@
       "cas": null,
       "smiles": "C1=C(C(=CC=C1)C=C(C#N)C(=O)OC)[N+]([O-])=O",
       "created_at": "2026-10-21T13:23:37+00:00",
-      "updated_at": "2026-10-21T13:39:43+00:00",
-      "synced_at": "2026-10-22T03:50:54.152945+00:00"
+      "updated_at": "2026-10-22T19:20:06+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
     },
     {
       "code": "EGZ-48",
@@ -1949,15 +1966,15 @@
       "name": "trans-4-(2-Nitroethenyl)benzonitrile",
       "reagents": "4-Formylbenzonitrile; Nitromethane",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
-      "loading_umol": null,
+      "yield_iso": 46.67,
+      "mass_measured_mg": 1400,
+      "loading_umol": 17225.6,
       "formula": "C9H6N2O2",
       "cas": "5153-73-1",
       "smiles": "C1=CC(=CC=C1C#N)C=C[N+]([O-])=O",
       "created_at": "2026-10-21T14:08:03+00:00",
-      "updated_at": "2026-10-21T14:08:03+00:00",
-      "synced_at": "2026-10-22T03:50:54.152945+00:00"
+      "updated_at": "2026-10-22T19:19:07+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
     },
     {
       "code": "EGZ-49",
@@ -1992,6 +2009,40 @@
       "created_at": "2026-08-24T13:20:08+00:00",
       "updated_at": "2026-09-24T22:29:22+00:00",
       "synced_at": "2026-10-17T11:31:04.898616+00:00"
+    },
+    {
+      "code": "EGZ-50",
+      "reaction_id": "b1edfdbc-7241-4a80-899a-13e8f5dfcfb1",
+      "display_id": "EGZ-57f77c42-944b-4dac-83cc-f3b1d74fddca-050",
+      "name": "Methyl 4-Formylbenzoate",
+      "reagents": "4-Formylbenzoic acid; Methanol; Thionyl chloride",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 33303.8,
+      "formula": "C9H8O3",
+      "cas": "1571-08-0",
+      "smiles": "COC(=O)C1=CC=C(C=C1)C=O",
+      "created_at": "2026-10-22T07:43:42+00:00",
+      "updated_at": "2026-10-22T19:16:47+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
+    },
+    {
+      "code": "EGZ-51",
+      "reaction_id": "bef952d8-9b42-4ede-9488-da57f1cc7b55",
+      "display_id": "EGZ-57f77c42-944b-4dac-83cc-f3b1d74fddca-051",
+      "name": "2-(2-Нитровинил)фуран",
+      "reagents": "Furfural; Nitromethane; Ammonium Acetate",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 52037.3,
+      "formula": "C6H5NO3",
+      "cas": "699-18-3",
+      "smiles": "[O-][N+](=O)C=CC1=CC=CO1",
+      "created_at": "2026-10-22T10:08:17+00:00",
+      "updated_at": "2026-10-22T19:17:58+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
     },
     {
       "code": "EGZ-6",
@@ -3020,15 +3071,15 @@
       "name": "Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
       "reagents": "Triphenylphosphine; Cyclopentadiene; Ruthenium(III) chloride trihydrate",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 35.43,
+      "mass_measured_mg": 492,
       "loading_umol": 1912.3,
       "formula": "C41H35ClP2Ru",
       "cas": "32993-05-8",
       "smiles": "[CH-]1C=CC=C1.C1=CC=C(C=C1)P(C1=CC=CC=C1)C1=CC=CC=C1.C1=CC=C(C=C1)P(C1=CC=CC=C1)C1=CC=CC=C1.[Cl-].[Ru+2]",
       "created_at": "2026-10-12T10:36:03+00:00",
-      "updated_at": "2026-10-18T22:45:57+00:00",
-      "synced_at": "2026-10-21T03:50:39.179302+00:00"
+      "updated_at": "2026-10-22T09:09:59+00:00",
+      "synced_at": "2026-10-23T03:49:51.254281+00:00"
     },
     {
       "code": "KIR-61",

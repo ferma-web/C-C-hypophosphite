@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-22T03:50:54.152945+00:00",
+    "generated_at": "2026-10-23T03:49:51.254281+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 29
   },
@@ -672,7 +672,7 @@
       "formula": "C11H13NO4",
       "cas": null,
       "loading_umol": 400,
-      "yield_analyt": null,
+      "yield_analyt": 53.4,
       "yield_iso": null,
       "mass_measured_mg": null,
       "melt_point_c": null,
@@ -689,8 +689,8 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-17T08:02:49.215727+00:00",
-      "updated_by": "сайт",
+      "updated_at": "2026-10-23T03:49:51.254281+00:00",
+      "updated_by": "OdanLab (авто)",
       "compound_class": "Нитроэфиры",
       "nmr_1h": false,
       "nmr_13c": false
