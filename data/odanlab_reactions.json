@@ -1,6 +1,6 @@
 {
   "meta": {
-    "synced_at": "2026-10-23T03:49:51.254281+00:00",
+    "synced_at": "2026-10-23T12:15:14.613603+00:00",
     "count": 191
   },
   "reactions": [
@@ -3170,24 +3170,24 @@
       "code": "KIR-66",
       "reaction_id": "0cd48181-e3bf-4b1a-9c3b-ebf847a37841",
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-066",
-      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
-      "reagents": "methyl (2E)-3-(4-methylphenyl)-2-nitroprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
+      "name": "Methyl 3-(4-methoxyphenyl)-2-nitropropanoate",
+      "reagents": "methyl (E)-3-(4-methoxyphenyl)-2-nitroprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
       "yield_analyt": null,
       "yield_iso": null,
       "mass_measured_mg": null,
       "loading_umol": 500,
-      "formula": "C11H13NO4",
+      "formula": "C11H13NO5",
       "cas": null,
-      "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
+      "smiles": "C1=CC(=CC=C1CC([N+]([O-])=O)C(=O)OC)OC",
       "created_at": "2026-10-21T12:54:12+00:00",
-      "updated_at": "2026-10-21T12:54:12+00:00",
-      "synced_at": "2026-10-22T03:50:54.152945+00:00"
+      "updated_at": "2026-10-23T12:07:41+00:00",
+      "synced_at": "2026-10-23T12:15:14.613603+00:00"
     },
     {
       "code": "KIR-67",
       "reaction_id": "a827e288-7ef5-4180-b467-dd5ab154f365",
       "display_id": "KIR-d58afb44-a308-4243-83ae-bfe4179dabeb-067",
-      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
+      "name": "methyl 3-(2-methylphenyl)-2-nitropropanoate",
       "reagents": "methyl (2E)-3-(2-methylphenyl)-2-nitroprop-2-enoate; Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
       "yield_analyt": null,
       "yield_iso": null,
@@ -3195,10 +3195,10 @@
       "loading_umol": 500,
       "formula": "C11H13NO4",
       "cas": null,
-      "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
+      "smiles": "C=1C=CC=C(CC(C(OC)=O)[N+]([O-])=O)C=1C",
       "created_at": "2026-10-21T12:55:43+00:00",
-      "updated_at": "2026-10-21T12:56:11+00:00",
-      "synced_at": "2026-10-22T03:50:54.152945+00:00"
+      "updated_at": "2026-10-23T12:06:38+00:00",
+      "synced_at": "2026-10-23T12:15:14.613603+00:00"
     },
     {
       "code": "KIR-7",
