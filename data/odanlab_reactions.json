@@ -1,7 +1,7 @@
 {
   "meta": {
-    "synced_at": "2026-10-23T12:15:14.613603+00:00",
-    "count": 191
+    "synced_at": "2026-10-24T03:50:45.702325+00:00",
+    "count": 192
   },
   "reactions": [
     {
@@ -1031,15 +1031,15 @@
       "name": "N,N-dimethyl-4-(2-nitroethyl)aniline",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; N,N-Dimethyl-4-[(E)-2-nitroethenyl]aniline",
       "yield_analyt": 61,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 26.05,
+      "mass_measured_mg": 25.3,
       "loading_umol": 500,
       "formula": "C10H14N2O2",
       "cas": null,
       "smiles": "CN(C)C1=CC=C(CC[N+]([O-])=O)C=C1",
       "created_at": "2026-10-08T11:30:19+00:00",
-      "updated_at": "2026-10-17T08:51:16+00:00",
-      "synced_at": "2026-10-21T03:50:39.179302+00:00"
+      "updated_at": "2026-10-23T12:46:57+00:00",
+      "synced_at": "2026-10-24T03:50:45.702325+00:00"
     },
     {
       "code": "AAP-63",
@@ -1065,15 +1065,15 @@
       "name": "Methyl 3-(4-chlorophenyl)-2-nitropropanoate",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; Methyl 3-(4-chlorophenyl)-2-nitroacrylate",
       "yield_analyt": 88,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 58.28,
+      "mass_measured_mg": 35.5,
       "loading_umol": 250,
       "formula": "C10H10ClNO4",
       "cas": null,
       "smiles": "C1(=CC=C(CC([N+]([O-])=O)C(=O)OC)C=C1)Cl",
       "created_at": "2026-10-10T07:48:12+00:00",
-      "updated_at": "2026-10-21T10:47:05+00:00",
-      "synced_at": "2026-10-22T03:50:54.152945+00:00"
+      "updated_at": "2026-10-23T12:28:33+00:00",
+      "synced_at": "2026-10-24T03:50:45.702325+00:00"
     },
     {
       "code": "AAP-65",
@@ -1201,15 +1201,32 @@
       "name": "1,2,3-Trimethoxy-5-(2-nitroethyl)benzene",
       "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium; 1,2,3-trimethoxy-5-[(E)-2-nitrovinyl]benzene",
       "yield_analyt": null,
-      "yield_iso": null,
-      "mass_measured_mg": null,
+      "yield_iso": 41.45,
+      "mass_measured_mg": 40,
       "loading_umol": 400,
       "formula": "C11H15NO5",
       "cas": "63909-39-7",
       "smiles": "[O-][N+](=O)CCC=1C=C(C(=C(C=1)OC)OC)OC",
       "created_at": "2026-10-22T17:12:43+00:00",
-      "updated_at": "2026-10-22T17:12:43+00:00",
-      "synced_at": "2026-10-23T03:49:51.254281+00:00"
+      "updated_at": "2026-10-23T16:19:24+00:00",
+      "synced_at": "2026-10-24T03:50:45.702325+00:00"
+    },
+    {
+      "code": "AAP-72",
+      "reaction_id": "3bcbba03-0f15-4ac4-a0ce-d5df173451da",
+      "display_id": "AAP-9dd47880-a68e-4b7d-a4ce-871d99161ffb-072",
+      "name": "CID 13957536",
+      "reagents": "Sodium;oxido(oxo)phosphanium;hydrate; methyl (Z)-2-cyano-3-(4-phenylmethoxyphenyl)prop-2-enoate; Chloro(eta5-cyclopentadienyl)bis(triphenylphosphine)ruthenium",
+      "yield_analyt": null,
+      "yield_iso": null,
+      "mass_measured_mg": null,
+      "loading_umol": 250,
+      "formula": "C18H17NO3",
+      "cas": null,
+      "smiles": "C1=CC(=CC=C1OCC1=CC=CC=C1)CC(C#N)C(=O)OC",
+      "created_at": "2026-10-23T16:20:34+00:00",
+      "updated_at": "2026-10-23T16:20:34+00:00",
+      "synced_at": "2026-10-24T03:50:45.702325+00:00"
     },
     {
       "code": "AAP-8",
