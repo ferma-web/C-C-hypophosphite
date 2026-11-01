@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-29T11:30:42.562344+00:00",
+    "generated_at": "2026-11-01T13:43:50.567036+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 35
   },
@@ -943,7 +943,7 @@
       "cas": null,
       "loading_umol": 400,
       "yield_analyt": null,
-      "yield_iso": 50,
+      "yield_iso": 68,
       "mass_measured_mg": null,
       "melt_point_c": null,
       "note": "Реакцию поставил Егор, выделение проводил Антон",
@@ -959,7 +959,7 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-29T07:56:11.146529+00:00",
-      "updated_at": "2026-10-29T11:22:57.397374+00:00",
+      "updated_at": "2026-11-01T13:43:50.567036+00:00",
       "updated_by": "сайт",
       "compound_class": "Цианоэфиры",
       "nmr_1h": true,
