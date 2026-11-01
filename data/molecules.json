@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-11-01T13:43:50.567036+00:00",
+    "generated_at": "2026-11-01T19:43:15.381883+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 35
   },
@@ -942,7 +942,7 @@
       "formula": "C12H10N2O2",
       "cas": null,
       "loading_umol": 400,
-      "yield_analyt": null,
+      "yield_analyt": 75,
       "yield_iso": 68,
       "mass_measured_mg": null,
       "melt_point_c": null,
@@ -959,7 +959,7 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-29T07:56:11.146529+00:00",
-      "updated_at": "2026-11-01T13:43:50.567036+00:00",
+      "updated_at": "2026-11-01T19:43:15.381883+00:00",
       "updated_by": "сайт",
       "compound_class": "Цианоэфиры",
       "nmr_1h": true,
