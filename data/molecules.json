@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generated_at": "2026-11-02T08:21:16.963932+00:00",
+    "generated_at": "2026-11-02T11:00:51.72988+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
-    "count": 35
+    "count": 34
   },
   "molecules": [
     {
@@ -602,36 +602,6 @@
       "updated_at": "2026-10-03T17:28:02.480556+00:00",
       "updated_by": "классы: заглавная буква",
       "compound_class": "Цианоэфиры",
-      "nmr_1h": false,
-      "nmr_13c": false
-    },
-    {
-      "id": "dc68d01df0b32d774e97129550eb564a",
-      "category": 3,
-      "name": "Methyl 3-(4-methylphenyl)-2-nitropropanoate",
-      "formula": "C11H13NO4",
-      "cas": null,
-      "loading_umol": 400,
-      "yield_analyt": 53.4,
-      "yield_iso": null,
-      "mass_measured_mg": null,
-      "melt_point_c": null,
-      "note": "Кирилл ставил синтез ненасыщенного субстрата, Антон начал обрабатывать и при экстракции потерял весь продукт.\nПоставлен повторный синтез исходника, в понедельник будет выделение",
-      "smiles": "C1=CC(=CC=C1C)CC([N+](=O)[O-])C(=O)OC",
-      "molfile": null,
-      "reactions": [
-        {
-          "id": "c57506fa-9f84-4f91-90ea-66e7ee652440",
-          "code": "AAP-66"
-        }
-      ],
-      "image": null,
-      "source": "odanlab",
-      "deleted": false,
-      "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-10-23T12:37:50.646047+00:00",
-      "updated_by": "сайт",
-      "compound_class": "Нитроэфиры",
       "nmr_1h": false,
       "nmr_13c": false
     },
