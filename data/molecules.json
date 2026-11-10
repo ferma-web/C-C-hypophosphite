@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-11-02T11:00:51.72988+00:00",
+    "generated_at": "2026-11-10T14:12:50.359782+00:00",
     "source": "Supabase (архив, обновляется автоматически)",
     "count": 34
   },
@@ -493,7 +493,7 @@
       "cas": "115149-31-0",
       "loading_umol": 500,
       "yield_analyt": 60,
-      "yield_iso": 48,
+      "yield_iso": 58,
       "mass_measured_mg": null,
       "melt_point_c": null,
       "note": "Выход по ароматике.\nРеакцию поставил Антон, выделение проводил Кирилл.",
@@ -509,7 +509,7 @@
       "source": "odanlab",
       "deleted": false,
       "created_at": "2026-10-03T09:44:31.055951+00:00",
-      "updated_at": "2026-11-02T07:23:29.154042+00:00",
+      "updated_at": "2026-11-10T14:12:50.359782+00:00",
       "updated_by": "сайт",
       "compound_class": "Нитростиролы",
       "nmr_1h": true,
